@@ -10,6 +10,11 @@ import { MainLayout } from './components/layout/MainLayout';
 import { LoginPage } from './modules/auth/pages/LoginPage';
 import { RegisterPage } from './modules/auth/pages/RegisterPage';
 
+// Modules: Author
+import { DashboardPage } from './modules/author/pages/DashboardPage';
+import { CreateSubmissionPage } from './modules/author/pages/CreateSubmissionPage';
+import { SubmissionDetailsPage } from './modules/author/pages/SubmissionDetailsPage';
+
 // Создаем клиент для React Query
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -42,7 +47,9 @@ const App: React.FC = () => {
 
                         {/* Заглушки для будущих модулей */}
                         <Route path="archive" element={<div className="py-20 text-center">Архив публикаций (В разработке)</div>} />
-                        <Route path="submissions" element={<div className="py-20 text-center">Кабинет автора (В разработке)</div>} />
+                        <Route path="submissions" element={<DashboardPage />} />
+                        <Route path="submissions/new" element={<CreateSubmissionPage />} />
+                        <Route path="submissions/:id" element={<SubmissionDetailsPage />} />
 
                         {/* 404 - Redirect to home */}
                         <Route path="*" element={<Navigate to="/" replace />} />
