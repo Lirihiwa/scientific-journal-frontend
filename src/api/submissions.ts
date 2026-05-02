@@ -1,6 +1,6 @@
 // src/api/submissions.ts
 import api from './client';
-import type {Submission, CreateSubmissionRequest, SubmissionDetails} from '../types/submissions';
+import type {Submission, CreateSubmissionRequest, SubmissionDetails, SubmissionStatus} from '../types/submissions';
 
 export const submissionsApi = {
     // Получить мои статьи
@@ -26,4 +26,12 @@ export const submissionsApi = {
     // Получить детали статьи
     getSubmissionDetails: (id: string) =>
         api.get<SubmissionDetails>(`/submissions/${id}`),
+
+    // Получить вообще все статьи (для редактора)
+    getAllSubmissions: (status?: string) =>
+        api.get<Submission[]>(`/submissions/${status ? `?status=${status}` : ''}`),
+
+    // Смена статуса (с обязательным комментарием для некоторых переходов)
+    patchStatus: (id: string, status: SubmissionStatus, comment?: string) =>
+        api.patch<Submission>(`/submissions/${id}/status`, { status, comment }),
 };

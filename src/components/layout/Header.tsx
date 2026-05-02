@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
-import { BookOpen } from 'lucide-react';
+import {BookOpen, LogOut} from 'lucide-react';
+import {useAuth} from "../../hooks/useAuth.ts";
 
 export const Header = () => {
+    const { user, logout } = useAuth();
+
     return (
         <header className="bg-white border-b border-border sticky top-0 z-40">
             <div className="bg-primary text-primary-foreground py-1.5 px-4">
@@ -24,15 +27,26 @@ export const Header = () => {
                 </Link>
 
                 <nav className="flex items-center gap-8">
-                    <Link to="/archive" className="text-xs font-accent font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
-                        Архив {/* // LOC nav.archive */}
-                    </Link>
-                    <Link to="/submissions" className="text-xs font-accent font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
-                        Подача статьи {/* // LOC nav.submit */}
-                    </Link>
-                    <Link to="/login" className="btn-outline !py-1.5 !px-4">
-                        Войти {/* // LOC nav.login */}
-                    </Link>
+                    {/* Ссылки доступны всем */}
+                    <Link to="/archive" className="...">Архив</Link>
+
+                    {/* Кабинет автора доступен только авторизованным */}
+                    {user && <Link to="/submissions" className="...">Мои статьи</Link>}
+
+                    {/* Панель редактора видна только персоналу */}
+                    {user && (user.role_code === 'editor' || user.role_code === 'admin') && (
+                        <Link to="/editor" className="text-accent ... underline">Редакция</Link>
+                    )}
+
+                    {/* Кнопка входа или профиль */}
+                    {user ? (
+                        <div className="flex items-center gap-4">
+                            <span className="text-[10px] font-bold uppercase text-primary">{user.last_name}</span>
+                            <button onClick={logout} className="text-muted hover:text-red-600"><LogOut size={16} /></button>
+                        </div>
+                    ) : (
+                        <Link to="/login" className="btn-outline !py-1.5 !px-4">Войти</Link>
+                    )}
                 </nav>
             </div>
         </header>

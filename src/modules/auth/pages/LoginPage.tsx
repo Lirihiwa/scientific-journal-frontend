@@ -4,19 +4,21 @@ import { LogIn, Lock, Mail } from 'lucide-react';
 import { authApi } from '../../../api/auth.ts';
 import { Button } from '../../../components/ui/Button.tsx';
 import { Input } from '../../../components/ui/Input.tsx';
+import {useAuth} from "../../../hooks/useAuth.ts";
 
 export const LoginPage = () => {
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors, isSubmitting }, setError } = useForm();
+    const { login } = useAuth(); // Берем метод из контекста
 
     const onSubmit = async (data: any) => {
         try {
             const response = await authApi.login(data);
-            localStorage.setItem('access_token', response.data.tokens.access_token);
-            localStorage.setItem('refresh_token', response.data.tokens.refresh_token);
-            navigate('/');
+            // Вызываем метод контекста, который сохранит токены и загрузит профиль
+            await login(response.data.tokens.access_token, response.data.tokens.refresh_token);
+            navigate('/submissions');
         } catch (err: any) {
-            setError('root', { message: 'Invalid credentials' }); // // LOC auth.error.invalid
+            setError('root', { message: 'Неверный логин или пароль' });
         }
     };
 
