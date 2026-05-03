@@ -20,6 +20,7 @@ import { SubmissionDetailsPage } from './modules/author/pages/SubmissionDetailsP
 import { HomePage } from './modules/public/pages/HomePage';
 import { ArchivePage } from './modules/public/pages/ArchivePage';
 import { PublicationPage } from './modules/public/pages/PublicationPage';
+import { IssuePage } from './modules/public/pages/IssuePage';
 
 // Modules: Editor
 import { EditorDashboard } from './modules/editor/pages/EditorDashboard';
@@ -52,12 +53,13 @@ const App: React.FC = () => {
                             <Route path="register" element={<RegisterPage />} />
 
                             {/* Заглушки для будущих модулей */}
-                            <Route path="archive" element={<div className="py-20 text-center">Архив публикаций (В разработке)</div>} />
                             <Route path="submissions" element={<DashboardPage />} />
                             <Route path="submissions/new" element={<CreateSubmissionPage />} />
                             <Route path="submissions/:id" element={<SubmissionDetailsPage />} />
                             <Route path="archive" element={<ArchivePage />} />
                             <Route path="publications/:id" element={<PublicationPage />} />
+                            <Route path="issues/:id" element={<IssuePage />} />
+
 
                             <Route
                                 path="editor"
