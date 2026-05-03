@@ -162,13 +162,29 @@ export const EditorDashboard = () => {
     });
 
     const publishMutation = useMutation({
-        mutationFn: (data: { submission_id: string; issue_id: string }) =>
-            journalApi.createPublication({ ...data, status: 'published' }),
+        mutationFn: async (data: { submission_id: string; issue_id: string }) => {
+            try {
+                // 1. Пытаемся создать публикацию
+                await journalApi.createPublication({ ...data, status: 'published' });
+            } catch (err: any) {
+                // Если бэкенд ответил 409 (уже существует), значит первый шаг уже был сделан ранее
+                // Мы просто игнорируем эту ошибку и идем дальше ко второму шагу
+                if (err.response?.status !== 409) {
+                    throw err; // Если ошибка другая (например 500) — пробрасываем её
+                }
+            }
+
+            // 2. В любом случае пытаемся перевести статус в 'published'
+            return submissionsApi.patchStatus(data.submission_id, 'published');
+        },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['editor', 'submissions'] });
             queryClient.invalidateQueries({ queryKey: ['current-issue'] });
             setPublishingId(null);
             alert("Статья опубликована!");
+        },
+        onError: (err: any) => {
+            alert("Критическая ошибка: " + (err.response?.data?.detail || "неизвестно"));
         }
     });
 
@@ -260,6 +276,7 @@ export const EditorDashboard = () => {
 
                                     <div className="flex flex-wrap items-center gap-3 shrink-0">
                                         {/* Логика кнопок смены статуса */}
+                                        {/* 1. НОВАЯ */}
                                         {sub.status === 'new' && (
                                             <Button variant="outline" className="!py-1.5 !text-[10px] border-amber-600 text-amber-600 hover:!bg-amber-600"
                                                     onClick={() => statusMutation.mutate({ id: sub.id, status: 'under_review' })}>
@@ -267,6 +284,7 @@ export const EditorDashboard = () => {
                                             </Button>
                                         )}
 
+                                        {/* 2. НА РЕЦЕНЗИИ */}
                                         {sub.status === 'under_review' && (
                                             <>
                                                 <Button variant="outline" className="!py-1.5 !text-[10px] border-green-700 text-green-700 hover:!bg-green-700"
@@ -290,7 +308,27 @@ export const EditorDashboard = () => {
                                             </>
                                         )}
 
-                                        {/* Логика публикации */}
+                                        {/* 3. ТРЕБУЮТСЯ ПРАВКИ (Добавленный блок) */}
+                                        {sub.status === 'revision_required' && (
+                                            <>
+                                                <div className="text-[10px] font-accent font-bold text-amber-600 uppercase flex items-center gap-1 mr-2">
+                                                    Ожидание автора {/* // LOC editor.status.waiting_author */}
+                                                </div>
+                                                <Button variant="outline" className="!py-1.5 !text-[10px] border-primary text-primary hover:!bg-primary"
+                                                        onClick={() => statusMutation.mutate({ id: sub.id, status: 'under_review' })}>
+                                                    Вернуть в работу
+                                                </Button>
+                                                <Button variant="outline" className="!py-1.5 !text-[10px] border-red-700 text-red-700 hover:!bg-red-700"
+                                                        onClick={() => {
+                                                            const reason = prompt("Причина отказа:");
+                                                            if(reason) statusMutation.mutate({ id: sub.id, status: 'rejected', comment: reason });
+                                                        }}>
+                                                    Отклонить
+                                                </Button>
+                                            </>
+                                        )}
+
+                                        {/* 4. ПРИНЯТА */}
                                         {sub.status === 'accepted' && (
                                             <div className="flex items-center gap-3">
                                                 {publishingId === sub.id ? (
@@ -310,9 +348,9 @@ export const EditorDashboard = () => {
                                                     </div>
                                                 ) : (
                                                     <>
-                            <span className="text-[10px] font-accent font-bold text-green-600 uppercase flex items-center gap-1">
-                              <CheckCircle2 size={14} /> Принята
-                            </span>
+                                                        <span className="text-[10px] font-accent font-bold text-green-600 uppercase flex items-center gap-1">
+                                                          <CheckCircle2 size={14} /> Принята
+                                                        </span>
                                                         <Button onClick={() => setPublishingId(sub.id)} className="!py-1.5 !text-[10px]">
                                                             Опубликовать
                                                         </Button>
@@ -321,10 +359,11 @@ export const EditorDashboard = () => {
                                             </div>
                                         )}
 
+                                        {/* 5. ОПУБЛИКОВАНА */}
                                         {sub.status === 'published' && (
                                             <span className="text-[10px] font-accent font-bold text-primary uppercase flex items-center gap-1 bg-grey-50 px-2 py-1 border border-border">
-                         <BookOpen size={14} /> В печати
-                       </span>
+                                                <BookOpen size={14} /> В печати
+                                            </span>
                                         )}
                                     </div>
                                 </div>
