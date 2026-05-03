@@ -3,6 +3,7 @@ import React from 'react';
 import { AuthProvider } from './store/AuthContext';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from 'sonner';
 
 // Layouts
 import { MainLayout } from './components/layout/MainLayout';
@@ -41,6 +42,15 @@ const App: React.FC = () => {
         <QueryClientProvider client={queryClient}>
             <AuthProvider>
                 <BrowserRouter>
+                    {/* Настройка Toaster: позиция, стиль */}
+                    <Toaster
+                        position="top-right"
+                        richColors
+                        theme="light"
+                        toastOptions={{
+                            style: { borderRadius: '0px', borderTop: '2px solid #004080' }
+                        }}
+                    />
                     <Routes>
                         {/* Публичные и защищенные маршруты внутри MainLayout */}
                         <Route path="/" element={<MainLayout />}>
