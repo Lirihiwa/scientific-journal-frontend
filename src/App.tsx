@@ -19,6 +19,7 @@ import { SubmissionDetailsPage } from './modules/author/pages/SubmissionDetailsP
 // Modules: Public
 import { HomePage } from './modules/public/pages/HomePage';
 import { ArchivePage } from './modules/public/pages/ArchivePage';
+import { PublicationPage } from './modules/public/pages/PublicationPage';
 
 // Modules: Editor
 import { EditorDashboard } from './modules/editor/pages/EditorDashboard';
@@ -56,6 +57,7 @@ const App: React.FC = () => {
                             <Route path="submissions/new" element={<CreateSubmissionPage />} />
                             <Route path="submissions/:id" element={<SubmissionDetailsPage />} />
                             <Route path="archive" element={<ArchivePage />} />
+                            <Route path="publications/:id" element={<PublicationPage />} />
 
                             <Route
                                 path="editor"
