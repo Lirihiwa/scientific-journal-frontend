@@ -7,6 +7,7 @@ import { Button } from '../../../components/ui/Button';
 import { Input } from '../../../components/ui/Input';
 import { TextArea } from '../../../components/ui/TextArea';
 import type { CreateSubmissionRequest } from '../../../types/submissions';
+import {toast} from "sonner";
 
 export const CreateSubmissionPage = () => {
     const navigate = useNavigate();
@@ -31,23 +32,21 @@ export const CreateSubmissionPage = () => {
     const onSubmit = async (data: any) => {
         try {
             if (!file) {
-                alert("Пожалуйста, прикрепите файл статьи (PDF)"); // // LOC submission.error.file_required
+                toast.error("Пожалуйста, прикрепите файл статьи (PDF)");
                 return;
             }
 
-            // 1. Создаем запись о статье
             const submissionRes = await submissionsApi.createSubmission({
                 ...data,
-                policy_accepted: true // В MVP фиксируем true, так как в форме есть чекбокс
+                policy_accepted: true
             });
 
-            // 2. Загружаем PDF файл
             await submissionsApi.uploadFile(submissionRes.data.id, file);
 
+            toast.success("Статья успешно подана в редакцию!");
             navigate('/submissions');
         } catch (err) {
-            console.error(err);
-            alert("Ошибка при подаче статьи"); // // LOC submission.error.generic
+            toast.error("Произошла ошибка при подаче статьи");
         }
     };
 

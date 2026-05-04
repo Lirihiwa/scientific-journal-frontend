@@ -11,6 +11,7 @@ import { MainLayout } from './components/layout/MainLayout';
 // Modules: Auth
 import { LoginPage } from './modules/auth/pages/LoginPage';
 import { RegisterPage } from './modules/auth/pages/RegisterPage';
+import { ProfilePage } from './modules/auth/pages/ProfilePage';
 
 // Modules: Author
 import { DashboardPage } from './modules/author/pages/DashboardPage';
@@ -61,6 +62,7 @@ const App: React.FC = () => {
                             {/* Авторизация (Auth Module) */}
                             <Route path="login" element={<LoginPage />} />
                             <Route path="register" element={<RegisterPage />} />
+                            <Route path="profile" element={<ProfilePage />} />
 
                             {/* Заглушки для будущих модулей */}
                             <Route path="submissions" element={<DashboardPage />} />

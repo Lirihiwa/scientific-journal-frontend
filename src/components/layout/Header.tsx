@@ -41,7 +41,9 @@ export const Header = () => {
                     {/* Кнопка входа или профиль */}
                     {user ? (
                         <div className="flex items-center gap-4">
-                            <span className="text-[10px] font-bold uppercase text-primary">{user.last_name}</span>
+                            <Link to={'/profile'}>
+                                <span className="text-[10px] font-bold uppercase text-primary">{user.last_name}</span>
+                            </Link>
                             <button onClick={logout} className="text-muted hover:text-red-600"><LogOut size={16} /></button>
                         </div>
                     ) : (

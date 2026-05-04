@@ -21,6 +21,7 @@ import { useAuth } from '../../../hooks/useAuth';
 
 // UI Компоненты
 import { Button } from '../../../components/ui/Button';
+import {toast} from "sonner";
 
 export const SubmissionDetailsPage = () => {
     const { id } = useParams<{ id: string }>();
@@ -41,14 +42,12 @@ export const SubmissionDetailsPage = () => {
     const uploadMutation = useMutation({
         mutationFn: (file: File) => submissionsApi.uploadFile(id!, file),
         onSuccess: () => {
-            // Сбрасываем кеш, чтобы страница обновилась (номер версии и таймлайн)
             queryClient.invalidateQueries({ queryKey: ['submission', id] });
             setUpdateFile(null);
-            alert("Новая версия рукописи успешно загружена"); // // LOC submission.alerts.version_updated
+            toast.success("Новая версия рукописи успешно загружена");
         },
         onError: (err: any) => {
-            alert(err.response?.data?.detail || "Ошибка при загрузке файла");
-            console.error(err);
+            toast.error(err.response?.data?.detail || "Ошибка при загрузке файла");
         }
     });
 
