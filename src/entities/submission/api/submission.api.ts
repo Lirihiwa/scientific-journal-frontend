@@ -1,6 +1,6 @@
 // src/entities/submission/api/submission.api.ts
 import { apiClient } from '../../../shared/api/client';
-import type { Submission } from '../model/types';
+import type {Submission, SubmissionDetails} from '../model/types';
 import type {SubmissionFormData} from "../../../features/submission/model/schemas.ts";
 
 export const submissionApi = {
@@ -9,7 +9,7 @@ export const submissionApi = {
         return data;
     },
 
-    create: async (data: any) => {
+    create: async (data: SubmissionFormData) => {
         const { data: submission } = await apiClient.post<Submission>('/submissions/', data);
         return submission;
     },
@@ -26,4 +26,9 @@ export const submissionApi = {
         const { data: updated } = await apiClient.put<Submission>(`/submissions/${id}`, data);
         return updated;
     },
+
+    getById: async (id: string) => {
+        const { data } = await apiClient.get<SubmissionDetails>(`/submissions/${id}`);
+        return data;
+    }
 };

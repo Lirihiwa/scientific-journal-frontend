@@ -5,21 +5,20 @@ import { journalApi } from '../../../entities/journal/api/journal.api';
 import { Button } from '../../../shared/ui/Button';
 import { toast } from 'sonner';
 import {apiClient} from "../../../shared/api/client.ts";
+import type {CreateIssueRequest} from "../../../features/editor/model/types.ts";
 
 export const JournalStructure = () => {
     const queryClient = useQueryClient();
     const { data: volumes, isLoading } = useQuery({ queryKey: ['editor-volumes'], queryFn: journalApi.getVolumes });
 
     const createIssueMutation = useMutation({
-        mutationFn: async (volId: string) => {
-            const num = prompt("Введите номер нового выпуска:");
-            if (!num) return;
+        mutationFn: async (vars: { volId: string, num: number }) => {
             return apiClient.post('/journal/issues', {
-                volume_id: volId,
-                number: parseInt(num),
+                volume_id: vars.volId,
+                number: vars.num,
                 status: 'published',
                 publication_date: new Date().toISOString().split('T')[0]
-            });
+            } as CreateIssueRequest);
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['editor-all-issues'] });
@@ -59,7 +58,23 @@ export const JournalStructure = () => {
                                     <h4 className="text-xl font-heading font-bold italic">Volume {vol.number}</h4>
                                 </div>
                             </div>
-                            <Button size="sm" variant="ghost" className="opacity-0 group-hover:opacity-100" onClick={() => createIssueMutation.mutate(vol.id)}>
+                            <Button
+                                size="sm"
+                                variant="ghost"
+                                className="opacity-0 group-hover:opacity-100"
+                                onClick={() => {
+                                    const numStr = prompt("Введите номер нового выпуска:");
+
+                                    if (numStr) {
+                                        const num = parseInt(numStr, 10);
+                                        if (!isNaN(num)) {
+                                            createIssueMutation.mutate({ volId: vol.id, num: num })
+                                        } else {
+                                            toast.error("Номер должен быть числом")
+                                        }
+                                    }
+                                }}
+                            >
                                 <Plus size={14} className="mr-2" /> Добавить выпуск
                             </Button>
                         </div>

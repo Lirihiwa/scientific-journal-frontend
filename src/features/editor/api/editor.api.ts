@@ -1,6 +1,7 @@
 // src/features/editor/api/editor.api.ts
 import { apiClient } from '../../../shared/api/client';
 import type { Submission, SubmissionStatus } from '../../../entities/submission/model/types';
+import type {CreatePublicationRequest} from "../model/types.ts";
 
 export const editorApi = {
     // Получить все статьи в системе
@@ -16,14 +17,10 @@ export const editorApi = {
     },
 
     // Привязка статьи к выпуску (Публикация)
-    publishToIssue: async (submissionId: string, issueId: string) => {
+    publishToIssue: async (payload: CreatePublicationRequest) => {
         // 1. Создаем запись в таблице публикаций
-        await apiClient.post('/journal/publications', {
-            submission_id: submissionId,
-            issue_id: issueId,
-            status: 'published'
-        });
+        await apiClient.post('/journal/publications', payload);
         // 2. Переводим статус рукописи в 'published'
-        return editorApi.updateStatus(submissionId, 'published');
+        return editorApi.updateStatus(payload.submission_id, 'published');
     }
 };
