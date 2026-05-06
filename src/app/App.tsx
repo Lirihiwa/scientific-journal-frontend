@@ -30,6 +30,7 @@ import {CreateSubmissionPage} from '../pages/author/CreateSubmissionPage';
 import {SubmissionDetailsPage} from '../pages/author/SubmissionDetailsPage'; // Добавишь позже
 // Editor
 import {EditorDashboard} from '../pages/editor/EditorDashboard';
+import {StaticPagePlaceholder} from "../pages/public/StaticPagePlaceholder.tsx";
 
 // Настройка Query Client
 const queryClient = new QueryClient({
@@ -72,6 +73,11 @@ export const App = () => {
                         <Route index element={<HomePage/>}/>
                         <Route path="login" element={<LoginPage/>}/>
                         <Route path="register" element={<RegisterPage/>}/>
+                        <Route path="about" element={<StaticPagePlaceholder title="О журнале" />} />
+                        <Route path="editorial" element={<StaticPagePlaceholder title="Редакционная коллегия" />} />
+                        <Route path="ethics" element={<StaticPagePlaceholder title="Этика публикаций" />} />
+                        <Route path="review-process" element={<StaticPagePlaceholder title="Процесс рецензирования" />} />
+                        <Route path="info/guidelines" element={<StaticPagePlaceholder title="Информация для авторов" />} />
 
 
                         {/* Публичный архив и статьи */}

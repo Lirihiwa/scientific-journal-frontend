@@ -1,7 +1,7 @@
 // src/pages/editor/EditorDashboard.tsx
-import {useState} from 'react';
+import {useMemo, useState} from 'react';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
-import {Clock, FileText, Search, Send} from 'lucide-react';
+import {AlertCircle, CheckCircle2, Eye, FileText, Inbox, Layers, Search, Send, XCircle} from 'lucide-react';
 import {toast} from 'sonner';
 import {editorApi} from '../../features/editor/api/editor.api';
 import {Button} from '../../shared/ui/Button';
@@ -13,14 +13,11 @@ import {JournalStructure} from '../../widgets/editor/ui/JournalStructure';
 import {PageHeader} from '../../shared/ui/PageHeader';
 import {Card} from '../../shared/ui/Card';
 import {SkeletonList} from '../../shared/ui/Skeleton';
+import {cn} from '../../shared/lib/utils';
 import type {SubmissionStatus} from '../../entities/submission/model/types';
 import {apiClient} from "../../shared/api/client.ts";
-import type {Issue} from '../../entities/journal/model/types.ts'
-
-const statusFilters: { key: SubmissionStatus | 'all'; label: string }[] = [
-    {key: 'all', label: 'Все'}, {key: 'new', label: 'Новые'}, {key: 'under_review', label: 'Рецензия'},
-    {key: 'revision_required', label: 'Правки'}, {key: 'accepted', label: 'Принятые'}
-];
+import type {Issue} from '../../entities/journal/model/types.ts';
+import {SubmissionCard} from "../../widgets/submission/ui/SubmissionCard.tsx";
 
 export const EditorDashboard = () => {
     const [activeTab, setActiveTab] = useState<'papers' | 'structure'>('papers');
@@ -36,10 +33,13 @@ export const EditorDashboard = () => {
     const [selectedIssue, setSelectedIssue] = useState('');
 
     const queryClient = useQueryClient();
-    const {data: submissions, isLoading} = useQuery({
-        queryKey: ['editor-submissions', filter],
-        queryFn: () => editorApi.getAllSubmissions(filter === 'all' ? undefined : filter)
+
+    // Запрашиваем ВСЕ статьи для подсчета статистики в плитках
+    const {data: allSubmissions, isLoading} = useQuery({
+        queryKey: ['editor-submissions', 'all'],
+        queryFn: () => editorApi.getAllSubmissions()
     });
+
     const {data: issues} = useQuery({
         queryKey: ['editor-all-issues'],
         queryFn: () => apiClient.get('/journal/issues').then(res => res.data)
@@ -60,12 +60,11 @@ export const EditorDashboard = () => {
     });
 
     const publishMutation = useMutation({
-        mutationFn: (vars: { subId: string, issueId: string }) =>
-            editorApi.publishToIssue({
-                submission_id: vars.subId,
-                issue_id: vars.issueId,
-                status: 'published'
-            }),
+        mutationFn: (vars: { subId: string, issueId: string }) => editorApi.publishToIssue({
+            submission_id: vars.subId,
+            issue_id: vars.issueId,
+            status: 'published'
+        }),
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ['editor-submissions']});
             setPublishingId(null);
@@ -73,7 +72,101 @@ export const EditorDashboard = () => {
         }
     });
 
-    const filteredList = submissions?.filter(s => s.title_ru.toLowerCase().includes(search.toLowerCase()));
+    // Фильтрация на клиенте
+    const filteredList = useMemo(() => {
+        let list = allSubmissions || [];
+        if (filter !== 'all') list = list.filter(s => s.status === filter);
+        if (search) list = list.filter(s => s.title_ru.toLowerCase().includes(search.toLowerCase()));
+        return list;
+    }, [allSubmissions, filter, search]);
+
+    // Подсчет статистики для дашборда
+    const stats = useMemo(() => {
+        if (!allSubmissions) return {all: 0, new: 0, review: 0, revision: 0, accepted: 0, published: 0, rejected: 0};
+        return {
+            all: allSubmissions.length,
+            new: allSubmissions.filter(s => s.status === 'new').length,
+            review: allSubmissions.filter(s => s.status === 'under_review').length,
+            revision: allSubmissions.filter(s => s.status === 'revision_required').length,
+            accepted: allSubmissions.filter(s => s.status === 'accepted').length,
+            published: allSubmissions.filter(s => s.status === 'published').length,
+            rejected: allSubmissions.filter(s => s.status === 'rejected').length,
+        };
+    }, [allSubmissions]);
+
+    // Конфигурация 7 плиток фильтрации
+    const dashboardTiles = [
+        {
+            id: 'all',
+            label: 'Все',
+            count: stats.all,
+            icon: Layers,
+            color: 'text-foreground',
+            bg: 'bg-muted/10',
+            border: 'border-border',
+            activeRing: 'ring-primary'
+        },
+        {
+            id: 'new',
+            label: 'Новые',
+            count: stats.new,
+            icon: Inbox,
+            color: 'text-status-new',
+            bg: 'bg-status-new/5',
+            border: 'border-status-new/20',
+            activeRing: 'ring-status-new'
+        },
+        {
+            id: 'under_review',
+            label: 'На рецензии',
+            count: stats.review,
+            icon: Eye,
+            color: 'text-status-review',
+            bg: 'bg-status-review/5',
+            border: 'border-status-review/20',
+            activeRing: 'ring-status-review'
+        },
+        {
+            id: 'revision_required',
+            label: 'На доработке',
+            count: stats.revision,
+            icon: AlertCircle,
+            color: 'text-status-revision',
+            bg: 'bg-status-revision/5',
+            border: 'border-status-revision/20',
+            activeRing: 'ring-status-revision'
+        },
+        {
+            id: 'accepted',
+            label: 'Принятые',
+            count: stats.accepted,
+            icon: CheckCircle2,
+            color: 'text-status-accepted',
+            bg: 'bg-status-accepted/5',
+            border: 'border-status-accepted/20',
+            activeRing: 'ring-status-accepted'
+        },
+        {
+            id: 'published',
+            label: 'Опубликованы',
+            count: stats.published,
+            icon: FileText,
+            color: 'text-status-published',
+            bg: 'bg-status-published/5',
+            border: 'border-status-published/20',
+            activeRing: 'ring-status-published'
+        },
+        {
+            id: 'rejected',
+            label: 'Отклонены',
+            count: stats.rejected,
+            icon: XCircle,
+            color: 'text-status-rejected',
+            bg: 'bg-status-rejected/5',
+            border: 'border-status-rejected/20',
+            activeRing: 'ring-status-rejected'
+        },
+    ] as const;
 
     return (
         <div className="space-y-12 animate-fade-in">
@@ -92,44 +185,66 @@ export const EditorDashboard = () => {
                     </div>
                 }
             />
+
             {activeTab === 'papers' ? (
                 <div className="space-y-8">
-                    <div className="flex flex-col lg:flex-row gap-6 bg-card border border-border p-4 shadow-sm">
-                        <Input placeholder="Поиск по названию..." icon={<Search size={18}/>}
-                               className="bg-muted/30 border-none focus:ring-0" value={search}
-                               onChange={e => setSearch(e.target.value)}/>
-                        <div className="flex items-center gap-2 overflow-x-auto pb-2 lg:pb-0 scrollbar-academic">
-                            {statusFilters.map((f) => (
-                                <button key={f.key} onClick={() => setFilter(f.key)}
-                                        className={`whitespace-nowrap px-4 py-1.5 text-[9px] font-accent font-bold uppercase tracking-tight border transition-all rounded-sm ${filter === f.key ? 'bg-primary text-primary-foreground border-primary' : 'bg-background text-muted-foreground border-border hover:border-primary'}`}>
-                                    {f.label}
-                                </button>
-                            ))}
-                        </div>
+                    {/* Плитки-фильтры со статистикой */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-4">
+                        {dashboardTiles.map((t) => {
+                            const isActive = filter === t.id;
+                            const Icon = t.icon;
+                            return (
+                                <Card
+                                    key={t.id}
+                                    padding="sm"
+                                    className={cn(
+                                        "cursor-pointer transition-all",
+                                        t.bg,
+                                        isActive ? `ring-2 ${t.activeRing} border-transparent shadow-md` : `${t.border} hover:border-foreground/20 hover:shadow-sm`
+                                    )}
+                                    onClick={() => setFilter(t.id as SubmissionStatus | 'all')}
+                                >
+                                    <div className="flex items-center justify-between">
+                                        <Icon size={16} className={t.color}/>
+                                        <span className="text-2xl font-heading font-bold">{t.count}</span>
+                                    </div>
+                                    <p className="text-[9px] font-accent font-bold uppercase tracking-widest text-muted-foreground mt-2">{t.label}</p>
+                                </Card>
+                            );
+                        })}
                     </div>
+
+                    {/* Строка поиска (без старых кнопок фильтров) */}
+                    <div className="flex bg-card border border-border p-4 shadow-sm rounded-sm">
+                        <Input
+                            placeholder="Поиск статьи по названию..."
+                            icon={<Search size={18}/>}
+                            className="bg-muted/30 border-none focus:ring-0 max-w-lg"
+                            value={search}
+                            onChange={e => setSearch(e.target.value)}
+                        />
+                    </div>
+
+                    {/* Список рукописей */}
                     <div className="space-y-4">
                         {isLoading ? (
                             <SkeletonList count={4} className="h-32"/>
                         ) : filteredList?.map(sub => (
-                            <Card key={sub.id} variant="interactive" padding="lg">
-                                <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
-                                    <div className="space-y-3 flex-grow">
-                                        <div className="flex items-center gap-4">
-                                            <Badge variant={sub.status}>{sub.status.replace('_', ' ')}</Badge>
-                                            <span
-                                                className="text-[10px] font-accent font-bold text-muted-foreground italic uppercase flex items-center gap-1"><Clock
-                                                size={12}/> ID: {sub.id.slice(0, 8)}</span>
-                                        </div>
-                                        <h3 className="text-2xl font-heading font-bold italic leading-tight">{sub.title_ru}</h3>
-                                        <p className="text-xs text-muted-foreground font-accent font-bold uppercase tracking-widest flex items-center gap-2">
-                                            <FileText size={14}
-                                                      className="text-primary"/> {new Date(sub.created_at).toLocaleDateString()}
-                                        </p>
-                                    </div>
-                                    <div className="flex flex-wrap items-center gap-3 shrink-0">
-                                        {sub.status === 'new' && <Button
-                                            onClick={() => statusMutation.mutate({id: sub.id, status: 'under_review'})}>В
-                                            работу</Button>}
+                            <SubmissionCard
+                                key={sub.id}
+                                submission={sub}
+                                showLink={false}
+                                actions={
+                                    <div className="flex gap-2">
+                                        {sub.status === 'new' && (
+                                            <Button onClick={() => statusMutation.mutate({
+                                                id: sub.id,
+                                                status: 'under_review'
+                                            })}>
+                                                В работу
+                                            </Button>
+                                        )}
+
                                         {sub.status === 'under_review' && (
                                             <>
                                                 <Button variant="outline"
@@ -154,12 +269,7 @@ export const EditorDashboard = () => {
                                                         })}>Отклонить</Button>
                                             </>
                                         )}
-                                        {sub.status === 'revision_required' && (
-                                            <Button
-                                                onClick={() => statusMutation.mutate({id: sub.id, status: 'under_review'})}>
-                                                Вернуть на рецензию
-                                            </Button>
-                                        )}
+
                                         {sub.status === 'accepted' && (
                                             publishingId === sub.id ? (
                                                 <div className="flex items-center gap-2 animate-fade-in">
@@ -167,7 +277,7 @@ export const EditorDashboard = () => {
                                                         className="h-10 px-3 bg-muted border border-border text-[10px] font-bold uppercase font-accent outline-none rounded-sm"
                                                         value={selectedIssue}
                                                         onChange={e => setSelectedIssue(e.target.value)}>
-                                                        <option value=" ">Выпуск...</option>
+                                                        <option value="">Выпуск...</option>
                                                         {issues?.map((i: Issue) => <option key={i.id}
                                                                                            value={i.id}>№{i.number} ({i.publication_date ? new Date(i.publication_date).getFullYear() : '—'})</option>)}
                                                     </select>
@@ -184,8 +294,8 @@ export const EditorDashboard = () => {
                                         )}
                                         {sub.status === 'published' && <Badge variant="published">В выпуске</Badge>}
                                     </div>
-                                </div>
-                            </Card>
+                                }
+                            />
                         ))}
                     </div>
                 </div>

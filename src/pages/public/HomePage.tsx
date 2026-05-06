@@ -55,9 +55,6 @@ export const HomePage = () => {
                     <PublicationCard
                         key={pub.id}
                         pub={pub}
-                        variant="list"
-                        showStatus
-                        status="published"
                     />
                 ))}
             </section>

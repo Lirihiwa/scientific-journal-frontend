@@ -149,11 +149,13 @@ export const CreateSubmissionPage = () => {
                         {!file ? (
                             <label className="cursor-pointer block">
                                 <FileUp size={40} className="mx-auto text-muted-foreground mb-3" />
-                                <span className="text-[10px] font-accent font-bold uppercase tracking-widest">Выберите PDF файл</span>
+                                <span className="text-[10px] font-accent font-bold uppercase tracking-widest">Выберите файл статьи</span>
+                                <p className="mt-2 text-xs font-serif italic text-muted-foreground">Поддерживаемые форматы: PDF, DOC, DOCX</p>
                                 <input
                                     type="file"
                                     className="hidden"
-                                    accept=".pdf"
+                                    // Обновлено согласно ТЗ 3.2.2
+                                    accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                                     onChange={e => setFile(e.target.files?.[0] || null)}
                                 />
                             </label>
@@ -161,10 +163,7 @@ export const CreateSubmissionPage = () => {
                             <div className="flex flex-col items-center">
                                 <CheckCircle size={32} className="text-primary mb-2" />
                                 <p className="font-serif italic text-sm text-foreground">{file.name}</p>
-                                <button
-                                    onClick={() => setFile(null)}
-                                    className="text-[9px] font-bold uppercase text-primary hover:underline mt-2"
-                                >
+                                <button onClick={() => setFile(null)} className="text-[9px] font-bold uppercase text-primary hover:underline mt-2">
                                     Заменить
                                 </button>
                             </div>

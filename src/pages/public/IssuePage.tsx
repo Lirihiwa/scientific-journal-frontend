@@ -79,9 +79,6 @@ export const IssuePage = () => {
                         <PublicationCard
                             key={pub.id}
                             pub={pub}
-                            variant="list"
-                            showStatus
-                            status="published"
                         />
                     ))}
                 </div>
