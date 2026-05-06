@@ -32,10 +32,11 @@ export const SubmissionDetailsPage = () => {
 
     // Загрузка данных рукописи
     const { data: submission, isLoading } = useQuery({
-        queryKey: ['submission', id],
-        queryFn: () => submissionApi.getMySubmissions().then(subs =>
-            subs.find(s => s.id === id)
-        ),
+        queryKey: ['submission', id] as const,
+        queryFn: ({ queryKey }) => {
+            const [_, submissionId] = queryKey;
+            return submissionApi.getById(submissionId!);
+        },
         enabled: !!id,
     });
 

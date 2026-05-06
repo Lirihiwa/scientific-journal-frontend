@@ -4,6 +4,12 @@ export type VolumeStatus = 'draft' | 'open' | 'published' | 'archived';
 export type IssueStatus = 'draft' | 'open' | 'published' | 'archived';
 export type PublicationStatus = 'scheduled' | 'published' | 'withdrawn';
 
+export const PublicationAuthorSchema = z.object({
+    author_id: z.string().uuid().nullable().optional(), // может быть null для внешних соавторов
+    full_name: z.string(),
+    is_primary: z.boolean(),
+});
+
 export const PublicationSchema = z.object({
     id: z.string().uuid(),
     submission_id: z.string().uuid(),
@@ -14,7 +20,7 @@ export const PublicationSchema = z.object({
     abstract_en: z.string().optional().nullable(),
     keywords_ru: z.string(),
     keywords_en: z.string().optional().nullable(),
-    authors: z.array(z.any()), // Можно уточнить позже
+    authors: z.array(PublicationAuthorSchema),
     doi: z.string().optional().nullable(),
     pdf_object_key: z.string().optional().nullable(),
     pdf_file_name: z.string().optional().nullable(),

@@ -11,6 +11,8 @@ import { registerSchema, type RegisterFormData } from '../../features/auth/model
 import { authApi } from '../../features/auth/api/auth.api';
 import { Card } from '../../shared/ui/Card';
 import { PageHeader } from '../../shared/ui/PageHeader';
+import type {AxiosError} from "axios";
+import type {ApiError} from "../../shared/api/types.ts";
 
 export const RegisterPage = () => {
     const navigate = useNavigate();
@@ -22,7 +24,7 @@ export const RegisterPage = () => {
             toast.success("Регистрация завершена. Теперь вы можете войти.");
             navigate('/login');
         },
-        onError: (err: any) => {
+        onError: (err: AxiosError<ApiError>) => {
             const isConflict = err.response?.status === 409;
             toast.error(isConflict ? "Указанный Email уже занят" : "Произошла ошибка регистрации");
         }

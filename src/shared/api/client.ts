@@ -2,9 +2,14 @@
 import axios, { AxiosError, type InternalAxiosRequestConfig } from 'axios';
 import { tokenStorage } from './tokens';
 
+interface FailedRequest {
+    resolve: (token: string | null) => void;
+    reject: (error: AxiosError) => void;
+}
+
 // Очередь для запросов, которые ждут обновления токена
 let isRefreshing = false;
-let failedQueue: Array<{ resolve: (value?: unknown) => void; reject: (reason?: any) => void }> =[];
+let failedQueue: FailedRequest[] = [];
 
 const processQueue = (error: AxiosError | null, token: string | null = null) => {
     failedQueue.forEach(prom => {

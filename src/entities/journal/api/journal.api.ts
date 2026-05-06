@@ -1,6 +1,7 @@
 // src/entities/journal/api/journal.api.ts
 import { apiClient } from '../../../shared/api/client';
 import type { Volume, Issue, Publication } from '../model/types';
+import type {CreateIssueRequest, CreateVolumeRequest} from "../../../features/editor/model/types.ts";
 
 export const journalApi = {
     getCurrentIssue: async () => {
@@ -28,4 +29,12 @@ export const journalApi = {
         return data;
     },
     getPdfUrl: (id: string) => `${import.meta.env.VITE_API_URL}/journal/publications/${id}/pdf`,
+    createVolume: async (data: CreateVolumeRequest) => {
+        const { data: volume } = await apiClient.post<Volume>('/journal/volumes', data);
+        return volume;
+    },
+    createIssue: async (data: CreateIssueRequest) => {
+        const { data: issue } = await apiClient.post<Issue>('/journal/issues', data);
+        return issue;
+    }
 };

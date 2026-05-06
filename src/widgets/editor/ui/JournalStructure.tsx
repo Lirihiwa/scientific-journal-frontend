@@ -4,8 +4,6 @@ import { Library, Plus, Layers } from 'lucide-react';
 import { journalApi } from '../../../entities/journal/api/journal.api';
 import { Button } from '../../../shared/ui/Button';
 import { toast } from 'sonner';
-import {apiClient} from "../../../shared/api/client.ts";
-import type {CreateIssueRequest} from "../../../features/editor/model/types.ts";
 
 export const JournalStructure = () => {
     const queryClient = useQueryClient();
@@ -13,12 +11,12 @@ export const JournalStructure = () => {
 
     const createIssueMutation = useMutation({
         mutationFn: async (vars: { volId: string, num: number }) => {
-            return apiClient.post('/journal/issues', {
+            return journalApi.createIssue({
                 volume_id: vars.volId,
                 number: vars.num,
                 status: 'published',
                 publication_date: new Date().toISOString().split('T')[0]
-            } as CreateIssueRequest);
+            });
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['editor-all-issues'] });

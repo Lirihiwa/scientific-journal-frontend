@@ -15,6 +15,7 @@ import {Card} from '../../shared/ui/Card';
 import {SkeletonList} from '../../shared/ui/Skeleton';
 import type {SubmissionStatus} from '../../entities/submission/model/types';
 import {apiClient} from "../../shared/api/client.ts";
+import type {Issue} from '../../entities/journal/model/types.ts'
 
 const statusFilters: { key: SubmissionStatus | 'all'; label: string }[] = [
     {key: 'all', label: 'Все'}, {key: 'new', label: 'Новые'}, {key: 'under_review', label: 'Рецензия'},
@@ -59,7 +60,12 @@ export const EditorDashboard = () => {
     });
 
     const publishMutation = useMutation({
-        mutationFn: (vars: { subId: string, issueId: string }) => editorApi.publishToIssue(vars.subId, vars.issueId),
+        mutationFn: (vars: { subId: string, issueId: string }) =>
+            editorApi.publishToIssue({
+                submission_id: vars.subId,
+                issue_id: vars.issueId,
+                status: 'published'
+            }),
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ['editor-submissions']});
             setPublishingId(null);
@@ -148,6 +154,12 @@ export const EditorDashboard = () => {
                                                         })}>Отклонить</Button>
                                             </>
                                         )}
+                                        {sub.status === 'revision_required' && (
+                                            <Button
+                                                onClick={() => statusMutation.mutate({id: sub.id, status: 'under_review'})}>
+                                                Вернуть на рецензию
+                                            </Button>
+                                        )}
                                         {sub.status === 'accepted' && (
                                             publishingId === sub.id ? (
                                                 <div className="flex items-center gap-2 animate-fade-in">
@@ -156,8 +168,8 @@ export const EditorDashboard = () => {
                                                         value={selectedIssue}
                                                         onChange={e => setSelectedIssue(e.target.value)}>
                                                         <option value=" ">Выпуск...</option>
-                                                        {issues?.map((i: any) => <option key={i.id}
-                                                                                         value={i.id}>№{i.number} ({new Date(i.publication_date).getFullYear()})</option>)}
+                                                        {issues?.map((i: Issue) => <option key={i.id}
+                                                                                           value={i.id}>№{i.number} ({i.publication_date ? new Date(i.publication_date).getFullYear() : '—'})</option>)}
                                                     </select>
                                                     <Button size="icon" disabled={!selectedIssue}
                                                             onClick={() => publishMutation.mutate({

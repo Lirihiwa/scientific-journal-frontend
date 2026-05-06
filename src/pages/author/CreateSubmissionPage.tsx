@@ -22,7 +22,7 @@ export const CreateSubmissionPage = () => {
 
     const { register, control, handleSubmit, formState: { errors } } = useForm<SubmissionFormData>({
         resolver: zodResolver(submissionFormSchema),
-        defaultValues: { manuscript_language: 'ru', coauthors: [] }
+        defaultValues: { manuscript_language: 'ru', coauthors:[], policy_accepted: false }
     });
 
     const { fields, append, remove } = useFieldArray({ control, name: "coauthors" });

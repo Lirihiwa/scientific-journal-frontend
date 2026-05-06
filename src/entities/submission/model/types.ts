@@ -38,7 +38,7 @@ export interface SubmissionEvent {
     from_status?: SubmissionStatus;
     to_status?: SubmissionStatus;
     comment?: string;
-    payload: Record<string, any>;
+    payload: Record<string, unknown>;
     created_at: string;
 }
 
