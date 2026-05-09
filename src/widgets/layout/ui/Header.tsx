@@ -18,8 +18,8 @@ export const Header = () => {
                         CSU
                     </div>
                     <div className="border-l border-border pl-3">
-                        <h1 className="text-base leading-none uppercase tracking-tight text-foreground font-heading italic group-hover:text-primary transition-colors">
-                            <span className="not-italic text-primary">ЧелГУ</span>
+                        <h1 className="text-base leading-none uppercase tracking-tight text-foreground font-heading group-hover:text-primary transition-colors">
+                            <span className="text-primary">ЧелГУ</span>
                         </h1>
                         <p className="text-[7px] text-muted-foreground uppercase tracking-[0.3em] mt-0.5 font-accent font-bold">
                             Scientific Journal

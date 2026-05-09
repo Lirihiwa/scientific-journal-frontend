@@ -26,7 +26,7 @@ export const PublicationCard = ({ pub, className }: PublicationCardProps) => {
                     <Badge variant="published">Опубликовано</Badge>
 
                     <Link to={`/publications/${pub.id}`} className="block">
-                        <h3 className="text-lg font-heading font-bold italic text-foreground group-hover:text-primary transition-colors leading-snug">
+                        <h3 className="text-lg font-heading font-bold text-foreground group-hover:text-primary transition-colors leading-snug">
                             {pub.title_ru}
                         </h3>
                     </Link>

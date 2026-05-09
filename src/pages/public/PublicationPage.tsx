@@ -64,7 +64,7 @@ export const PublicationPage = () => {
     if (!pub) {
         return (
             <div className="max-w-4xl mx-auto py-20 text-center">
-                <p className="font-serif italic text-muted-foreground">Статья не найдена</p>
+                <p className="font-serif text-muted-foreground">Статья не найдена</p>
                 <Link to="/archive" className="inline-flex items-center gap-2 mt-4 text-[10px] font-accent font-bold uppercase tracking-widest text-primary hover:underline">
                     <ChevronLeft size={12} /> Вернуться в архив
                 </Link>
@@ -108,7 +108,7 @@ export const PublicationPage = () => {
                             {pub.title_ru}
                         </h1>
                         {pub.title_en && (
-                            <p className="text-base font-serif italic text-muted-foreground">
+                            <p className="text-base font-serif text-muted-foreground">
                                 {pub.title_en}
                             </p>
                         )}
@@ -151,7 +151,7 @@ export const PublicationPage = () => {
                 <span className="font-accent font-bold uppercase tracking-widest text-muted-foreground mr-2">
                   Ключевые слова:
                 </span>
-                                <span className="font-serif italic text-foreground">
+                                <span className="font-serif text-foreground">
                   {pub.keywords_ru}
                 </span>
                             </p>
@@ -199,7 +199,7 @@ export const PublicationPage = () => {
                                     {pub.doi}
                                 </a>
                             ) : (
-                                <span className="text-muted-foreground italic">Не присвоен</span>
+                                <span className="text-muted-foreground">Не присвоен</span>
                             )}
                         </MetaBlock>
 
@@ -222,9 +222,9 @@ export const PublicationPage = () => {
                             <Quote size={12} />
                             Цитирование
                         </h4>
-                        <p className="text-[10px] font-serif italic leading-relaxed text-muted-foreground">
+                        <p className="text-[10px] font-serif leading-relaxed text-muted-foreground">
                             {pub.authors[0]?.full_name} ({year}). {pub.title_ru}.{' '}
-                            <span className="text-foreground font-bold not-italic">Вестник ЧелГУ</span>,{' '}
+                            <span className="text-foreground font-bold">ЧелГУ</span>,{' '}
                             {issueNumber}, 12–24. {pub.doi && `https://doi.org/${pub.doi}`}
                         </p>
                         <button

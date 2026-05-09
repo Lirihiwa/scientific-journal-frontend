@@ -109,7 +109,7 @@ export const SubmissionDetailsPage = () => {
     if (!submission) {
         return (
             <div className="max-w-6xl mx-auto py-20 text-center">
-                <p className="font-serif italic text-muted-foreground">Рукопись не найдена</p>
+                <p className="font-serif text-muted-foreground">Рукопись не найдена</p>
                 <Link to="/submissions" className="inline-flex items-center gap-2 mt-4 text-[10px] font-accent font-bold uppercase tracking-widest text-primary hover:underline">
                     <ChevronLeft size={12} /> Вернуться к списку
                 </Link>
@@ -145,7 +145,7 @@ export const SubmissionDetailsPage = () => {
                     {/* Сообщения для заблокированных состояний */}
                     {isPublished && (
                         <Card variant="muted" padding="md">
-                            <p className="text-sm font-serif italic text-muted-foreground text-center">
+                            <p className="text-sm font-serif text-muted-foreground text-center">
                                 Опубликованные статьи нельзя редактировать. Для внесения правок обратитесь в редакцию.
                             </p>
                         </Card>
@@ -153,7 +153,7 @@ export const SubmissionDetailsPage = () => {
 
                     {!isEditable && !isPublished && (
                         <Card variant="muted" padding="md">
-                            <p className="text-sm font-serif italic text-muted-foreground text-center">
+                            <p className="text-sm font-serif text-muted-foreground text-center">
                                 Рукопись находится в статусе «{submission.status.replace('_', ' ')}». Редактирование временно недоступно.
                             </p>
                         </Card>
@@ -215,7 +215,7 @@ export const SubmissionDetailsPage = () => {
                                             <span className="text-[10px] font-accent font-bold uppercase tracking-widest">
                                                 Загрузить новую версию файла
                                             </span>
-                                            <p className="mt-2 text-xs font-serif italic text-muted-foreground">Поддерживаемые форматы: PDF, DOC, DOCX</p>
+                                            <p className="mt-2 text-xs font-serif text-muted-foreground">Поддерживаемые форматы: PDF, DOC, DOCX</p>
                                             <input
                                                 type="file"
                                                 className="hidden"
@@ -229,7 +229,7 @@ export const SubmissionDetailsPage = () => {
                                     ) : (
                                         <div className="flex flex-col items-center">
                                             <CheckCircle size={32} className="text-primary mb-2" />
-                                            <p className="font-serif italic text-sm text-foreground">{file.name}</p>
+                                            <p className="font-serif text-sm text-foreground">{file.name}</p>
                                             <button type="button" onClick={() => setFile(null)} className="text-[9px] font-bold uppercase text-primary hover:underline mt-2">
                                                 Отменить
                                             </button>
@@ -241,7 +241,7 @@ export const SubmissionDetailsPage = () => {
                                     <p className="text-[10px] font-accent font-bold uppercase tracking-widest text-muted-foreground mb-1">
                                         Текущий файл:
                                     </p>
-                                    <p className="text-sm font-serif italic text-foreground break-all">
+                                    <p className="text-sm font-serif text-foreground break-all">
                                         {submission.submitted_file_name || `manuscript_${submission.id.slice(0, 6)}.pdf`}
                                     </p>
                                 </div>

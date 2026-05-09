@@ -42,12 +42,12 @@ export const SubmissionCard = ({submission, actions, showLink = true, className}
             <div className="space-y-2 flex-grow">
                 {showLink ? (
                     <Link to={detailsUrl}>
-                        <h3 className="text-xl font-heading font-bold italic text-foreground group-hover:text-primary transition-colors leading-tight">
+                        <h3 className="text-xl font-heading font-bold text-foreground group-hover:text-primary transition-colors leading-tight">
                             {submission.title_ru}
                         </h3>
                     </Link>
                 ) : (
-                    <h3 className="text-xl font-heading font-bold italic text-foreground leading-tight">
+                    <h3 className="text-xl font-heading font-bold text-foreground leading-tight">
                         {submission.title_ru}
                     </h3>
                 )}
@@ -59,7 +59,7 @@ export const SubmissionCard = ({submission, actions, showLink = true, className}
 
                 {/* Аннотация в сокращенном виде для редактора */}
                 {!showLink && submission.abstract_ru && (
-                    <p className="text-[11px] font-serif italic text-muted-foreground line-clamp-2 pt-1 border-t border-border/50 mt-2">
+                    <p className="text-[11px] font-serif text-muted-foreground line-clamp-2 pt-1 border-t border-border/50 mt-2">
                         {submission.abstract_ru}
                     </p>
                 )}

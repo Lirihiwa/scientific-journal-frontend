@@ -150,7 +150,7 @@ export const CreateSubmissionPage = () => {
                             <label className="cursor-pointer block">
                                 <FileUp size={40} className="mx-auto text-muted-foreground mb-3" />
                                 <span className="text-[10px] font-accent font-bold uppercase tracking-widest">Выберите файл статьи</span>
-                                <p className="mt-2 text-xs font-serif italic text-muted-foreground">Поддерживаемые форматы: PDF, DOC, DOCX</p>
+                                <p className="mt-2 text-xs font-serif text-muted-foreground">Поддерживаемые форматы: PDF, DOC, DOCX</p>
                                 <input
                                     type="file"
                                     className="hidden"
@@ -162,7 +162,7 @@ export const CreateSubmissionPage = () => {
                         ) : (
                             <div className="flex flex-col items-center">
                                 <CheckCircle size={32} className="text-primary mb-2" />
-                                <p className="font-serif italic text-sm text-foreground">{file.name}</p>
+                                <p className="font-serif text-sm text-foreground">{file.name}</p>
                                 <button onClick={() => setFile(null)} className="text-[9px] font-bold uppercase text-primary hover:underline mt-2">
                                     Заменить
                                 </button>
@@ -177,7 +177,7 @@ export const CreateSubmissionPage = () => {
                             {...register('policy_accepted')}
                             className="mt-1 accent-primary"
                         />
-                        <label className="text-[11px] leading-relaxed text-muted-foreground italic font-serif">
+                        <label className="text-[11px] leading-relaxed text-muted-foreground font-serif">
                             Я подтверждаю, что статья ранее не публиковалась и оформлена согласно ГОСТ и правилам Журнала.
                         </label>
                     </div>

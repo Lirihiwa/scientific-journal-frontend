@@ -46,7 +46,7 @@ export const Modal = ({isOpen, onClose, title, children, className}: ModalProps)
                     aria-modal="true"
                 >
                     <div className="flex items-center justify-between mb-6 pb-4 border-b border-border">
-                        <h2 className="text-xl font-heading italic text-foreground tracking-tight">
+                        <h2 className="text-xl font-heading text-foreground tracking-tight">
                             {title}
                         </h2>
                         <button

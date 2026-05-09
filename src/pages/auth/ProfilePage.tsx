@@ -19,7 +19,7 @@ export const ProfilePage = () => {
                 <div className="p-12 space-y-10 flex-grow">
                     <div className="space-y-2">
                         <h2 className="text-3xl font-heading font-bold">{user.last_name} {user.first_name}</h2>
-                        <p className="flex items-center gap-2 text-muted-foreground font-serif italic text-lg"><Mail size={18} className="text-primary" /> {user.email}</p>
+                        <p className="flex items-center gap-2 text-muted-foreground font-serif text-lg"><Mail size={18} className="text-primary" /> {user.email}</p>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-8 border-t border-border">
                         <div className="space-y-4">

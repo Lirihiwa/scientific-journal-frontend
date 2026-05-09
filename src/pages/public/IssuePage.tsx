@@ -53,10 +53,10 @@ export const IssuePage = () => {
                     <p className="text-[9px] font-accent font-bold uppercase tracking-[0.4em] text-primary">
                         Научный выпуск
                     </p>
-                    <h1 className="text-3xl font-heading italic font-bold text-foreground">
+                    <h1 className="text-3xl font-heading font-bold text-foreground">
                         Выпуск №{issue?.number}
                     </h1>
-                    <div className="flex items-center gap-4 text-sm font-serif italic text-muted-foreground pt-4 border-t border-border">
+                    <div className="flex items-center gap-4 text-sm font-serif text-muted-foreground pt-4 border-t border-border">
             <span className="flex items-center gap-2">
               <Calendar size={14} />
                 {issue?.publication_date

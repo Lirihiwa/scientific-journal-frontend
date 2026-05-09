@@ -64,7 +64,7 @@ export const SubmissionTimeline = ({ events }: SubmissionTimelineProps) => {
                                     <div className="mt-3 p-4 bg-muted/30 border-l-2 border-accent/50 rounded-sm">
                                         <div className="flex gap-3">
                                             <MessageSquare size={14} className="text-accent shrink-0 mt-1" />
-                                            <p className="text-sm font-serif italic leading-relaxed text-foreground/90 whitespace-pre-wrap">
+                                            <p className="text-sm font-serif leading-relaxed text-foreground/90 whitespace-pre-wrap">
                                                 {event.comment}
                                             </p>
                                         </div>

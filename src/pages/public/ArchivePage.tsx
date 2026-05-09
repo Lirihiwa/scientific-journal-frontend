@@ -68,7 +68,7 @@ export const ArchivePage = () => {
                     <h3 className="text-lg font-heading font-bold text-foreground mb-2">
                         Выпуски пока не созданы
                     </h3>
-                    <p className="text-sm font-serif italic text-muted-foreground">
+                    <p className="text-sm font-serif text-muted-foreground">
                         Редакция журнала ещё не опубликовала ни одного выпуска
                     </p>
                 </Card>
@@ -128,7 +128,7 @@ const IssuesList = ({ volumeId }: { volumeId: string }) => {
                                 </div>
 
                                 {issue.description && (
-                                    <p className="text-xs font-serif italic text-muted-foreground line-clamp-2">
+                                    <p className="text-xs font-serif text-muted-foreground line-clamp-2">
                                         {issue.description}
                                     </p>
                                 )}

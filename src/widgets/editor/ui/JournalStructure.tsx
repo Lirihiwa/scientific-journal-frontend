@@ -31,7 +31,7 @@ export const JournalStructure = () => {
             {/* Боковая панель создания Тома (упрощенно) */}
             <div className="lg:col-span-1 space-y-6">
                 <div className="bg-card border-t-4 border-accent p-8 shadow-sm">
-                    <h3 className="text-lg font-heading font-bold italic mb-4">Новый том</h3>
+                    <h3 className="text-lg font-heading font-bold mb-4">Новый том</h3>
                     <p className="text-[10px] text-muted-foreground uppercase font-accent mb-6">Создание годового архива</p>
                     <Button className="w-full" variant="outline" onClick={() => toast.info("Функция в разработке")}>
                         Инициализировать том {new Date().getFullYear()}
@@ -53,7 +53,7 @@ export const JournalStructure = () => {
                                 </div>
                                 <div>
                                     <span className="block text-[10px] font-accent font-bold text-primary uppercase">Year {vol.year}</span>
-                                    <h4 className="text-xl font-heading font-bold italic">Volume {vol.number}</h4>
+                                    <h4 className="text-xl font-heading font-bold">Volume {vol.number}</h4>
                                 </div>
                             </div>
                             <Button
