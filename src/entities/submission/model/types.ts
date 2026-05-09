@@ -8,7 +8,8 @@ export type SubmissionStatus = z.infer<typeof SubmissionStatusSchema>;
 
 export const CoAuthorSchema = z.object({
     full_name: z.string().min(2, 'Укажите ФИО'),
-    organization: z.string().optional(),
+    organization: z.string().optional().nullable(),
+    country: z.string().optional().nullable(),
     email: z.string().email('Некорректный email').optional().or(z.literal('')),
 });
 
@@ -17,14 +18,26 @@ export type CoAuthor = z.infer<typeof CoAuthorSchema>;
 export interface Submission {
     id: string;
     author_id: string;
+    manuscript_language: 'ru' | 'en';
     title_ru: string;
-    title_en?: string;
+    title_en?: string | null;
     abstract_ru: string;
-    abstract_en?: string;
+    abstract_en?: string | null;
     keywords_ru: string;
+    keywords_en?: string | null;
+    coauthors: CoAuthor[];
+    cover_letter?: string | null;
+    funding_info_ru?: string | null;
+    funding_info_en?: string | null;
+    policy_accepted: boolean;
+    current_version: number;
+    submitted_file_object_key?: string | null;
+    submitted_file_name?: string | null;
+    submitted_file_mime_type?: string | null;
+    submitted_file_size_bytes?: number;
     status: SubmissionStatus;
     created_at: string;
-    coauthors: CoAuthor[];
+    updated_at: string;
 }
 
 export type SubmissionEventType = 'created' | 'file_uploaded' | 'status_changed';
@@ -45,8 +58,4 @@ export interface SubmissionEvent {
 export interface SubmissionDetails extends Submission {
     events: SubmissionEvent[];
     author_email: string;
-    manuscript_language: 'ru' | 'en';
-    current_version: number;
-    submitted_file_name?: string;
-    submitted_file_size_bytes?: number;
 }

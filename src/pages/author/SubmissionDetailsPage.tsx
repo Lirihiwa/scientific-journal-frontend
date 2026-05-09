@@ -1,14 +1,10 @@
 // src/pages/author/SubmissionDetailsPage.tsx
-import { useState, useEffect } from 'react';
-import { useForm, useFieldArray } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Save, ChevronLeft, FileUp, CheckCircle, Trash2, Plus } from 'lucide-react';
+import { ChevronLeft, FileUp, CheckCircle, Info, Save } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { Input } from '../../shared/ui/Input';
-import { TextArea } from '../../shared/ui/TextArea';
 import { Button } from '../../shared/ui/Button';
 import { Badge } from '../../shared/ui/Bagde';
 import { Card } from '../../shared/ui/Card';
@@ -17,80 +13,28 @@ import { SectionHeader } from '../../shared/ui/SectionHeader';
 import { Skeleton } from '../../shared/ui/Skeleton';
 import { cn } from '../../shared/lib/utils';
 import { submissionApi } from '../../entities/submission/api/submission.api';
-import { submissionFormSchema, type SubmissionFormData } from '../../features/submission/model/schemas';
-
 import { SubmissionTimeline } from '../../widgets/submission/ui/SubmissionTimeline';
-
-const editFormSchema = submissionFormSchema.omit({ policy_accepted: true });
-type EditFormData = Omit<SubmissionFormData, 'policy_accepted'>;
 
 export const SubmissionDetailsPage = () => {
     const { id } = useParams();
-    const navigate = useNavigate();
     const queryClient = useQueryClient();
     const [file, setFile] = useState<File | null>(null);
 
-    // Загрузка данных рукописи
     const { data: submission, isLoading } = useQuery({
-        queryKey: ['submission', id] as const,
-        queryFn: ({ queryKey }) => {
-            const [_, submissionId] = queryKey;
-            return submissionApi.getById(submissionId!);
-        },
+        queryKey: ['submission', id],
+        queryFn: () => submissionApi.getById(id!),
         enabled: !!id,
     });
 
-    // Форма с pre-filled данными
-    const { register, control, handleSubmit, formState: { errors, isDirty }, reset } = useForm<EditFormData>({
-        resolver: zodResolver(editFormSchema),
-        defaultValues: {
-            title_ru: '',
-            title_en: '',
-            abstract_ru: '',
-            abstract_en: '',
-            keywords_ru: '',
-            manuscript_language: 'ru',
-            coauthors:[],
-        },
-    });
-
-    const { fields, append, remove } = useFieldArray({ control, name: "coauthors" });
-
-    // Заполнение формы при загрузке данных
-    useEffect(() => {
-        if (submission) {
-            reset({
-                title_ru: submission.title_ru,
-                title_en: submission.title_en || '',
-                abstract_ru: submission.abstract_ru,
-                abstract_en: submission.abstract_en || '',
-                keywords_ru: submission.keywords_ru,
-                manuscript_language: 'ru',
-                coauthors: submission.coauthors || [],
-            });
-        }
-    }, [submission, reset]);
-
-    // Мутация обновления
-    const updateMutation = useMutation({
-        mutationFn: async (data: EditFormData) => {
-            return submissionApi.updateSubmission(id!, { ...data, policy_accepted: true });
-        },
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['submission', id] });
-            queryClient.invalidateQueries({ queryKey: ['my-submissions'] });
-            toast.success('Изменения сохранены');
-            setFile(null); // Сбрасываем выбранный файл
-        },
-        onError: (error: any) => toast.error(error.message || 'Ошибка при сохранении'),
-    });
-
-    // Загрузка нового файла
     const uploadFileMutation = useMutation({
         mutationFn: async (file: File) => {
             return submissionApi.uploadFile(id!, file);
         },
-        onSuccess: () => toast.success('Файл обновлён'),
+        onSuccess: () => {
+            toast.success('Файл успешно обновлён');
+            setFile(null);
+            queryClient.invalidateQueries({ queryKey: ['submission', id] });
+        },
         onError: () => toast.error('Ошибка загрузки файла'),
     });
 
@@ -117,13 +61,10 @@ export const SubmissionDetailsPage = () => {
         );
     }
 
-    const isPublished = submission.status === 'published';
     const isEditable = ['new', 'revision_required'].includes(submission.status);
 
     return (
         <div className="max-w-6xl mx-auto py-8 px-4 animate-fade-in space-y-10">
-
-            {/* Навигация + Статус (На всю ширину) */}
             <div className="flex items-center justify-between">
                 <Link to="/submissions" className="inline-flex items-center gap-2 text-[9px] font-accent font-bold uppercase tracking-widest text-muted-foreground hover:text-primary">
                     <ChevronLeft size={12} /> К списку рукописей
@@ -131,135 +72,77 @@ export const SubmissionDetailsPage = () => {
                 <Badge variant={submission.status}>{submission.status.replace('_', ' ')}</Badge>
             </div>
 
-            <PageHeader
-                title="Редактирование рукописи"
-                subtitle={`ID: ${submission.id.slice(0, 8)}`}
-            />
+            <PageHeader title="Данные рукописи" subtitle={`ID: ${submission.id.slice(0, 8)}`} />
 
-            {/* ДВУХКОЛОНОЧНАЯ РАСКЛАДКА */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
-
-                {/* ЛЕВАЯ КОЛОНКА (Форма) */}
                 <div className="lg:col-span-2 space-y-10">
 
-                    {/* Сообщения для заблокированных состояний */}
-                    {isPublished && (
-                        <Card variant="muted" padding="md">
-                            <p className="text-sm font-serif text-muted-foreground text-center">
-                                Опубликованные статьи нельзя редактировать. Для внесения правок обратитесь в редакцию.
+                    {!isEditable && (
+                        <Card variant="muted" padding="md" className="flex items-center gap-3">
+                            <Info className="text-primary shrink-0" size={24} />
+                            <p className="text-sm font-serif text-muted-foreground">
+                                Рукопись находится в статусе «{submission.status.replace('_', ' ')}». Внесение изменений невозможно.
                             </p>
                         </Card>
                     )}
 
-                    {!isEditable && !isPublished && (
-                        <Card variant="muted" padding="md">
-                            <p className="text-sm font-serif text-muted-foreground text-center">
-                                Рукопись находится в статусе «{submission.status.replace('_', ' ')}». Редактирование временно недоступно.
-                            </p>
-                        </Card>
-                    )}
-
-                    {isEditable && (
-                        <form onSubmit={handleSubmit(async (data) => {
-                            if (file) await uploadFileMutation.mutateAsync(file);
-                            updateMutation.mutate(data);
-                        })} className="space-y-12">
-
-                            {/* === СЕКЦИЯ 01: МЕТАДАННЫЕ === */}
-                            <Card padding="lg" variant="accent">
-                                <SectionHeader title="Метаданные" prefix="01." />
-                                <div className="space-y-6">
-                                    <Input label="Заголовок (RU) *" {...register('title_ru')} error={errors.title_ru?.message} />
-                                    <Input label="Заголовок (EN)" {...register('title_en')} error={errors.title_en?.message} />
-                                    <TextArea label="Ключевые слова (RU) *" placeholder="через запятую" {...register('keywords_ru')} error={errors.keywords_ru?.message} />
-                                </div>
-                            </Card>
-
-                            {/* === СЕКЦИЯ 02: АННОТАЦИЯ === */}
-                            <Card padding="lg" variant="accent">
-                                <SectionHeader title="Аннотация" prefix="02." />
-                                <TextArea label="Аннотация (RU) *" {...register('abstract_ru')} error={errors.abstract_ru?.message} />
-                            </Card>
-
-                            {/* === СЕКЦИЯ 03: КОЛЛЕКТИВ АВТОРОВ === */}
-                            <Card padding="lg" variant="accent">
-                                <div className="flex justify-between items-center mb-6">
-                                    <SectionHeader title="Коллектив авторов" prefix="03." className="mb-0 pb-0 border-0" />
-                                    <Button type="button" variant="ghost" size="sm" onClick={() => append({ full_name: '' })}>
-                                        <Plus size={14} className="mr-1" /> Добавить
-                                    </Button>
-                                </div>
-                                <div className="space-y-4">
-                                    {fields.map((field, index) => (
-                                        <Card key={field.id} variant="muted" padding="sm" className="relative">
-                                            <button type="button" onClick={() => remove(index)} className="absolute top-2 right-2 text-muted-foreground hover:text-destructive p-2">
-                                                <Trash2 size={14} />
-                                            </button>
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                <Input label="ФИО" {...register(`coauthors.${index}.full_name`)} error={errors.coauthors?.[index]?.full_name?.message} />
-                                                <Input label="Email" {...register(`coauthors.${index}.email`)} error={errors.coauthors?.[index]?.email?.message} />
-                                            </div>
-                                        </Card>
-                                    ))}
-                                </div>
-                            </Card>
-
-                            {/* === СЕКЦИЯ 04: РУКОПИСЬ === */}
-                            <Card padding="lg" variant="accent">
-                                <SectionHeader title="Рукопись" prefix="04." />
-
-                                <div className={cn("border-2 border-dashed rounded-sm p-10 text-center transition-colors", file ? "border-primary bg-primary/5" : "border-border hover:border-primary/50")}>
-                                    {!file ? (
-                                        <label className="cursor-pointer block">
-                                            <FileUp size={40} className="mx-auto text-muted-foreground mb-3" />
-                                            <span className="text-[10px] font-accent font-bold uppercase tracking-widest">
-                                                Загрузить новую версию файла
-                                            </span>
-                                            <p className="mt-2 text-xs font-serif text-muted-foreground">Поддерживаемые форматы: PDF, DOC, DOCX</p>
-                                            <input
-                                                type="file"
-                                                className="hidden"
-                                                accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                                                onChange={e => {
-                                                    const selected = e.target.files?.[0];
-                                                    if (selected) setFile(selected);
-                                                }}
-                                            />
-                                        </label>
-                                    ) : (
-                                        <div className="flex flex-col items-center">
-                                            <CheckCircle size={32} className="text-primary mb-2" />
-                                            <p className="font-serif text-sm text-foreground">{file.name}</p>
-                                            <button type="button" onClick={() => setFile(null)} className="text-[9px] font-bold uppercase text-primary hover:underline mt-2">
-                                                Отменить
-                                            </button>
-                                        </div>
-                                    )}
-                                </div>
-
-                                <div className="mt-6 p-4 bg-muted/30 border border-border rounded-sm">
-                                    <p className="text-[10px] font-accent font-bold uppercase tracking-widest text-muted-foreground mb-1">
-                                        Текущий файл:
-                                    </p>
-                                    <p className="text-sm font-serif text-foreground break-all">
-                                        {submission.submitted_file_name || `manuscript_${submission.id.slice(0, 6)}.pdf`}
-                                    </p>
-                                </div>
-                            </Card>
-
-                            {/* Кнопки сохранения */}
-                            <div className="flex items-center justify-end gap-4 pt-6 border-t border-border">
-                                <Button type="button" variant="ghost" onClick={() => navigate('/submissions')}>Отмена</Button>
-                                <Button
-                                    type="submit"
-                                    disabled={(!isDirty && !file) || updateMutation.isPending || uploadFileMutation.isPending}
-                                    isLoading={updateMutation.isPending || uploadFileMutation.isPending}
-                                >
-                                    <Save size={16} className="mr-2" /> Сохранить изменения
-                                </Button>
+                    <Card padding="lg" variant="accent">
+                        <SectionHeader title="Метаданные" prefix="01." />
+                        <div className="space-y-6">
+                            <div>
+                                <p className="text-[10px] font-accent font-bold uppercase text-muted-foreground">Заголовок (RU)</p>
+                                <p className="text-base font-serif text-foreground">{submission.title_ru}</p>
                             </div>
-                        </form>
-                    )}
+                            {submission.title_en && (
+                                <div>
+                                    <p className="text-[10px] font-accent font-bold uppercase text-muted-foreground">Заголовок (EN)</p>
+                                    <p className="text-base font-serif text-foreground">{submission.title_en}</p>
+                                </div>
+                            )}
+                            <div>
+                                <p className="text-[10px] font-accent font-bold uppercase text-muted-foreground">Ключевые слова (RU)</p>
+                                <p className="text-sm font-serif text-foreground">{submission.keywords_ru}</p>
+                            </div>
+                        </div>
+                    </Card>
+
+                    <Card padding="lg" variant="accent">
+                        <SectionHeader title="Аннотация" prefix="02." />
+                        <p className="text-sm font-serif text-foreground leading-relaxed text-justify">
+                            {submission.abstract_ru}
+                        </p>
+                    </Card>
+
+                    <Card padding="lg" variant="accent">
+                        <SectionHeader title="Файл рукописи" prefix="03." />
+                        <div className="p-4 bg-muted/30 border border-border rounded-sm mb-6">
+                            <p className="text-[10px] font-accent font-bold uppercase tracking-widest text-muted-foreground mb-1">Текущая версия:</p>
+                            <p className="text-sm font-serif text-foreground">{submission.submitted_file_name || "Файл не загружен"}</p>
+                        </div>
+
+                        {isEditable && (
+                            <div className={cn("border-2 border-dashed rounded-sm p-8 text-center transition-colors", file ? "border-primary bg-primary/5" : "border-border hover:border-primary/50")}>
+                                {!file ? (
+                                    <label className="cursor-pointer block">
+                                        <FileUp size={32} className="mx-auto text-muted-foreground mb-3" />
+                                        <span className="text-[10px] font-accent font-bold uppercase tracking-widest">Выбрать PDF для замены</span>
+                                        <input type="file" className="hidden" accept=".pdf,application/pdf" onChange={e => setFile(e.target.files?.[0] || null)} />
+                                    </label>
+                                ) : (
+                                    <div className="flex flex-col items-center">
+                                        <CheckCircle size={32} className="text-primary mb-2" />
+                                        <p className="font-serif text-sm text-foreground mb-4">{file.name}</p>
+                                        <div className="flex gap-4">
+                                            <Button size="sm" onClick={() => uploadFileMutation.mutate(file)} isLoading={uploadFileMutation.isPending}>
+                                                <Save size={14} className="mr-2" /> Сохранить файл
+                                            </Button>
+                                            <Button size="sm" variant="ghost" onClick={() => setFile(null)}>Отмена</Button>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </Card>
                 </div>
 
                 {/* ПРАВАЯ КОЛОНКА (Таймлайн) - Плавающая */}
