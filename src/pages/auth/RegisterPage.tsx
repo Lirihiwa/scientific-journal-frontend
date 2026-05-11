@@ -13,6 +13,7 @@ import { Card } from '../../shared/ui/Card';
 import { PageHeader } from '../../shared/ui/PageHeader';
 import type {AxiosError} from "axios";
 import type {ApiError} from "../../shared/api/types.ts";
+import {PageContainer} from "../../shared/ui/PageContainer.tsx";
 
 export const RegisterPage = () => {
     const navigate = useNavigate();
@@ -41,7 +42,7 @@ export const RegisterPage = () => {
     };
 
     return (
-        <div className="min-h-[80vh] flex items-center justify-center py-12 px-4 animate-fade-in">
+        <PageContainer className="flex flex-col justify-center items-center w-full">
             <Card variant="accent" padding="lg" className="w-full max-w-2xl">
                 <div className="text-center mb-10">
                     <PageHeader title="Регистрация автора" subtitle="Scientific Community" className="border-0 pb-0 mb-0" />
@@ -76,6 +77,6 @@ export const RegisterPage = () => {
                     </p>
                 </div>
             </Card>
-        </div>
+        </PageContainer>
     );
 };

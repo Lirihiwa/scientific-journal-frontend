@@ -8,6 +8,7 @@ import {PageHeader} from '../../shared/ui/PageHeader';
 import {SkeletonList} from '../../shared/ui/Skeleton';
 import {EmptyState} from '../../shared/ui/EmptyState';
 import {SubmissionCard} from "../../widgets/submission/ui/SubmissionCard.tsx";
+import {PageContainer} from "../../shared/ui/PageContainer.tsx";
 
 export const DashboardPage = () => {
     const {data: submissions, isLoading} = useQuery({
@@ -16,7 +17,7 @@ export const DashboardPage = () => {
     });
 
     return (
-        <div className="space-y-10 animate-fade-in">
+        <PageContainer className="space-y-10">
             <PageHeader
                 title="Кабинет автора"
                 subtitle="Manuscript Management System"
@@ -39,6 +40,6 @@ export const DashboardPage = () => {
                     />
                 )}
             </div>
-        </div>
+        </PageContainer>
     );
 };

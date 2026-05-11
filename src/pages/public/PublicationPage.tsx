@@ -1,12 +1,13 @@
 // src/pages/public/PublicationPage.tsx
-import { useParams, Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { ChevronLeft, Download, Quote, Fingerprint, Calendar, FileText } from 'lucide-react';
-import { journalApi } from '../../entities/journal/api/journal.api';
-import { Button } from '../../shared/ui/Button';
-import { Skeleton } from '../../shared/ui/Skeleton';
-import { Card } from '../../shared/ui/Card';
-import { Badge } from '../../shared/ui/Bagde';
+import {Link, useParams} from 'react-router-dom';
+import {useQuery} from '@tanstack/react-query';
+import {Calendar, ChevronLeft, Download, FileText, Fingerprint, Quote} from 'lucide-react';
+import {journalApi} from '../../entities/journal/api/journal.api';
+import {Button} from '../../shared/ui/Button';
+import {Skeleton} from '../../shared/ui/Skeleton';
+import {Card} from '../../shared/ui/Card';
+import {Badge} from '../../shared/ui/Bagde';
+import {PageContainer} from "../../shared/ui/PageContainer.tsx";
 
 // Вспомогательный блок для сайдбара
 const MetaBlock = ({
@@ -34,9 +35,9 @@ const MetaBlock = ({
 );
 
 export const PublicationPage = () => {
-    const { id } = useParams();
+    const {id} = useParams();
 
-    const { data: pub, isLoading } = useQuery({
+    const {data: pub, isLoading} = useQuery({
         queryKey: ['publication', id],
         queryFn: () => journalApi.getPublication(id!),
         enabled: !!id,
@@ -45,16 +46,16 @@ export const PublicationPage = () => {
     if (isLoading) {
         return (
             <div className="max-w-6xl mx-auto py-8 px-4">
-                <Skeleton className="h-6 w-40 mb-6" />
+                <Skeleton className="h-6 w-40 mb-6"/>
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div className="lg:col-span-2 space-y-4">
-                        <Skeleton className="h-8 w-full" />
-                        <Skeleton className="h-4 w-3/4" />
-                        <Skeleton className="h-32 w-full" />
+                        <Skeleton className="h-8 w-full"/>
+                        <Skeleton className="h-4 w-3/4"/>
+                        <Skeleton className="h-32 w-full"/>
                     </div>
                     <div className="space-y-4">
-                        <Skeleton className="h-48 w-full" />
-                        <Skeleton className="h-24 w-full" />
+                        <Skeleton className="h-48 w-full"/>
+                        <Skeleton className="h-24 w-full"/>
                     </div>
                 </div>
             </div>
@@ -65,8 +66,9 @@ export const PublicationPage = () => {
         return (
             <div className="max-w-4xl mx-auto py-20 text-center">
                 <p className="font-serif text-muted-foreground">Статья не найдена</p>
-                <Link to="/archive" className="inline-flex items-center gap-2 mt-4 text-[10px] font-accent font-bold uppercase tracking-widest text-primary hover:underline">
-                    <ChevronLeft size={12} /> Вернуться в архив
+                <Link to="/archive"
+                      className="inline-flex items-center gap-2 mt-4 text-[10px] font-accent font-bold uppercase tracking-widest text-primary hover:underline">
+                    <ChevronLeft size={12}/> Вернуться в архив
                 </Link>
             </div>
         );
@@ -76,7 +78,7 @@ export const PublicationPage = () => {
     const issueNumber = '№' + Math.floor(Math.random() * 4) + 1; // Заглушка, пока нет связи с issue
 
     return (
-        <div className="max-w-6xl mx-auto py-8 px-4 animate-fade-in">
+        <PageContainer>
 
             {/* === ХЛЕБНЫЕ КРОШКИ / НАЗАД === */}
             <nav className="mb-6 pb-4 border-b border-border">
@@ -84,7 +86,7 @@ export const PublicationPage = () => {
                     to="/archive"
                     className="inline-flex items-center gap-2 text-[9px] font-accent font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors"
                 >
-                    <ChevronLeft size={12} />
+                    <ChevronLeft size={12}/>
                     Архив выпусков
                 </Link>
             </nav>
@@ -99,8 +101,9 @@ export const PublicationPage = () => {
                     <header className="space-y-3 pb-6 border-b border-border">
                         <div className="flex flex-wrap items-center gap-3">
                             <Badge variant="published">Оригинальная статья</Badge>
-                            <span className="text-[9px] font-accent font-bold uppercase tracking-tight text-muted-foreground flex items-center gap-1">
-                <Calendar size={10} />
+                            <span
+                                className="text-[9px] font-accent font-bold uppercase tracking-tight text-muted-foreground flex items-center gap-1">
+                <Calendar size={10}/>
                                 {year}
               </span>
                         </div>
@@ -124,7 +127,8 @@ export const PublicationPage = () => {
                                 <p key={author.author_id || idx} className="text-sm font-bold text-foreground">
                                     {author.full_name}
                                     {author.is_primary && (
-                                        <span className="ml-2 text-[9px] font-accent uppercase tracking-tight text-primary">
+                                        <span
+                                            className="ml-2 text-[9px] font-accent uppercase tracking-tight text-primary">
                       [корр. автор]
                     </span>
                                     )}
@@ -136,7 +140,7 @@ export const PublicationPage = () => {
                     {/* Аннотация */}
                     <section className="space-y-3">
                         <h2 className="text-[9px] font-accent font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
-                            <FileText size={12} />
+                            <FileText size={12}/>
                             Аннотация
                         </h2>
                         <p className="font-serif text-sm leading-relaxed text-foreground text-justify">
@@ -173,7 +177,7 @@ export const PublicationPage = () => {
                                 className="block"
                             >
                                 <Button className="w-full h-10 text-[10px]">
-                                    <Download size={14} className="mr-2" />
+                                    <Download size={14} className="mr-2"/>
                                     Скачать PDF
                                 </Button>
                             </a>
@@ -188,7 +192,7 @@ export const PublicationPage = () => {
 
                     {/* Блок 2: Идентификаторы */}
                     <Card variant="flat" padding="md" className="space-y-4">
-                        <MetaBlock title="DOI" icon={<Fingerprint size={12} />}>
+                        <MetaBlock title="DOI" icon={<Fingerprint size={12}/>}>
                             {pub.doi ? (
                                 <a
                                     href={`https://doi.org/${pub.doi}`}
@@ -219,7 +223,7 @@ export const PublicationPage = () => {
                     {/* Блок 3: Как цитировать */}
                     <Card variant="muted" padding="md" className="space-y-3">
                         <h4 className="flex items-center gap-2 text-[9px] font-accent font-bold uppercase tracking-widest text-primary">
-                            <Quote size={12} />
+                            <Quote size={12}/>
                             Цитирование
                         </h4>
                         <p className="text-[10px] font-serif leading-relaxed text-muted-foreground">
@@ -251,6 +255,6 @@ export const PublicationPage = () => {
                 </aside>
 
             </div>
-        </div>
+        </PageContainer>
     );
 };

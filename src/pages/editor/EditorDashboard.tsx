@@ -18,6 +18,7 @@ import type {SubmissionStatus} from '../../entities/submission/model/types';
 import {apiClient} from "../../shared/api/client.ts";
 import type {Issue} from '../../entities/journal/model/types.ts';
 import {SubmissionCard} from "../../widgets/submission/ui/SubmissionCard.tsx";
+import { PageContainer } from "../../shared/ui/PageContainer.tsx";
 
 export const EditorDashboard = () => {
     const [activeTab, setActiveTab] = useState<'papers' | 'structure'>('papers');
@@ -169,7 +170,7 @@ export const EditorDashboard = () => {
     ] as const;
 
     return (
-        <div className="space-y-12 animate-fade-in">
+        <PageContainer className="space-y-12">
             <PageHeader
                 title="Editorial Panel"
                 subtitle="Management Console"
@@ -318,6 +319,6 @@ export const EditorDashboard = () => {
                     </div>
                 </div>
             </Modal>
-        </div>
+        </PageContainer>
     );
 };

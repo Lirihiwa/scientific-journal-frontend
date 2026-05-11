@@ -7,6 +7,7 @@ import {Skeleton, SkeletonList} from '../../shared/ui/Skeleton';
 import { PublicationCard } from '../../widgets/publication/ui/PublicationCard';
 import { Button } from '../../shared/ui/Button';
 import { Card } from '../../shared/ui/Card';
+import { PageContainer } from "../../shared/ui/PageContainer";
 
 export const HomePage = () => {
     const { data: current, isLoading } = useQuery({
@@ -27,8 +28,7 @@ export const HomePage = () => {
     }
 
     return (
-        <div className="max-w-6xl mx-auto py-8 px-4 grid grid-cols-1 lg:grid-cols-4 gap-12 animate-fade-in">
-
+        <PageContainer className="grid grid-cols-1 lg:grid-cols-4 gap-12">
             {/* ЦЕНТРАЛЬНЫЙ БЛОК */}
             <div className="lg:col-span-3 space-y-12">
 
@@ -97,6 +97,6 @@ export const HomePage = () => {
                     <p className="text-[9px] font-accent font-bold uppercase tracking-widest">Crossref / DOI</p>
                 </Card>
             </aside>
-        </div>
+        </PageContainer>
     );
 };

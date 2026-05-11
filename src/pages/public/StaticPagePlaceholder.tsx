@@ -2,10 +2,11 @@
 import { PageHeader } from '../../shared/ui/PageHeader';
 import { Card } from '../../shared/ui/Card';
 import { FileText } from 'lucide-react';
+import {PageContainer} from "../../shared/ui/PageContainer.tsx";
 
 export const StaticPagePlaceholder = ({ title }: { title: string }) => {
     return (
-        <div className="max-w-4xl mx-auto py-12 px-4 animate-fade-in space-y-8">
+        <PageContainer className="space-y-8">
             <PageHeader title={title} subtitle="Journal Information" className="border-b-0 pb-0 mb-6" />
 
             <Card padding="lg" variant="flat" className="border border-dashed border-border bg-muted/20 text-center">
@@ -17,6 +18,6 @@ export const StaticPagePlaceholder = ({ title }: { title: string }) => {
                     Текст будет предоставлен редакцией позднее.
                 </p>
             </Card>
-        </div>
+        </PageContainer>
     );
 };

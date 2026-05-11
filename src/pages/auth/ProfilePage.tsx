@@ -3,13 +3,14 @@ import { User as UserIcon, Mail, Building, Globe } from 'lucide-react';
 import { useSessionStore } from '../../entities/session/model/store';
 import { Card } from '../../shared/ui/Card';
 import { PageHeader } from '../../shared/ui/PageHeader';
+import {PageContainer} from "../../shared/ui/PageContainer.tsx";
 
 export const ProfilePage = () => {
     const { user } = useSessionStore();
     if (!user) return null;
 
     return (
-        <div className="max-w-4xl mx-auto py-12 animate-fade-in">
+        <PageContainer>
             <PageHeader title="Профиль автора" subtitle="Author Identity" />
             <Card padding="none" className="overflow-hidden flex flex-col md:flex-row">
                 <div className="p-12 bg-muted/30 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-border min-w-[300px]">
@@ -33,6 +34,6 @@ export const ProfilePage = () => {
                     </div>
                 </div>
             </Card>
-        </div>
+        </PageContainer>
     );
 };

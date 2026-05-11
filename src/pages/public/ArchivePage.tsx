@@ -6,6 +6,7 @@ import { journalApi } from '../../entities/journal/api/journal.api';
 import { PageHeader } from '../../shared/ui/PageHeader';
 import { Card } from '../../shared/ui/Card';
 import { Skeleton } from '../../shared/ui/Skeleton';
+import { PageContainer } from "../../shared/ui/PageContainer";
 
 export const ArchivePage = () => {
     const { data: volumes, isLoading } = useQuery({
@@ -27,7 +28,7 @@ export const ArchivePage = () => {
     }
 
     return (
-        <div className="max-w-5xl mx-auto py-12 px-4 animate-fade-in space-y-12">
+        <PageContainer className="space-y-12">
 
             {/* Заголовок страницы */}
             <PageHeader
@@ -73,7 +74,7 @@ export const ArchivePage = () => {
                     </p>
                 </Card>
             )}
-        </div>
+        </PageContainer>
     );
 };
 

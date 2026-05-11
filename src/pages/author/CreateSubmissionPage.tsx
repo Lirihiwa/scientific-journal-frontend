@@ -15,6 +15,7 @@ import { cn } from "../../shared/lib/utils.ts";
 import { PageHeader } from '../../shared/ui/PageHeader';
 import { Card } from '../../shared/ui/Card';
 import { SectionHeader } from '../../shared/ui/SectionHeader';
+import {PageContainer} from "../../shared/ui/PageContainer.tsx";
 
 export const CreateSubmissionPage = () => {
     const navigate = useNavigate();
@@ -42,7 +43,7 @@ export const CreateSubmissionPage = () => {
     });
 
     return (
-        <div className="max-w-4xl mx-auto space-y-12 animate-fade-in">
+        <PageContainer>
             <PageHeader
                 title="Подача рукописи"
                 subtitle="New Manuscript Submission"
@@ -200,6 +201,6 @@ export const CreateSubmissionPage = () => {
                     </Button>
                 </div>
             </form>
-        </div>
+        </PageContainer>
     );
 };

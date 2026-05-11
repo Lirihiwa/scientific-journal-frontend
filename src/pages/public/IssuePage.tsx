@@ -5,6 +5,7 @@ import { ChevronLeft, Calendar } from 'lucide-react';
 import { journalApi } from '../../entities/journal/api/journal.api';
 import { PublicationCard } from '../../widgets/publication/ui/PublicationCard';
 import { Skeleton } from '../../shared/ui/Skeleton';
+import {PageContainer} from "../../shared/ui/PageContainer.tsx";
 
 export const IssuePage = () => {
     const { id } = useParams();
@@ -36,7 +37,7 @@ export const IssuePage = () => {
     }
 
     return (
-        <div className="max-w-5xl mx-auto py-12 px-4 animate-fade-in space-y-10">
+        <PageContainer className="space-y-10">
 
             {/* Навигация */}
             <Link
@@ -83,6 +84,6 @@ export const IssuePage = () => {
                     ))}
                 </div>
             </section>
-        </div>
+        </PageContainer>
     );
 };

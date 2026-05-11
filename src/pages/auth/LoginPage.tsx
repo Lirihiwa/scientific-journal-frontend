@@ -12,6 +12,7 @@ import { authApi } from '../../features/auth/api/auth.api';
 import { useSessionStore } from '../../entities/session/model/store';
 import { Card } from '../../shared/ui/Card';
 import { PageHeader } from '../../shared/ui/PageHeader';
+import {PageContainer} from "../../shared/ui/PageContainer.tsx";
 
 export const LoginPage = () => {
     const navigate = useNavigate();
@@ -29,7 +30,7 @@ export const LoginPage = () => {
     });
 
     return (
-        <div className="min-h-[80vh] flex items-center justify-center p-4 animate-fade-in">
+        <PageContainer className="flex flex-col justify-center items-center w-full">
             <Card variant="accent" padding="lg" className="w-full max-w-md">
                 <div className="text-center mb-8">
                     <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 text-primary mb-6"><ShieldCheck size={28} /></div>
@@ -49,6 +50,6 @@ export const LoginPage = () => {
                     </p>
                 </div>
             </Card>
-        </div>
+        </PageContainer>
     );
 };

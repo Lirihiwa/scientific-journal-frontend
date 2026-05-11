@@ -8,32 +8,27 @@ export const MainLayout = () => {
     const { isCollapsed } = useSidebarStore();
 
     return (
-        <div className="min-h-screen flex flex-col bg-background selection:bg-primary/20 selection:text-primary">
+        <div className="min-h-screen flex flex-col bg-background">
             <Header />
 
-            {/* Flex-контейнер для адаптивной раскладки */}
-            <div className="flex flex-grow bg-muted/20 border-y border-border">
-
-                {/* Сайдбар: скрыт на mobile, сворачивается на desktop */}
+            <div className="flex flex-grow border-y border-border">
                 <aside className={`
-          hidden lg:flex flex-col border-r border-border bg-card 
-          transition-all duration-300 ease-in-out overflow-hidden
-          ${isCollapsed ? 'w-16' : 'w-64'}
-        `}>
+                    hidden lg:flex flex-col border-r border-border bg-card 
+                    transition-all duration-300 ease-in-out overflow-hidden
+                    ${isCollapsed ? 'w-16' : 'w-64'}
+                `}>
                     <Sidebar />
                 </aside>
 
-                {/* Основной контент */}
-                <main className="flex-grow p-4 lg:p-8 min-h-[60vh] overflow-x-hidden">
+                <main className="flex-grow w-full bg-muted/20">
                     <Outlet />
                 </main>
-
             </div>
 
             <footer className="bg-card border-t border-border py-6">
-                <div className="max-w-7xl mx-auto px-4 text-center">
+                <div className="max-w-5xl mx-auto px-4 text-center">
                     <p className="text-[9px] text-muted-foreground uppercase tracking-widest font-accent">
-                        © {new Date().getFullYear()} Академическое издательство · ИС управления научным журналом
+                        © {new Date().getFullYear()} Академическое издательство
                     </p>
                 </div>
             </footer>

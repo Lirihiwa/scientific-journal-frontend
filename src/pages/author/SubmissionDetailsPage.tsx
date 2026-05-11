@@ -14,6 +14,7 @@ import { Skeleton } from '../../shared/ui/Skeleton';
 import { cn } from '../../shared/lib/utils';
 import { submissionApi } from '../../entities/submission/api/submission.api';
 import { SubmissionTimeline } from '../../widgets/submission/ui/SubmissionTimeline';
+import { PageContainer } from "../../shared/ui/PageContainer";
 
 export const SubmissionDetailsPage = () => {
     const { id } = useParams();
@@ -64,7 +65,7 @@ export const SubmissionDetailsPage = () => {
     const isEditable = ['new', 'revision_required'].includes(submission.status);
 
     return (
-        <div className="max-w-6xl mx-auto py-8 px-4 animate-fade-in space-y-10">
+        <PageContainer className="space-y-10">
             <div className="flex items-center justify-between">
                 <Link to="/submissions" className="inline-flex items-center gap-2 text-[9px] font-accent font-bold uppercase tracking-widest text-muted-foreground hover:text-primary">
                     <ChevronLeft size={12} /> К списку рукописей
@@ -151,6 +152,7 @@ export const SubmissionDetailsPage = () => {
                     <SubmissionTimeline events={(submission as any).events || []} />
                 </div>
             </div>
-        </div>
+
+        </PageContainer>
     );
 };
