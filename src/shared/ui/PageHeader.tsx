@@ -1,4 +1,5 @@
-import {cn} from '../lib/utils';
+// src/shared/ui/PageHeader.tsx
+import { cn } from '../lib/utils';
 import React from "react";
 
 interface PageHeaderProps {
@@ -6,12 +7,22 @@ interface PageHeaderProps {
     subtitle?: string;
     action?: React.ReactNode;
     className?: string;
+    withBorder?: boolean; // Явный переключатель полосы
 }
 
-export const PageHeader = ({title, subtitle, action, className}: PageHeaderProps) => {
+export const PageHeader = ({
+                               title,
+                               subtitle,
+                               action,
+                               className,
+                               withBorder = true
+                           }: PageHeaderProps) => {
     return (
-        <header
-            className={cn('flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-border pb-8 mb-10', className)}>
+        <header className={cn(
+            'flex flex-col md:flex-row md:items-end justify-between gap-6',
+            withBorder ? 'border-b border-border pb-6' : 'pb-2',
+            className
+        )}>
             <div className="space-y-3">
                 <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground tracking-tight">{title}</h1>
                 {subtitle && (

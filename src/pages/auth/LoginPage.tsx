@@ -34,7 +34,12 @@ export const LoginPage = () => {
             <Card variant="accent" padding="lg" className="w-full max-w-md">
                 <div className="text-center mb-8">
                     <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 text-primary mb-6"><ShieldCheck size={28} /></div>
-                    <PageHeader title="Вход в систему" subtitle="Scientific Journal Identity" className="border-0 pb-0 mb-0" />
+                    <PageHeader
+                        title="Вход в систему"
+                        subtitle="Scientific Journal Identity"
+                        withBorder={false}
+                        className="items-center text-center"
+                    />
                 </div>
 
                 <form onSubmit={handleSubmit(data => loginMutation.mutate(data))} className="space-y-6">

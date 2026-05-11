@@ -1,12 +1,13 @@
-// src/pages/public/IssuesPage.tsx
+// src/pages/public/ArchivePage.tsx
 import { useQuery } from '@tanstack/react-query';
-import { Calendar, ChevronRight, BookOpen, FileText } from 'lucide-react';
+import { Calendar, ArrowRight, BookOpen, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { journalApi } from '../../entities/journal/api/journal.api';
 import { PageHeader } from '../../shared/ui/PageHeader';
 import { Card } from '../../shared/ui/Card';
 import { Skeleton } from '../../shared/ui/Skeleton';
 import { PageContainer } from "../../shared/ui/PageContainer";
+import { Badge } from '../../shared/ui/Bagde';
 
 export const ArchivePage = () => {
     const { data: volumes, isLoading } = useQuery({
@@ -16,61 +17,53 @@ export const ArchivePage = () => {
 
     if (isLoading) {
         return (
-            <div className="max-w-5xl mx-auto py-12 px-4">
-                <Skeleton className="h-8 w-64 mx-auto mb-12" />
+            <PageContainer spacing="md">
+                <Skeleton className="h-24 w-full mb-10" />
                 <div className="space-y-8">
-                    {[1, 2, 3].map((i) => (
+                    {[1, 2].map((i) => (
                         <Skeleton key={i} className="h-48 w-full" />
                     ))}
                 </div>
-            </div>
+            </PageContainer>
         );
     }
 
     return (
-        <PageContainer className="space-y-12">
-
-            {/* Заголовок страницы */}
+        <PageContainer spacing="md">
+            {/* Стандартный заголовок, как на всех страницах */}
             <PageHeader
-                title="Выпуски журнала"
-                subtitle="Journal Issues"
-                className="text-center border-b-0 pb-4 mb-12"
+                title="Архив номеров"
+                subtitle="Scientific Journal Archive"
             />
 
-            {/* Список томов и выпусков */}
-            <div className="space-y-10">
+            <div className="space-y-12">
                 {volumes?.map((vol) => (
                     <section key={vol.id} className="space-y-6">
-                        {/* Заголовок тома */}
-                        <div className="flex items-center gap-4 border-b-2 border-border pb-3">
-                            <div className="w-12 h-12 bg-primary/10 text-primary flex items-center justify-center rounded-sm">
-                                <BookOpen size={20} />
-                            </div>
-                            <div>
-                                <h2 className="text-xl font-heading font-bold text-foreground">
-                                    Том {vol.number}
-                                </h2>
-                                <p className="text-[10px] font-accent font-bold uppercase tracking-widest text-muted-foreground">
-                                    Year {vol.year}
-                                </p>
-                            </div>
+                        {/* Строгий заголовок тома (в стиле SectionHeader) */}
+                        <div className="flex items-end gap-4 border-b border-border pb-3">
+                            <h2 className="text-2xl font-heading font-bold text-foreground leading-none">
+                                Том {vol.number}
+                            </h2>
+                            <span className="text-[10px] font-accent font-bold uppercase tracking-widest text-muted-foreground mb-0.5">
+                                Год издания: {vol.year}
+                            </span>
                         </div>
 
-                        {/* Список выпусков в томе */}
+                        {/* Ровная сетка выпусков */}
                         <IssuesList volumeId={vol.id} />
                     </section>
                 ))}
             </div>
 
-            {/* Пустое состояние */}
+            {/* Пустое состояние в вашем фирменном стиле */}
             {volumes?.length === 0 && (
-                <Card variant="muted" padding="lg" className="text-center">
-                    <FileText size={48} className="mx-auto text-muted-foreground mb-4" />
+                <Card variant="muted" padding="lg" className="text-center py-16">
+                    <FileText size={40} className="mx-auto text-muted-foreground mb-4 opacity-50" />
                     <h3 className="text-lg font-heading font-bold text-foreground mb-2">
-                        Выпуски пока не созданы
+                        Архив пуст
                     </h3>
                     <p className="text-sm font-serif text-muted-foreground">
-                        Редакция журнала ещё не опубликовала ни одного выпуска
+                        Выпуски журнала пока не опубликованы.
                     </p>
                 </Card>
             )}
@@ -78,73 +71,69 @@ export const ArchivePage = () => {
     );
 };
 
-// Компонент списка выпусков для одного тома
+// Список выпусков
 const IssuesList = ({ volumeId }: { volumeId: string }) => {
     const { data: issues, isLoading } = useQuery({
-        queryKey: ['issues', volumeId],
+        queryKey:['issues', volumeId],
         queryFn: () => journalApi.getIssues(volumeId)
     });
 
     if (isLoading) {
         return (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {[1, 2].map((i) => (
-                    <Skeleton key={i} className="h-32" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {[1, 2, 3].map((i) => (
+                    <Skeleton key={i} className="h-40" />
                 ))}
             </div>
         );
     }
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {issues?.map((issue) => (
-                <Link
-                    key={issue.id}
-                    to={`/issues/${issue.id}`}
-                    className="group relative p-6 bg-card border border-border hover:border-primary/50 hover:shadow-md transition-all rounded-sm"
-                >
-                    <div className="flex items-start justify-between gap-4">
-                        {/* Номер выпуска */}
-                        <div className="flex items-center gap-4 flex-grow">
-                            <div className="w-14 h-14 bg-muted border-2 border-border group-hover:border-primary/50 flex items-center justify-center transition-colors shrink-0">
-                <span className="text-lg font-heading font-bold text-primary">
-                  №{issue.number}
-                </span>
+                <Link key={issue.id} to={`/issues/${issue.id}`} className="group block h-full">
+                    <Card variant="interactive" padding="md" className="h-full flex flex-col">
+
+                        <div className="flex justify-between items-start gap-4 mb-4">
+                            {/* Строгий квадрат с номером, в стиле остальных иконок на сайте */}
+                            <div className="w-12 h-12 bg-muted border border-border flex items-center justify-center shrink-0 group-hover:bg-primary/5 transition-colors">
+                                <span className="font-heading font-bold text-lg text-foreground group-hover:text-primary transition-colors">
+                                    №{issue.number}
+                                </span>
                             </div>
 
-                            <div className="space-y-2 flex-grow min-w-0">
-                                <h3 className="text-base font-heading font-bold text-foreground group-hover:text-primary transition-colors truncate">
-                                    Выпуск {issue.number}
-                                </h3>
-
-                                <div className="flex items-center gap-3 text-[10px] font-accent font-bold uppercase tracking-tight text-muted-foreground">
-                  <span className="flex items-center gap-1">
-                    <Calendar size={10} />
-                      {new Date(issue.publication_date).toLocaleDateString('ru-RU', {
-                          day: '2-digit',
-                          month: 'short',
-                          year: 'numeric'
-                      })}
-                  </span>
-                                </div>
-
-                                {issue.description && (
-                                    <p className="text-xs font-serif text-muted-foreground line-clamp-2">
-                                        {issue.description}
-                                    </p>
-                                )}
-                            </div>
+                            <Badge variant="published">Опубликовано</Badge>
                         </div>
 
-                        {/* Иконка стрелки */}
-                        <ChevronRight
-                            size={18}
-                            className="text-border group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0"
-                        />
-                    </div>
+                        <div className="flex-grow space-y-2">
+                            <h3 className="text-lg font-heading font-bold text-foreground group-hover:text-primary transition-colors leading-tight">
+                                {issue.title || `Выпуск ${issue.number}`}
+                            </h3>
 
-                    {/* Бейдж "Текущий" (опционально, если нужно выделить текущий выпуск) */}
-                    {/* Можно добавить логику для определения текущего выпуска */}
+                            <div className="flex items-center gap-1.5 text-[10px] font-accent font-bold uppercase tracking-wide text-muted-foreground">
+                                <Calendar size={12} className="text-primary/70" />
+                                {issue.publication_date
+                                    ? new Date(issue.publication_date).toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' })
+                                    : 'Дата не указана'}
+                            </div>
+
+                            {issue.description && (
+                                <p className="text-sm font-serif text-muted-foreground line-clamp-2 pt-2">
+                                    {issue.description}
+                                </p>
+                            )}
+                        </div>
+
+                        {/* Нижняя панель в стиле PublicationCard */}
+                        <div className="flex items-center justify-between pt-4 mt-4 border-t border-border">
+                            <div className="flex items-center gap-1.5 text-[10px] font-accent font-bold uppercase tracking-widest text-muted-foreground">
+                                <BookOpen size={12} />
+                                Открытый доступ
+                            </div>
+                            <ArrowRight size={16} className="text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                        </div>
+
+                    </Card>
                 </Link>
             ))}
         </div>

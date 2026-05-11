@@ -47,7 +47,6 @@ export const CreateSubmissionPage = () => {
             <PageHeader
                 title="Подача рукописи"
                 subtitle="New Manuscript Submission"
-                className="text-center border-b-0 pb-4 mb-12"
             />
 
             <form onSubmit={handleSubmit(data => createMutation.mutate(data))} className="space-y-12">

@@ -45,8 +45,12 @@ export const RegisterPage = () => {
         <PageContainer className="flex flex-col justify-center items-center w-full">
             <Card variant="accent" padding="lg" className="w-full max-w-2xl">
                 <div className="text-center mb-10">
-                    <PageHeader title="Регистрация автора" subtitle="Scientific Community" className="border-0 pb-0 mb-0" />
-                </div>
+                    <PageHeader
+                        title="Вход в систему"
+                        subtitle="Scientific Journal Identity"
+                        withBorder={false}
+                        className="items-center text-center"
+                    />                </div>
 
                 <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
                     <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8 mb-4 border-b border-border pb-8">
