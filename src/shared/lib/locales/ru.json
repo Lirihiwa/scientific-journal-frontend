@@ -1,0 +1,133 @@
+{
+    "common": {
+        "save": "Сохранить",
+        "cancel": "Отмена",
+        "delete": "Удалить",
+        "loading": "Загрузка...",
+        "more": "Подробнее",
+        "back": "Назад",
+        "send": "Отправить",
+        "edit": "Редактировать",
+        "search": "Поиск...",
+        "not_found": "Ничего не найдено",
+        "all": "Все",
+        "copy_success": "Скопировано в буфер",
+        "roles": {
+            "author": "Автор",
+            "editor": "Редактор",
+            "reviewer": "Рецензент",
+            "admin": "Администратор"
+        }
+    },
+    "nav": {
+        "home": "Главная",
+        "archive": "Архив",
+        "about": "О журнале",
+        "editorial": "Ред. коллегия",
+        "ethics": "Этика",
+        "submit": "Подать статью",
+        "my_submissions": "Мои рукописи",
+        "guidelines": "Требования",
+        "editor_panel": "Панель редактора",
+        "profile": "Профиль",
+        "login": "Вход в кабинет",
+        "sections": {
+            "journal": "Журнал",
+            "authors": "Авторам",
+            "editorial": "Редакция",
+            "indexing": "Индексация"
+        }
+    },
+    "auth": {
+        "login_title": "Вход в систему",
+        "register_title": "Регистрация",
+        "email": "Электронная почта",
+        "password": "Пароль",
+        "first_name": "Имя",
+        "last_name": "Фамилия",
+        "middle_name": "Отчество",
+        "organization": "Организация",
+        "country": "Страна",
+        "no_account": "У вас еще нет профиля?",
+        "have_account": "Уже есть аккаунт?",
+        "register_action": "Зарегистрироваться",
+        "login_action": "Войти в кабинет",
+        "login_success": "Успешный вход в систему",
+        "login_error": "Неверный логин или пароль",
+        "register_success": "Регистрация завершена. Теперь вы можете войти.",
+        "register_error": "Произошла ошибка регистрации",
+        "email_conflict": "Указанный Email уже занят",
+        "not_specified": "Не указана"
+    },
+    "submission": {
+        "status": {
+            "new": "Новая",
+            "under_review": "На рецензии",
+            "revision_required": "Нужны правки",
+            "accepted": "Принята",
+            "rejected": "Отклонена",
+            "published": "Опубликована"
+        },
+        "form": {
+            "metadata": "Метаданные",
+            "title_ru": "Заголовок (RU)",
+            "title_en": "Заголовок (EN)",
+            "abstract_ru": "Аннотация (RU)",
+            "abstract_en": "Аннотация (EN)",
+            "keywords_ru": "Ключевые слова (RU)",
+            "keywords_en": "Ключевые слова (EN)",
+            "authors": "Коллектив авторов",
+            "file": "Файл рукописи",
+            "policy": "Я подтверждаю, что статья ранее не публиковалась и оформлена согласно правилам.",
+            "placeholder_file": "Выберите файл статьи",
+            "formats": "Поддерживаемые форматы: PDF, DOC, DOCX",
+            "replace": "Заменить"
+        },
+        "details": {
+            "history": "История обработки",
+            "info_title": "Данные рукописи",
+            "back_to_list": "К списку рукописей",
+            "not_found": "Рукопись не найдена",
+            "readonly_notice": "Рукопись находится в статусе «{{status}}». Внесение изменений невозможно.",
+            "current_version": "Текущая версия",
+            "no_file": "Файл не загружен",
+            "replace_file": "Выбрать файл для замены"
+        }
+    },
+    "journal": {
+        "current_issue": "Текущий выпуск",
+        "archive_title": "Архив номеров",
+        "issn": "ISSN",
+        "doi": "DOI",
+        "download_pdf": "Скачать PDF",
+        "citation": "Цитирование",
+        "copy": "Копировать",
+        "original_paper": "Оригинальная статья",
+        "corresponding_author": "корр. автор",
+        "access_open": "Открытый доступ",
+        "access_restricted": "Доступ ограничен",
+        "pages": "Страницы",
+        "license": "Лицензия",
+        "license_text": "Контент по лицензии",
+        "contents": "Содержание"
+    },
+    "editor": {
+        "tabs": {
+            "papers": "Рукописи",
+            "structure": "Структура"
+        },
+        "actions": {
+            "start_review": "В работу",
+            "accept": "Принять",
+            "revision": "Правки",
+            "reject": "Отклонить",
+            "publish": "Опубликовать"
+        },
+        "decision": {
+            "title_reject": "Отказ в публикации",
+            "title_revision": "Запрос правок",
+            "comment": "Комментарий",
+            "placeholder": "Причина решения..."
+        }
+    }
+}

@@ -1,0 +1,132 @@
+{
+    "common": {
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "loading": "Loading...",
+        "more": "Read more",
+        "back": "Back",
+        "send": "Send",
+        "edit": "Edit",
+        "search": "Search...",
+        "not_found": "Nothing found",
+        "all": "All",
+        "copy_success": "Copied to clipboard",
+        "roles": {
+            "author": "Author",
+            "editor": "Editor",
+            "reviewer": "Reviewer",
+            "admin": "Administrator"
+        }
+    },
+    "nav": {
+        "home": "Home",
+        "archive": "Archive",
+        "about": "About the Journal",
+        "editorial": "Editorial Board",
+        "ethics": "Ethics",
+        "submit": "Submit Article",
+        "my_submissions": "My Submissions",
+        "guidelines": "Guidelines",
+        "editor_panel": "Editor Panel",
+        "profile": "Profile",
+        "login": "Login",
+        "sections": {
+            "journal": "Journal",
+            "authors": "For Authors",
+            "editorial": "Editorial Office",
+            "indexing": "Indexing"
+        }
+    },
+    "auth": {
+        "login_title": "System Login",
+        "register_title": "Registration",
+        "email": "Email",
+        "password": "Password",
+        "first_name": "First Name",
+        "last_name": "Last Name",
+        "middle_name": "Middle Name",
+        "organization": "Organization",
+        "country": "Country",
+        "no_account": "Don't have a profile yet?",
+        "have_account": "Already have an account?",
+        "register_action": "Register",
+        "login_action": "Log In",
+        "login_success": "Login successful",
+        "login_error": "Invalid username or password",
+        "register_success": "Registration complete. You may now log in.",
+        "register_error": "Registration failed",
+        "email_conflict": "The specified email address is already in use",
+        "not_specified": "Not specified"
+    },
+    "submission": {
+        "status": {
+            "new": "New",
+            "under_review": "Under Review",
+            "revision_required": "Revisions Required",
+            "accepted": "Accepted",
+            "rejected": "Rejected",
+            "published": "Published"
+        },
+        "form": {
+            "metadata": "Metadata",
+            "title_ru": "Title (RU)",
+            "title_en": "Title (EN)",
+            "abstract_ru": "Abstract (RU)",
+            "abstract_en": "Abstract (EN)",
+            "keywords_ru": "Keywords (RU)",
+            "keywords_en": "Keywords (EN)",
+            "authors": "Authors",
+            "file": "Manuscript File",
+            "policy": "I confirm that this article has not been previously published and adheres to the submission guidelines.",
+            "placeholder_file": "Select article file",
+            "formats": "Supported formats: PDF, DOC, DOCX",
+            "replace": "Replace"
+        },
+        "details": {
+            "history": "Processing History",
+            "info_title": "Manuscript Details",
+            "back_to_list": "Back to Manuscript List",
+            "not_found": "Manuscript not found",
+            "readonly_notice": "The manuscript is currently in the '{{status}}' status. Modifications are not possible.",
+            "current_version": "Current Version",
+            "no_file": "No file uploaded",
+            "replace_file": "Select replacement file"
+        }
+    },
+    "journal": { "current_issue": "Current Issue",
+        "archive_title": "Issue Archive",
+        "issn": "ISSN",
+        "doi": "DOI",
+        "download_pdf": "Download PDF",
+        "citation": "Citation",
+        "copy": "Copy",
+        "original_paper": "Original Article",
+        "corresponding_author": "Corr. Author",
+        "access_open": "Open Access",
+        "access_restricted": "Restricted Access",
+        "pages": "Pages",
+        "license": "License",
+        "license_text": "Content licensed under",
+        "contents": "Contents"
+    },
+    "editor": {
+        "tabs": {
+            "papers": "Manuscripts",
+            "structure": "Structure"
+        },
+        "actions": {
+            "start_review": "Start Review",
+            "accept": "Accept",
+            "revision": "Request Revisions",
+            "reject": "Reject",
+            "publish": "Publish"
+        },
+        "decision": {
+            "title_reject": "Rejection",
+            "title_revision": "Request for Revisions",
+            "comment": "Comment",
+            "placeholder": "Reason for decision..."
+        }
+    }
+}
