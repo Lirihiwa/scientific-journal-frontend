@@ -40,7 +40,7 @@ export const HomePage = () => {
                         </div>
                         <div className="space-y-4">
                             <h1 className="text-3xl font-heading font-bold text-foreground leading-tight">
-                                Вестник Челябинского государственного университета
+                                Журнал Челябинского государственного университета
                             </h1>
                             <div className="flex gap-3">
                                 <span className="px-2 py-0.5 bg-accent/10 text-accent border border-accent/20 text-[10px] font-accent font-bold uppercase tracking-widest rounded-sm">ISSN: 1994-2796</span>
@@ -62,7 +62,7 @@ export const HomePage = () => {
                     </div>
 
                     <div className="space-y-4">
-                        {current?.publications.slice(0, 3).map((pub) => (
+                        {current?.publications?.slice(0, 3).map((pub) => (
                             <PublicationCard key={pub.id} pub={pub} />
                         ))}
                     </div>

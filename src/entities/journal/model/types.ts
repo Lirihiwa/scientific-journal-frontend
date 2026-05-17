@@ -6,7 +6,6 @@ export type PublicationStatus = 'scheduled' | 'published' | 'withdrawn';
 
 export const PublicationAuthorSchema = z.object({
     author_id: z.string().uuid().nullable().optional(), // может быть null для внешних соавторов
-    full_name: z.string(),
     is_primary: z.boolean(),
 });
 

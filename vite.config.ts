@@ -12,5 +12,6 @@ export default defineConfig({
         port: 3000, // Устанавливаем порт 3000
         strictPort: true, // Если порт 3000 занят, Vite не будет пробовать 3001, а выдаст ошибку
         host: true, // Позволяет открывать сайт по IP в локальной сети
+        allowedHosts: ['csu-journal.cloudpub.ru']
     },
 })

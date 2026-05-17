@@ -76,12 +76,14 @@ export const IssuePage = () => {
                     Содержание
                 </h3>
                 <div className="space-y-4">
-                    {publications?.map((pub) => (
-                        <PublicationCard
-                            key={pub.id}
-                            pub={pub}
-                        />
-                    ))}
+                    <div className="grid grid-cols-2 gap-4">
+                        {publications?.map((pub) => (
+                            <PublicationCard
+                                key={pub.id}
+                                pub={pub}
+                            />
+                        ))}
+                    </div>
                 </div>
             </section>
         </PageContainer>
