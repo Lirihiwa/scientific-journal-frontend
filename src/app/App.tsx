@@ -73,7 +73,7 @@ export const App = () => {
                         <Route index element={<HomePage/>}/>
                         <Route path="login" element={<LoginPage/>}/>
                         <Route path="register" element={<RegisterPage/>}/>
-                        <Route path="about" element={<StaticPagePlaceholder title="О журнале" />} />
+                        <Route path="about" element={<StaticPagePlaceholder title={"О журнале"} />} />
                         <Route path="editorial" element={<StaticPagePlaceholder title="Редакционная коллегия" />} />
                         <Route path="ethics" element={<StaticPagePlaceholder title="Этика публикаций" />} />
                         <Route path="review-process" element={<StaticPagePlaceholder title="Процесс рецензирования" />} />

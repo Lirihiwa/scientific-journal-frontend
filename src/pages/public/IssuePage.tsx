@@ -1,14 +1,17 @@
 // src/pages/public/IssuePage.tsx
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { ChevronLeft, Calendar } from 'lucide-react';
 import { journalApi } from '../../entities/journal/api/journal.api';
 import { PublicationCard } from '../../widgets/publication/ui/PublicationCard';
 import { Skeleton } from '../../shared/ui/Skeleton';
-import {PageContainer} from "../../shared/ui/PageContainer.tsx";
+import { PageContainer } from "../../shared/ui/PageContainer.tsx";
 
 export const IssuePage = () => {
     const { id } = useParams();
+    const { t, i18n } = useTranslation();
+    const isRu = i18n.language.startsWith('ru');
 
     const { data: issue, isLoading: issueLoading } = useQuery({
         queryKey: ['issue', id],
@@ -45,38 +48,40 @@ export const IssuePage = () => {
                 className="inline-flex items-center gap-2 text-[9px] font-accent font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors"
             >
                 <ChevronLeft size={12} />
-                Назад в архив
+                {t('nav.archive')}
             </Link>
 
             {/* Шапка выпуска */}
             <header className="p-8 bg-card border border-border">
                 <div className="space-y-4">
                     <p className="text-[9px] font-accent font-bold uppercase tracking-[0.4em] text-primary">
-                        Научный выпуск
+                        {isRu ? 'Научный выпуск' : 'Scientific Issue'}
                     </p>
                     <h1 className="text-3xl font-heading font-bold text-foreground">
-                        Выпуск №{issue?.number}
+                        {isRu ? `Выпуск №${issue?.number}` : `Issue №${issue?.number}`}
                     </h1>
                     <div className="flex items-center gap-4 text-sm font-serif text-muted-foreground pt-4 border-t border-border">
-            <span className="flex items-center gap-2">
-              <Calendar size={14} />
-                {issue?.publication_date
-                    ? new Date(issue.publication_date).getFullYear()
-                    : ''}
-            </span>
+                        <span className="flex items-center gap-2">
+                            <Calendar size={14} />
+                            {issue?.publication_date
+                                ? new Date(issue.publication_date).getFullYear()
+                                : ''}
+                        </span>
                         <span>·</span>
-                        <span>{publications?.length || 0} статей</span>
+                        <span>
+                            {publications?.length || 0} {isRu ? 'статей' : 'articles'}
+                        </span>
                     </div>
                 </div>
             </header>
 
-            {/* Содержимое — единые карточки */}
+            {/* Содержание */}
             <section className="space-y-6">
                 <h3 className="text-[9px] font-accent font-bold uppercase tracking-[0.3em] text-primary pb-2 border-b-2 border-primary w-fit">
-                    Содержание
+                    {isRu ? 'Содержание' : 'Contents'}
                 </h3>
                 <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {publications?.map((pub) => (
                             <PublicationCard
                                 key={pub.id}

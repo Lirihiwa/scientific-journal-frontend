@@ -1,6 +1,7 @@
 // src/pages/editor/EditorDashboard.tsx
 import { useMemo, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { AlertCircle, CheckCircle2, Eye, FileText, Inbox, Layers, Search, Send, XCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -22,9 +23,12 @@ import { SubmissionCard } from "../../widgets/submission/ui/SubmissionCard.tsx";
 import { PageContainer } from "../../shared/ui/PageContainer.tsx";
 
 export const EditorDashboard = () => {
+    const { t, i18n } = useTranslation();
+    const isRu = i18n.language.startsWith('ru');
+
     const [activeTab, setActiveTab] = useState<'papers' | 'structure'>('papers');
     const [filter, setFilter] = useState<SubmissionStatus | 'all'>('all');
-    const[search, setSearch] = useState('');
+    const [search, setSearch] = useState('');
     const [decisionModal, setDecisionModal] = useState<{
         isOpen: boolean;
         subId: string;
@@ -32,29 +36,27 @@ export const EditorDashboard = () => {
     }>({ isOpen: false, subId: '', target: null });
 
     const [comment, setComment] = useState('');
-    const[publishingId, setPublishingId] = useState<string | null>(null);
+    const [publishingId, setPublishingId] = useState<string | null>(null);
     const [selectedIssue, setSelectedIssue] = useState('');
 
     const queryClient = useQueryClient();
 
-    // 1. Данные: Заявки
+    // Загрузка заявок
     const { data: allSubmissions, isLoading: isSubmissionsLoading } = useQuery({
-        queryKey:['editor-submissions', 'all'],
+        queryKey: ['editor-submissions', 'all'],
         queryFn: () => editorApi.getAllSubmissions()
     });
 
-    // 2. Данные: Выпуски для селектора публикации
+    // Загрузка выпусков
     const { data: issues } = useQuery({
         queryKey: ['editor-all-issues'],
         queryFn: async () => {
             const volumes = await journalApi.getVolumes();
-            if (!volumes.length) return[];
-            // Берем выпуски для последнего тома (для примера)
+            if (!volumes.length) return [];
             return await journalApi.getIssues(volumes[0].id);
         }
     });
 
-    // Мутации
     const statusMutation = useMutation({
         mutationFn: (vars: { id: string, status: SubmissionStatus, comment?: string }) =>
             editorApi.updateStatus(vars.id, vars.status, vars.comment),
@@ -62,7 +64,7 @@ export const EditorDashboard = () => {
             queryClient.invalidateQueries({ queryKey: ['editor-submissions'] });
             setDecisionModal({ isOpen: false, subId: '', target: null });
             setComment('');
-            toast.success("Статус обновлен");
+            toast.success(isRu ? "Статус обновлен" : "Status updated");
         }
     });
 
@@ -73,15 +75,14 @@ export const EditorDashboard = () => {
             status: 'published'
         }),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey:['editor-submissions'] });
+            queryClient.invalidateQueries({ queryKey: ['editor-submissions'] });
             setPublishingId(null);
-            toast.success("Статья успешно опубликована в выпуске");
+            toast.success(isRu ? "Статья опубликована" : "Article published");
         }
     });
 
-    // Вычисления
     const filteredList = useMemo(() => {
-        let list = allSubmissions ||[];
+        let list = allSubmissions || [];
         if (filter !== 'all') list = list.filter(s => s.status === filter);
         if (search) list = list.filter(s => s.title_ru.toLowerCase().includes(search.toLowerCase()));
         return list;
@@ -100,30 +101,30 @@ export const EditorDashboard = () => {
         };
     }, [allSubmissions]);
 
-    const dashboardTiles =[
-        { id: 'all', label: 'Все', count: stats.all, icon: Layers, color: 'text-foreground', bg: 'bg-muted/10', border: 'border-border', activeRing: 'ring-primary' },
-        { id: 'new', label: 'Новые', count: stats.new, icon: Inbox, color: 'text-status-new', bg: 'bg-status-new/5', border: 'border-status-new/20', activeRing: 'ring-status-new' },
-        { id: 'under_review', label: 'На рецензии', count: stats.review, icon: Eye, color: 'text-status-review', bg: 'bg-status-review/5', border: 'border-status-review/20', activeRing: 'ring-status-review' },
-        { id: 'revision_required', label: 'На доработке', count: stats.revision, icon: AlertCircle, color: 'text-status-revision', bg: 'bg-status-revision/5', border: 'border-status-revision/20', activeRing: 'ring-status-revision' },
-        { id: 'accepted', label: 'Принятые', count: stats.accepted, icon: CheckCircle2, color: 'text-status-accepted', bg: 'bg-status-accepted/5', border: 'border-status-accepted/20', activeRing: 'ring-status-accepted' },
-        { id: 'published', label: 'Опубликованы', count: stats.published, icon: FileText, color: 'text-status-published', bg: 'bg-status-published/5', border: 'border-status-published/20', activeRing: 'ring-status-published' },
-        { id: 'rejected', label: 'Отклонены', count: stats.rejected, icon: XCircle, color: 'text-status-rejected', bg: 'bg-status-rejected/5', border: 'border-status-rejected/20', activeRing: 'ring-status-rejected' },
+    const dashboardTiles = [
+        { id: 'all', label: t('common.all'), count: stats.all, icon: Layers, color: 'text-foreground', bg: 'bg-muted/10', border: 'border-border', activeRing: 'ring-primary' },
+        { id: 'new', label: t('submission.status.new'), count: stats.new, icon: Inbox, color: 'text-status-new', bg: 'bg-status-new/5', border: 'border-status-new/20', activeRing: 'ring-status-new' },
+        { id: 'under_review', label: t('submission.status.under_review'), count: stats.review, icon: Eye, color: 'text-status-review', bg: 'bg-status-review/5', border: 'border-status-review/20', activeRing: 'ring-status-review' },
+        { id: 'revision_required', label: t('submission.status.revision_required'), count: stats.revision, icon: AlertCircle, color: 'text-status-revision', bg: 'bg-status-revision/5', border: 'border-status-revision/20', activeRing: 'ring-status-revision' },
+        { id: 'accepted', label: t('submission.status.accepted'), count: stats.accepted, icon: CheckCircle2, color: 'text-status-accepted', bg: 'bg-status-accepted/5', border: 'border-status-accepted/20', activeRing: 'ring-status-accepted' },
+        { id: 'published', label: t('submission.status.published'), count: stats.published, icon: FileText, color: 'text-status-published', bg: 'bg-status-published/5', border: 'border-status-published/20', activeRing: 'ring-status-published' },
+        { id: 'rejected', label: t('submission.status.rejected'), count: stats.rejected, icon: XCircle, color: 'text-status-rejected', bg: 'bg-status-rejected/5', border: 'border-status-rejected/20', activeRing: 'ring-status-rejected' },
     ] as const;
 
     return (
         <PageContainer className="space-y-12">
             <PageHeader
-                title="Панель редактора"
+                title={t('nav.editor_panel')}
                 subtitle="Editorial Control Panel"
                 action={
                     <div className="flex bg-muted p-1 rounded-sm ring-1 ring-border">
                         <button onClick={() => setActiveTab('papers')}
                                 className={cn("px-6 py-2 text-[10px] font-accent font-bold uppercase tracking-widest transition-all rounded-sm", activeTab === 'papers' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-primary')}>
-                            Рукописи
+                            {isRu ? 'Рукописи' : 'Manuscripts'}
                         </button>
                         <button onClick={() => setActiveTab('structure')}
                                 className={cn("px-6 py-2 text-[10px] font-accent font-bold uppercase tracking-widest transition-all rounded-sm", activeTab === 'structure' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-primary')}>
-                            Структура журнала
+                            {isRu ? 'Структура' : 'Structure'}
                         </button>
                     </div>
                 }
@@ -150,7 +151,7 @@ export const EditorDashboard = () => {
 
                     <div className="flex bg-card border border-border p-4 shadow-sm rounded-sm">
                         <Input
-                            placeholder="Поиск по названию..."
+                            placeholder={t('common.search')}
                             icon={<Search size={18}/>}
                             className="bg-muted/30 border-none focus:ring-0 max-w-lg"
                             value={search}
@@ -168,27 +169,27 @@ export const EditorDashboard = () => {
                                 showLink={false}
                                 actions={
                                     <div className="flex gap-2">
-                                        {sub.status === 'new' && <Button onClick={() => statusMutation.mutate({ id: sub.id, status: 'under_review' })}>В работу</Button>}
+                                        {sub.status === 'new' && <Button onClick={() => statusMutation.mutate({ id: sub.id, status: 'under_review' })}>{isRu ? 'В работу' : 'Start Review'}</Button>}
                                         {sub.status === 'under_review' && (
                                             <>
-                                                <Button variant="outline" className="text-status-accepted border-status-accepted/30 hover:bg-status-accepted/10" onClick={() => statusMutation.mutate({ id: sub.id, status: 'accepted' })}>Принять</Button>
-                                                <Button variant="outline" className="text-status-revision border-status-revision/30 hover:bg-status-revision/10" onClick={() => setDecisionModal({ isOpen: true, subId: sub.id, target: 'revision_required' })}>Правки</Button>
-                                                <Button variant="outline" className="text-status-rejected border-status-rejected/30 hover:bg-status-rejected/10" onClick={() => setDecisionModal({ isOpen: true, subId: sub.id, target: 'rejected' })}>Отклонить</Button>
+                                                <Button variant="outline" className="text-status-accepted border-status-accepted/30 hover:bg-status-accepted/10" onClick={() => statusMutation.mutate({ id: sub.id, status: 'accepted' })}>{isRu ? 'Принять' : 'Accept'}</Button>
+                                                <Button variant="outline" className="text-status-revision border-status-revision/30 hover:bg-status-revision/10" onClick={() => setDecisionModal({ isOpen: true, subId: sub.id, target: 'revision_required' })}>{isRu ? 'Правки' : 'Revision'}</Button>
+                                                <Button variant="outline" className="text-status-rejected border-status-rejected/30 hover:bg-status-rejected/10" onClick={() => setDecisionModal({ isOpen: true, subId: sub.id, target: 'rejected' })}>{isRu ? 'Отклонить' : 'Reject'}</Button>
                                             </>
                                         )}
                                         {sub.status === 'accepted' && (
                                             publishingId === sub.id ? (
                                                 <div className="flex items-center gap-2 animate-fade-in">
                                                     <select className="h-10 px-3 bg-muted border border-border text-[10px] font-bold uppercase font-accent outline-none rounded-sm" value={selectedIssue} onChange={e => setSelectedIssue(e.target.value)}>
-                                                        <option value="">Выпуск...</option>
+                                                        <option value="">{isRu ? 'Выпуск...' : 'Issue...'}</option>
                                                         {issues?.map((i: Issue) => <option key={i.id} value={i.id}>№{i.number} ({i.publication_date ? new Date(i.publication_date).getFullYear() : '—'})</option>)}
                                                     </select>
                                                     <Button size="icon" disabled={!selectedIssue} onClick={() => publishMutation.mutate({ subId: sub.id, issueId: selectedIssue })}><Send size={16}/></Button>
                                                     <button onClick={() => setPublishingId(null)} className="text-[10px] p-2 text-muted-foreground hover:text-foreground">✕</button>
                                                 </div>
-                                            ) : <Button onClick={() => setPublishingId(sub.id)}>Опубликовать</Button>
+                                            ) : <Button onClick={() => setPublishingId(sub.id)}>{isRu ? 'Опубликовать' : 'Publish'}</Button>
                                         )}
-                                        {sub.status === 'published' && <Badge variant="published">В выпуске</Badge>}
+                                        {sub.status === 'published' && <Badge variant="published">{t('submission.status.published')}</Badge>}
                                     </div>
                                 }
                             />
@@ -197,13 +198,26 @@ export const EditorDashboard = () => {
                 </div>
             ) : <JournalStructure />}
 
-            {/* Модалка решения */}
-            <Modal isOpen={decisionModal.isOpen} onClose={() => setDecisionModal({...decisionModal, isOpen: false})} title={decisionModal.target === 'rejected' ? "Отказ в публикации" : "Запрос правок"}>
+            <Modal
+                isOpen={decisionModal.isOpen}
+                onClose={() => setDecisionModal({...decisionModal, isOpen: false})}
+                title={decisionModal.target === 'rejected' ? (isRu ? "Отказ в публикации" : "Publication Rejection") : (isRu ? "Запрос правок" : "Revision Request")}
+            >
                 <div className="space-y-6">
-                    <TextArea label="Комментарий" rows={6} value={comment} onChange={e => setComment(e.target.value)} placeholder="Причина решения..."/>
+                    <TextArea
+                        label={isRu ? "Комментарий" : "Comment"}
+                        rows={6}
+                        value={comment}
+                        onChange={e => setComment(e.target.value)}
+                        placeholder={isRu ? "Причина решения..." : "Decision rationale..."}
+                    />
                     <div className="flex gap-3">
-                        <Button className="flex-grow" isLoading={statusMutation.isPending} disabled={!comment.trim()} onClick={() => statusMutation.mutate({ id: decisionModal.subId, status: decisionModal.target!, comment })}>Подтвердить</Button>
-                        <Button variant="ghost" onClick={() => setDecisionModal({...decisionModal, isOpen: false})}>Отмена</Button>
+                        <Button className="flex-grow" isLoading={statusMutation.isPending} disabled={!comment.trim()} onClick={() => statusMutation.mutate({ id: decisionModal.subId, status: decisionModal.target!, comment })}>
+                            {isRu ? 'Подтвердить' : 'Confirm'}
+                        </Button>
+                        <Button variant="ghost" onClick={() => setDecisionModal({...decisionModal, isOpen: false})}>
+                            {t('common.cancel')}
+                        </Button>
                     </div>
                 </div>
             </Modal>

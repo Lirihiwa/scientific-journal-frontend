@@ -1,5 +1,6 @@
 // src/widgets/submission/ui/SubmissionTimeline.tsx
 import { Clock, MessageSquare, User as UserIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Badge } from '../../../shared/ui/Bagde';
 import { SectionHeader } from '../../../shared/ui/SectionHeader';
 import { Card } from '../../../shared/ui/Card';
@@ -10,11 +11,14 @@ interface SubmissionTimelineProps {
 }
 
 export const SubmissionTimeline = ({ events }: SubmissionTimelineProps) => {
+    const { t, i18n } = useTranslation();
+    const isRu = i18n.language.startsWith('ru');
+
     if (!events || events.length === 0) return null;
 
     return (
         <div className="space-y-8 animate-fade-in">
-            <SectionHeader title="История обработки" />
+            <SectionHeader title={isRu ? "История обработки" : "Processing History"} />
 
             <div className="relative space-y-0">
                 {/* Вертикальная линия таймлайна */}
@@ -33,7 +37,7 @@ export const SubmissionTimeline = ({ events }: SubmissionTimelineProps) => {
                             <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                                 <span className="text-[10px] font-accent font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-1.5">
                                     <Clock size={12} className="text-primary" />
-                                    {new Date(event.created_at).toLocaleString('ru-RU', {
+                                    {new Date(event.created_at).toLocaleString(isRu ? 'ru-RU' : 'en-US', {
                                         day: '2-digit',
                                         month: 'short',
                                         year: 'numeric',
@@ -45,7 +49,7 @@ export const SubmissionTimeline = ({ events }: SubmissionTimelineProps) => {
                                 <div className="flex items-center gap-2">
                                     {event.to_status && (
                                         <Badge variant={event.to_status}>
-                                            {event.to_status.replace('_', ' ')}
+                                            {t(`submission.status.${event.to_status}`)}
                                         </Badge>
                                     )}
                                 </div>
@@ -55,11 +59,15 @@ export const SubmissionTimeline = ({ events }: SubmissionTimelineProps) => {
                             <div className="space-y-2">
                                 <p className="text-[11px] font-accent font-bold uppercase tracking-tight text-foreground flex items-center gap-2">
                                     <UserIcon size={12} className="text-muted-foreground" />
-                                    {event.actor_role === 'author' ? 'Автор' : 'Редакция'}
-                                    <span className="text-muted-foreground font-normal lowercase">инициировал действие</span>
+                                    {event.actor_role === 'author'
+                                        ? (isRu ? 'Автор' : 'Author')
+                                        : (isRu ? 'Редакция' : 'Editorial Board')}
+                                    <span className="text-muted-foreground font-normal lowercase">
+                                        {isRu ? 'инициировал действие' : 'initiated action'}
+                                    </span>
                                 </p>
 
-                                {/* Комментарий (шрифт Merriweather) */}
+                                {/* Комментарий редактора или автора */}
                                 {event.comment && (
                                     <div className="mt-3 p-4 bg-muted/30 border-l-2 border-accent/50 rounded-sm">
                                         <div className="flex gap-3">

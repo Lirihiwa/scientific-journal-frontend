@@ -1,5 +1,7 @@
+// src/widgets/editor/ui/JournalStructure.tsx
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { Library, Plus, Layers } from 'lucide-react';
 import { journalApi } from '../../../entities/journal/api/journal.api';
 import { Button } from '../../../shared/ui/Button';
@@ -8,8 +10,14 @@ import { Input } from '../../../shared/ui/Input';
 import { toast } from 'sonner';
 
 export const JournalStructure = () => {
+    const { i18n } = useTranslation();
+    const isRu = i18n.language.startsWith('ru');
     const queryClient = useQueryClient();
-    const { data: volumes, isLoading } = useQuery({ queryKey: ['editor-volumes'], queryFn: journalApi.getVolumes });
+
+    const { data: volumes, isLoading } = useQuery({
+        queryKey: ['editor-volumes'],
+        queryFn: journalApi.getVolumes
+    });
 
     const [isVolumeModalOpen, setVolumeModalOpen] = useState(false);
     const [isIssueModalOpen, setIssueModalOpen] = useState(false);
@@ -20,7 +28,7 @@ export const JournalStructure = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['editor-volumes'] });
             setVolumeModalOpen(false);
-            toast.success("Том успешно создан");
+            toast.success(isRu ? "Том успешно создан" : "Volume created successfully");
         }
     });
 
@@ -29,19 +37,22 @@ export const JournalStructure = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['editor-all-issues'] });
             setIssueModalOpen(false);
-            toast.success("Выпуск успешно создан");
+            toast.success(isRu ? "Выпуск успешно создан" : "Issue created successfully");
         }
     });
 
-    if (isLoading) return <div className="h-64 bg-muted animate-skeleton" />;
+    if (isLoading) return <div className="h-64 bg-muted animate-skeleton rounded-sm" />;
 
     return (
         <div className="space-y-8 animate-fade-in">
             <div className="flex justify-between items-center">
                 <h2 className="text-xl font-heading font-bold flex items-center gap-2">
-                    <Library size={20} className="text-primary" /> Структура архива
+                    <Library size={20} className="text-primary" />
+                    {isRu ? 'Структура архива' : 'Archive Structure'}
                 </h2>
-                <Button onClick={() => setVolumeModalOpen(true)}><Plus size={16} className="mr-2"/> Новый том</Button>
+                <Button onClick={() => setVolumeModalOpen(true)}>
+                    <Plus size={16} className="mr-2"/> {isRu ? 'Новый том' : 'New Volume'}
+                </Button>
             </div>
 
             <div className="grid grid-cols-1 gap-4">
@@ -52,19 +63,27 @@ export const JournalStructure = () => {
                                 <Layers size={24} />
                             </div>
                             <div>
-                                <span className="block text-[10px] font-accent font-bold text-primary uppercase">Year {vol.year}</span>
-                                <h4 className="text-xl font-heading font-bold">Том {vol.number}</h4>
+                                <span className="block text-[10px] font-accent font-bold text-primary uppercase">
+                                    {isRu ? 'Год' : 'Year'} {vol.year}
+                                </span>
+                                <h4 className="text-xl font-heading font-bold">
+                                    {isRu ? `Том ${vol.number}` : `Volume ${vol.number}`}
+                                </h4>
                             </div>
                         </div>
                         <Button variant="outline" size="sm" onClick={() => { setSelectedVolumeId(vol.id); setIssueModalOpen(true); }}>
-                            <Plus size={14} className="mr-2" /> Добавить выпуск
+                            <Plus size={14} className="mr-2" /> {isRu ? 'Добавить выпуск' : 'Add Issue'}
                         </Button>
                     </div>
                 ))}
             </div>
 
             {/* Модалка создания тома */}
-            <Modal isOpen={isVolumeModalOpen} onClose={() => setVolumeModalOpen(false)} title="Создание нового тома">
+            <Modal
+                isOpen={isVolumeModalOpen}
+                onClose={() => setVolumeModalOpen(false)}
+                title={isRu ? "Создание нового тома" : "Create New Volume"}
+            >
                 <form className="space-y-4" onSubmit={(e) => {
                     e.preventDefault();
                     const formData = new FormData(e.currentTarget);
@@ -74,14 +93,20 @@ export const JournalStructure = () => {
                         status: 'draft'
                     });
                 }}>
-                    <Input name="year" label="Год" type="number" defaultValue={new Date().getFullYear()} />
-                    <Input name="number" label="Номер тома" type="number" />
-                    <Button className="w-full" isLoading={createVolumeMutation.isPending}>Создать том</Button>
+                    <Input name="year" label={isRu ? "Год" : "Year"} type="number" defaultValue={new Date().getFullYear()} />
+                    <Input name="number" label={isRu ? "Номер тома" : "Volume Number"} type="number" />
+                    <Button className="w-full" isLoading={createVolumeMutation.isPending}>
+                        {isRu ? 'Создать том' : 'Create Volume'}
+                    </Button>
                 </form>
             </Modal>
 
             {/* Модалка создания выпуска */}
-            <Modal isOpen={isIssueModalOpen} onClose={() => setIssueModalOpen(false)} title="Создание выпуска">
+            <Modal
+                isOpen={isIssueModalOpen}
+                onClose={() => setIssueModalOpen(false)}
+                title={isRu ? "Создание выпуска" : "Create Issue"}
+            >
                 <form className="space-y-4" onSubmit={(e) => {
                     e.preventDefault();
                     const formData = new FormData(e.currentTarget);
@@ -91,8 +116,10 @@ export const JournalStructure = () => {
                         status: 'draft'
                     });
                 }}>
-                    <Input name="number" label="Номер выпуска" type="number" />
-                    <Button className="w-full" isLoading={createIssueMutation.isPending}>Создать выпуск</Button>
+                    <Input name="number" label={isRu ? "Номер выпуска" : "Issue Number"} type="number" />
+                    <Button className="w-full" isLoading={createIssueMutation.isPending}>
+                        {isRu ? 'Создать выпуск' : 'Create Issue'}
+                    </Button>
                 </form>
             </Modal>
         </div>
