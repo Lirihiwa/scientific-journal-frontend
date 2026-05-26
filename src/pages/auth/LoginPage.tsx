@@ -1,4 +1,3 @@
-// src/pages/auth/LoginPage.tsx
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate, Link } from 'react-router-dom';
@@ -7,14 +6,14 @@ import { ShieldCheck, Mail, Lock } from 'lucide-react';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 
-import { Input } from '../../components/ui/Input.tsx';
-import { Button } from '../../components/ui/Button.tsx';
-import { loginSchema, type LoginFormData } from '../../features/auth/model/schemas';
-import { authApi } from '../../features/auth/api/auth.api';
-import { useSessionStore } from '../../entities/session/model/store';
-import { Card } from '../../components/ui/Card.tsx';
-import { PageHeader } from '../../components/ui/PageHeader.tsx';
-import { PageContainer } from "../../components/ui/PageContainer.tsx";
+import { Input } from '../../components/ui/Input';
+import { Button } from '../../components/ui/Button';
+import { loginSchema, type LoginFormData } from '../../features/auth/auth.types';
+import { authApi } from '../../features/auth/auth.api';
+import { useSessionStore } from '../../stores/session.store';
+import { Card } from '../../components/ui/Card';
+import { PageHeader } from '../../components/ui/PageHeader';
+import { PageContainer } from "../../components/ui/PageContainer";
 
 export const LoginPage = () => {
     const { t, i18n } = useTranslation();

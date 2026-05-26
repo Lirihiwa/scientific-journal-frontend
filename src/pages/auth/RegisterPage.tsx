@@ -1,4 +1,3 @@
-// src/pages/auth/RegisterPage.tsx
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate, Link } from 'react-router-dom';
@@ -7,15 +6,15 @@ import { useTranslation } from 'react-i18next';
 import { UserPlus, Mail, Lock, User, Building, Globe } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { Input } from '../../components/ui/Input.tsx';
-import { Button } from '../../components/ui/Button.tsx';
-import { registerSchema, type RegisterFormData } from '../../features/auth/model/schemas';
-import { authApi } from '../../features/auth/api/auth.api';
-import { Card } from '../../components/ui/Card.tsx';
-import { PageHeader } from '../../components/ui/PageHeader.tsx';
+import { Input } from '../../components/ui/Input';
+import { Button } from '../../components/ui/Button';
+import { registerSchema, type RegisterFormData } from '../../features/auth/auth.types';
+import { authApi } from '../../features/auth/auth.api';
+import { Card } from '../../components/ui/Card';
+import { PageHeader } from '../../components/ui/PageHeader';
 import type { AxiosError } from "axios";
-import type { ApiError } from "../../api/types.ts";
-import { PageContainer } from "../../components/ui/PageContainer.tsx";
+import type { ApiError } from "../../api/types";
+import { PageContainer } from "../../components/ui/PageContainer";
 
 export const RegisterPage = () => {
     const { t, i18n } = useTranslation();
@@ -71,7 +70,6 @@ export const RegisterPage = () => {
                 </div>
 
                 <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
-                    {/* Секция логина */}
                     <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8 mb-4 border-b border-border pb-8">
                         <Input
                             label={`${t('auth.email')} *`}
@@ -91,7 +89,6 @@ export const RegisterPage = () => {
                         />
                     </div>
 
-                    {/* Личные данные */}
                     <Input
                         label={`${t('auth.first_name')} *`}
                         icon={<User size={16} />}
@@ -118,7 +115,6 @@ export const RegisterPage = () => {
                         {...register('country')}
                     />
 
-                    {/* Организация */}
                     <div className="md:col-span-2">
                         <Input
                             label={t('auth.organization')}

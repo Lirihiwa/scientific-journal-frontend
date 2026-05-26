@@ -14,8 +14,8 @@ import {
     Users
 } from 'lucide-react';
 import { cn } from '../../utils/cn';
-import { useSidebarStore } from '../../entities/layout/model/sidebar.store';
-import { useSessionStore } from '../../entities/session/model/store';
+import { useSidebarStore } from '../../stores/sidebar.store';
+import { useSessionStore } from '../../stores/session.store';
 import React from 'react';
 
 const NavItem = ({ to, icon, label, isCollapsed, end = false }: {

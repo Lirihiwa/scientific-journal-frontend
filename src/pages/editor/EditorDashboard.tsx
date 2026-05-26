@@ -1,26 +1,25 @@
-// src/pages/editor/EditorDashboard.tsx
 import { useMemo, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { AlertCircle, CheckCircle2, Eye, FileText, Inbox, Layers, Search, Send, XCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { editorApi } from '../../features/editor/api/editor.api';
-import { journalApi } from '../../entities/journal/api/journal.api';
-import { Button } from '../../components/ui/Button.tsx';
-import { Input } from '../../components/ui/Input.tsx';
-import { TextArea } from '../../components/ui/TextArea.tsx';
-import { Modal } from '../../components/ui/Modal.tsx';
-import { Badge } from '../../components/ui/Badge.tsx';
-import { JournalStructure } from '../../widgets/editor/ui/JournalStructure';
-import { PageHeader } from '../../components/ui/PageHeader.tsx';
-import { Card } from '../../components/ui/Card.tsx';
-import { SkeletonList } from '../../components/ui/Skeleton.tsx';
-import { cn } from '../../utils/cn.ts';
-import type { SubmissionStatus } from '../../entities/submission/model/types';
-import type { Issue } from '../../entities/journal/model/types.ts';
-import { SubmissionCard } from "../../widgets/submission/ui/SubmissionCard.tsx";
-import { PageContainer } from "../../components/ui/PageContainer.tsx";
+import { editorApi } from '../../features/editor/editor.api';
+import { journalApi } from '../../features/journal/journal.api';
+import { Button } from '../../components/ui/Button';
+import { Input } from '../../components/ui/Input';
+import { TextArea } from '../../components/ui/TextArea';
+import { Modal } from '../../components/ui/Modal';
+import { Badge } from '../../components/ui/Badge';
+import { JournalStructure } from '../../features/editor/components/JournalStructure';
+import { PageHeader } from '../../components/ui/PageHeader';
+import { Card } from '../../components/ui/Card';
+import { SkeletonList } from '../../components/ui/Skeleton';
+import { cn } from '../../utils/cn';
+import type { SubmissionStatus } from '../../features/submission/submission.types';
+import type { Issue } from '../../features/journal/journal.types';
+import { SubmissionCard } from "../../features/submission/components/SubmissionCard";
+import { PageContainer } from "../../components/ui/PageContainer";
 
 export const EditorDashboard = () => {
     const { t, i18n } = useTranslation();
@@ -41,13 +40,11 @@ export const EditorDashboard = () => {
 
     const queryClient = useQueryClient();
 
-    // Загрузка заявок
     const { data: allSubmissions, isLoading: isSubmissionsLoading } = useQuery({
         queryKey: ['editor-submissions', 'all'],
         queryFn: () => editorApi.getAllSubmissions()
     });
 
-    // Загрузка выпусков
     const { data: issues } = useQuery({
         queryKey: ['editor-all-issues'],
         queryFn: async () => {

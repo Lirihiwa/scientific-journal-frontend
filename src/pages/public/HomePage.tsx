@@ -1,14 +1,13 @@
-// src/pages/public/HomePage.tsx
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Info, FileText, Users, BookOpen, Scale, Send, Fingerprint } from 'lucide-react';
-import { journalApi } from '../../entities/journal/api/journal.api';
-import { Skeleton, SkeletonList } from '../../components/ui/Skeleton.tsx';
-import { PublicationCard } from '../../widgets/publication/ui/PublicationCard';
-import { Button } from '../../components/ui/Button.tsx';
-import { Card } from '../../components/ui/Card.tsx';
-import { PageContainer } from "../../components/ui/PageContainer.tsx";
+import { journalApi } from '../../features/journal/journal.api';
+import { Skeleton, SkeletonList } from '../../components/ui/Skeleton';
+import { PublicationCard } from '../../features/journal/components/PublicationCard';
+import { Button } from '../../components/ui/Button';
+import { Card } from '../../components/ui/Card';
+import { PageContainer } from "../../components/ui/PageContainer";
 
 export const HomePage = () => {
     const { t, i18n } = useTranslation();
@@ -33,10 +32,7 @@ export const HomePage = () => {
 
     return (
         <PageContainer className="grid grid-cols-1 lg:grid-cols-4 gap-12">
-            {/* ЦЕНТРАЛЬНЫЙ БЛОК */}
             <div className="lg:col-span-3 space-y-12">
-
-                {/* Информация о журнале */}
                 <section className="bg-card border border-border border-t-4 border-t-primary shadow-sm p-8 rounded-sm">
                     <div className="flex flex-col md:flex-row gap-8 items-start">
                         <div className="w-48 h-64 bg-muted border border-border flex items-center justify-center shrink-0 text-muted-foreground/40 font-serif text-center p-4">
@@ -64,7 +60,6 @@ export const HomePage = () => {
                     </div>
                 </section>
 
-                {/* Список последних статей */}
                 <section className="space-y-6">
                     <div className="flex items-center justify-between border-b border-border pb-2">
                         <h2 className="text-xl font-heading font-bold text-foreground">
@@ -83,7 +78,6 @@ export const HomePage = () => {
                 </section>
             </div>
 
-            {/* ПРАВАЯ КОЛОНКА */}
             <aside className="lg:col-span-1 space-y-6">
                 <Link to="/submissions/new">
                     <Button size="lg" className="w-full shadow-md">

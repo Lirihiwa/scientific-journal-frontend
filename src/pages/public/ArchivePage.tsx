@@ -1,14 +1,13 @@
-// src/pages/public/ArchivePage.tsx
 import { useQuery } from '@tanstack/react-query';
 import { Calendar, ArrowRight, BookOpen, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { journalApi } from '../../entities/journal/api/journal.api';
-import { PageHeader } from '../../components/ui/PageHeader.tsx';
-import { Card } from '../../components/ui/Card.tsx';
-import { Skeleton } from '../../components/ui/Skeleton.tsx';
-import { PageContainer } from "../../components/ui/PageContainer.tsx";
-import { Badge } from '../../components/ui/Badge.tsx';
+import { journalApi } from '../../features/journal/journal.api';
+import { PageHeader } from '../../components/ui/PageHeader';
+import { Card } from '../../components/ui/Card';
+import { Skeleton } from '../../components/ui/Skeleton';
+import { PageContainer } from "../../components/ui/PageContainer";
+import { Badge } from '../../components/ui/Badge';
 
 export const ArchivePage = () => {
     const { t, i18n } = useTranslation();
@@ -42,7 +41,6 @@ export const ArchivePage = () => {
             <div className="space-y-12">
                 {volumes?.map((vol) => (
                     <section key={vol.id} className="space-y-6">
-                        {/* Заголовок тома */}
                         <div className="flex items-end gap-4 border-b border-border pb-3">
                             <h2 className="text-2xl font-heading font-bold text-foreground leading-none">
                                 {isRu ? `Том ${vol.number}` : `Volume ${vol.number}`}
@@ -52,13 +50,11 @@ export const ArchivePage = () => {
                             </span>
                         </div>
 
-                        {/* Список выпусков */}
                         <IssuesList volumeId={vol.id} />
                     </section>
                 ))}
             </div>
 
-            {/* Пустое состояние */}
             {volumes?.length === 0 && (
                 <Card variant="muted" padding="lg" className="text-center py-16">
                     <FileText size={40} className="mx-auto text-muted-foreground mb-4 opacity-50" />
@@ -76,7 +72,6 @@ export const ArchivePage = () => {
     );
 };
 
-// Вспомогательный компонент списка выпусков
 const IssuesList = ({ volumeId }: { volumeId: string }) => {
     const { t, i18n } = useTranslation();
     const isRu = i18n.language.startsWith('ru');

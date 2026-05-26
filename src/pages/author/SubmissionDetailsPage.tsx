@@ -1,4 +1,3 @@
-// src/pages/author/SubmissionDetailsPage.tsx
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -6,16 +5,16 @@ import { useTranslation } from 'react-i18next';
 import { ChevronLeft, FileUp, CheckCircle, Info, Save } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { Button } from '../../components/ui/Button.tsx';
-import { Badge } from '../../components/ui/Badge.tsx';
-import { Card } from '../../components/ui/Card.tsx';
-import { PageHeader } from '../../components/ui/PageHeader.tsx';
-import { SectionHeader } from '../../components/ui/SectionHeader.tsx';
-import { Skeleton } from '../../components/ui/Skeleton.tsx';
-import { cn } from '../../utils/cn.ts';
-import { submissionApi } from '../../entities/submission/api/submission.api';
-import { SubmissionTimeline } from '../../widgets/submission/ui/SubmissionTimeline';
-import { PageContainer } from "../../components/ui/PageContainer.tsx";
+import { Button } from '../../components/ui/Button';
+import { Badge } from '../../components/ui/Badge';
+import { Card } from '../../components/ui/Card';
+import { PageHeader } from '../../components/ui/PageHeader';
+import { SectionHeader } from '../../components/ui/SectionHeader';
+import { Skeleton } from '../../components/ui/Skeleton';
+import { cn } from '../../utils/cn';
+import { submissionApi } from '../../features/submission/submission.api';
+import { SubmissionTimeline } from '../../features/submission/components/SubmissionTimeline';
+import { PageContainer } from "../../components/ui/PageContainer";
 
 export const SubmissionDetailsPage = () => {
     const { id } = useParams();
@@ -166,9 +165,8 @@ export const SubmissionDetailsPage = () => {
                     </Card>
                 </div>
 
-                {/* ПРАВАЯ КОЛОНКА (Таймлайн) */}
                 <div className="lg:col-span-1 sticky top-24">
-                    <SubmissionTimeline events={(submission as any).events || []} />
+                    <SubmissionTimeline events={submission.events || []} />
                 </div>
             </div>
 

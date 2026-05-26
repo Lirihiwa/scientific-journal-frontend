@@ -1,7 +1,7 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 import { useSessionStore } from '../../stores/session.store';
-import type { RoleCode } from '../../entities/user/model/types';
+import type { RoleCode } from '../../features/auth/auth.types.ts';
 import React from "react";
 
 interface RoleGuardProps {

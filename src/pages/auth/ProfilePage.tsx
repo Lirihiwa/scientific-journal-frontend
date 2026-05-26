@@ -1,10 +1,9 @@
-// src/pages/auth/ProfilePage.tsx
 import { User as UserIcon, Mail, Building, Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { useSessionStore } from '../../entities/session/model/store';
-import { Card } from '../../components/ui/Card.tsx';
-import { PageHeader } from '../../components/ui/PageHeader.tsx';
-import { PageContainer } from "../../components/ui/PageContainer.tsx";
+import { useSessionStore } from '../../stores/session.store';
+import { Card } from '../../components/ui/Card';
+import { PageHeader } from '../../components/ui/PageHeader';
+import { PageContainer } from "../../components/ui/PageContainer";
 
 export const ProfilePage = () => {
     const { t, i18n } = useTranslation();
@@ -21,7 +20,6 @@ export const ProfilePage = () => {
             />
 
             <Card padding="none" className="overflow-hidden flex flex-col md:flex-row">
-                {/* Левая панель с аватаром */}
                 <div className="p-12 bg-muted/30 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-border min-w-[300px]">
                     <div className="w-24 h-24 bg-primary text-primary-foreground rounded-full flex items-center justify-center mb-6 shadow-xl">
                         <UserIcon size={48} />
@@ -31,7 +29,6 @@ export const ProfilePage = () => {
                     </div>
                 </div>
 
-                {/* Основная информация */}
                 <div className="p-12 space-y-10 flex-grow">
                     <div className="space-y-2">
                         <h2 className="text-3xl font-heading font-bold">
@@ -44,7 +41,6 @@ export const ProfilePage = () => {
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-8 border-t border-border">
-                        {/* Организация */}
                         <div className="space-y-4">
                             <h4 className="text-[9px] font-accent font-bold uppercase tracking-widest text-muted-foreground mb-1">
                                 {t('auth.organization')}
@@ -55,7 +51,6 @@ export const ProfilePage = () => {
                             </p>
                         </div>
 
-                        {/* Страна */}
                         <div className="space-y-4">
                             <h4 className="text-[9px] font-accent font-bold uppercase tracking-widest text-muted-foreground mb-1">
                                 {t('auth.country')}

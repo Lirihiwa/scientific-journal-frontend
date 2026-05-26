@@ -1,4 +1,3 @@
-// src/pages/author/CreateSubmissionPage.tsx
 import { useState } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -8,16 +7,16 @@ import { useTranslation } from 'react-i18next';
 import { Save, Plus, Trash2, FileUp, CheckCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { Input } from '../../components/ui/Input.tsx';
-import { TextArea } from '../../components/ui/TextArea.tsx';
-import { Button } from '../../components/ui/Button.tsx';
-import { submissionFormSchema, type SubmissionFormData } from '../../features/submission/model/schemas';
-import { submissionApi } from '../../entities/submission/api/submission.api';
-import { cn } from "../../utils/cn.ts";
-import { PageHeader } from '../../components/ui/PageHeader.tsx';
-import { Card } from '../../components/ui/Card.tsx';
-import { SectionHeader } from '../../components/ui/SectionHeader.tsx';
-import { PageContainer } from "../../components/ui/PageContainer.tsx";
+import { Input } from '../../components/ui/Input';
+import { TextArea } from '../../components/ui/TextArea';
+import { Button } from '../../components/ui/Button';
+import { submissionFormSchema, type SubmissionFormData } from '../../features/submission/submission.types';
+import { submissionApi } from '../../features/submission/submission.api';
+import { cn } from "../../utils/cn";
+import { PageHeader } from '../../components/ui/PageHeader';
+import { Card } from '../../components/ui/Card';
+import { SectionHeader } from '../../components/ui/SectionHeader';
+import { PageContainer } from "../../components/ui/PageContainer";
 
 export const CreateSubmissionPage = () => {
     const { t, i18n } = useTranslation();
@@ -54,8 +53,6 @@ export const CreateSubmissionPage = () => {
             />
 
             <form onSubmit={handleSubmit(data => createMutation.mutate(data))} className="space-y-12">
-
-                {/* === СЕКЦИЯ 01: МЕТАДАННЫЕ === */}
                 <Card padding="lg" variant="accent">
                     <SectionHeader title={t('submission.form.metadata')} prefix="01." />
                     <div className="space-y-6">
@@ -84,7 +81,6 @@ export const CreateSubmissionPage = () => {
                     </div>
                 </Card>
 
-                {/* === СЕКЦИЯ 02: АННОТАЦИЯ === */}
                 <Card padding="lg" variant="accent">
                     <SectionHeader title={t('submission.form.abstract_ru')} prefix="02." />
                     <div className="space-y-6">
@@ -101,7 +97,6 @@ export const CreateSubmissionPage = () => {
                     </div>
                 </Card>
 
-                {/* === СЕКЦИЯ 03: КОЛЛЕКТИВ АВТОРОВ === */}
                 <Card padding="lg" variant="accent">
                     <div className="flex justify-between items-center mb-6">
                         <SectionHeader title={t('submission.form.authors')} prefix="03." className="mb-0 pb-0 border-0" />
@@ -141,7 +136,6 @@ export const CreateSubmissionPage = () => {
                     </div>
                 </Card>
 
-                {/* === СЕКЦИЯ 04: РУКОПИСЬ === */}
                 <Card padding="lg" variant="accent">
                     <SectionHeader title={t('submission.form.file')} prefix="04." />
 
@@ -176,7 +170,6 @@ export const CreateSubmissionPage = () => {
                         )}
                     </div>
 
-                    {/* Чекбокс подтверждения */}
                     <div className="flex items-start gap-3 p-4 bg-muted/50 mt-6 rounded-sm">
                         <input
                             type="checkbox"
@@ -194,7 +187,6 @@ export const CreateSubmissionPage = () => {
                     )}
                 </Card>
 
-                {/* Кнопка отправки */}
                 <div className="flex justify-center pt-6">
                     <Button
                         type="submit"

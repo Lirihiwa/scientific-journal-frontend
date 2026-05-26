@@ -1,12 +1,11 @@
-// src/pages/public/IssuePage.tsx
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { ChevronLeft, Calendar } from 'lucide-react';
-import { journalApi } from '../../entities/journal/api/journal.api';
-import { PublicationCard } from '../../widgets/publication/ui/PublicationCard';
-import { Skeleton } from '../../components/ui/Skeleton.tsx';
-import { PageContainer } from "../../components/ui/PageContainer.tsx";
+import { journalApi } from '../../features/journal/journal.api';
+import { PublicationCard } from '../../features/journal/components/PublicationCard';
+import { Skeleton } from '../../components/ui/Skeleton';
+import { PageContainer } from "../../components/ui/PageContainer";
 
 export const IssuePage = () => {
     const { id } = useParams();
@@ -41,8 +40,6 @@ export const IssuePage = () => {
 
     return (
         <PageContainer className="space-y-10">
-
-            {/* Навигация */}
             <Link
                 to="/archive"
                 className="inline-flex items-center gap-2 text-[9px] font-accent font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors"
@@ -51,7 +48,6 @@ export const IssuePage = () => {
                 {t('nav.archive')}
             </Link>
 
-            {/* Шапка выпуска */}
             <header className="p-8 bg-card border border-border">
                 <div className="space-y-4">
                     <p className="text-[9px] font-accent font-bold uppercase tracking-[0.4em] text-primary">
@@ -75,7 +71,6 @@ export const IssuePage = () => {
                 </div>
             </header>
 
-            {/* Содержание */}
             <section className="space-y-6">
                 <h3 className="text-[9px] font-accent font-bold uppercase tracking-[0.3em] text-primary pb-2 border-b-2 border-primary w-fit">
                     {isRu ? 'Содержание' : 'Contents'}

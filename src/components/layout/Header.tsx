@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { LogOut, User as UserIcon, Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { useSessionStore } from '../../entities/session/model/store';
+import { useSessionStore } from '../../stores/session.store';
 
 export const Header = () => {
     const { user, logout } = useSessionStore();

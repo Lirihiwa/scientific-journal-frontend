@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { Header } from './Header';
 import { Sidebar } from './Sidebar';
-import { useSidebarStore } from '../../entities/layout/model/sidebar.store';
+import { useSidebarStore } from '../../stores/sidebar.store';
 
 export const MainLayout = () => {
     const { isCollapsed } = useSidebarStore();

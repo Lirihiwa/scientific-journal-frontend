@@ -1,18 +1,16 @@
-// src/pages/public/PublicationPage.tsx
 import { Link, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { Calendar, ChevronLeft, Download, FileText, Fingerprint, Quote } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { journalApi } from '../../entities/journal/api/journal.api';
-import { Button } from '../../components/ui/Button.tsx';
-import { Skeleton } from '../../components/ui/Skeleton.tsx';
-import { Card } from '../../components/ui/Card.tsx';
-import { Badge } from '../../components/ui/Badge.tsx';
-import { PageContainer } from "../../components/ui/PageContainer.tsx";
+import { journalApi } from '../../features/journal/journal.api';
+import { Button } from '../../components/ui/Button';
+import { Skeleton } from '../../components/ui/Skeleton';
+import { Card } from '../../components/ui/Card';
+import { Badge } from '../../components/ui/Badge';
+import { PageContainer } from "../../components/ui/PageContainer";
 
-// Вспомогательный блок для сайдбара
 const MetaBlock = ({
                        title,
                        icon,
@@ -86,7 +84,6 @@ export const PublicationPage = () => {
     const displayAbstract = isRu ? pub.abstract_ru : (pub.abstract_en || pub.abstract_ru);
     const displayKeywords = isRu ? pub.keywords_ru : (pub.keywords_en || pub.keywords_ru);
 
-    // Заглушка данных, которые обычно приходят из Issue
     const issueInfo = isRu ? `№1 · ${year}` : `Issue 1 · ${year}`;
 
     const handleCopyCitation = () => {
@@ -97,7 +94,6 @@ export const PublicationPage = () => {
 
     return (
         <PageContainer>
-            {/* ХЛЕБНЫЕ КРОШКИ */}
             <nav className="mb-6 pb-4 border-b border-border">
                 <Link
                     to="/archive"
@@ -109,7 +105,6 @@ export const PublicationPage = () => {
             </nav>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {/* КОНТЕНТ */}
                 <article className="lg:col-span-2 space-y-8">
                     <header className="space-y-3 pb-6 border-b border-border">
                         <div className="flex flex-wrap items-center gap-3">
@@ -131,7 +126,6 @@ export const PublicationPage = () => {
                         )}
                     </header>
 
-                    {/* Авторы */}
                     <section className="space-y-2">
                         <h2 className="text-[9px] font-accent font-bold uppercase tracking-widest text-muted-foreground">
                             {isRu ? 'Авторы' : 'Authors'}
@@ -150,7 +144,6 @@ export const PublicationPage = () => {
                         </div>
                     </section>
 
-                    {/* Аннотация */}
                     <section className="space-y-3">
                         <h2 className="text-[9px] font-accent font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
                             <FileText size={12} />
@@ -161,7 +154,6 @@ export const PublicationPage = () => {
                         </p>
                     </section>
 
-                    {/* Ключевые слова */}
                     {displayKeywords && (
                         <section className="pt-4 border-t border-border">
                             <p className="text-[10px]">
@@ -176,7 +168,6 @@ export const PublicationPage = () => {
                     )}
                 </article>
 
-                {/* САЙДБАР */}
                 <aside className="lg:col-span-1 space-y-6">
                     <Card variant="accent" padding="md" className="space-y-4">
                         {pub.pdf_download_allowed ? (
@@ -217,7 +208,6 @@ export const PublicationPage = () => {
                         </MetaBlock>
                     </Card>
 
-                    {/* Цитирование */}
                     <Card variant="muted" padding="md" className="space-y-3">
                         <h4 className="flex items-center gap-2 text-[9px] font-accent font-bold uppercase tracking-widest text-primary">
                             <Quote size={12} />
