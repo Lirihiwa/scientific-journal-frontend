@@ -39,8 +39,8 @@
         }
     },
     "auth": {
-        "login_title": "System Login",
-        "register_title": "Registration",
+        "login_title": "Sign in",
+        "register_title": "Sign up",
         "email": "Email",
         "password": "Password",
         "first_name": "First Name",
@@ -50,8 +50,8 @@
         "country": "Country",
         "no_account": "Don't have a profile yet?",
         "have_account": "Already have an account?",
-        "register_action": "Register",
-        "login_action": "Log In",
+        "register_action": "Sign up",
+        "login_action": "Sign in",
         "login_success": "Login successful",
         "login_error": "Invalid username or password",
         "register_success": "Registration complete. You may now log in.",
