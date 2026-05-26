@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Info, FileText, Users, BookOpen, Scale, Send, Fingerprint } from 'lucide-react';
 import { journalApi } from '../../entities/journal/api/journal.api';
-import { Skeleton, SkeletonList } from '../../shared/ui/Skeleton';
+import { Skeleton, SkeletonList } from '../../components/ui/Skeleton.tsx';
 import { PublicationCard } from '../../widgets/publication/ui/PublicationCard';
-import { Button } from '../../shared/ui/Button';
-import { Card } from '../../shared/ui/Card';
-import { PageContainer } from "../../shared/ui/PageContainer";
+import { Button } from '../../components/ui/Button.tsx';
+import { Card } from '../../components/ui/Card.tsx';
+import { PageContainer } from "../../components/ui/PageContainer.tsx";
 
 export const HomePage = () => {
     const { t, i18n } = useTranslation();

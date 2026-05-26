@@ -6,16 +6,16 @@ import { useTranslation } from 'react-i18next';
 import { ChevronLeft, FileUp, CheckCircle, Info, Save } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { Button } from '../../shared/ui/Button';
-import { Badge } from '../../shared/ui/Bagde';
-import { Card } from '../../shared/ui/Card';
-import { PageHeader } from '../../shared/ui/PageHeader';
-import { SectionHeader } from '../../shared/ui/SectionHeader';
-import { Skeleton } from '../../shared/ui/Skeleton';
-import { cn } from '../../shared/lib/utils';
+import { Button } from '../../components/ui/Button.tsx';
+import { Badge } from '../../components/ui/Badge.tsx';
+import { Card } from '../../components/ui/Card.tsx';
+import { PageHeader } from '../../components/ui/PageHeader.tsx';
+import { SectionHeader } from '../../components/ui/SectionHeader.tsx';
+import { Skeleton } from '../../components/ui/Skeleton.tsx';
+import { cn } from '../../utils/cn.ts';
 import { submissionApi } from '../../entities/submission/api/submission.api';
 import { SubmissionTimeline } from '../../widgets/submission/ui/SubmissionTimeline';
-import { PageContainer } from "../../shared/ui/PageContainer";
+import { PageContainer } from "../../components/ui/PageContainer.tsx";
 
 export const SubmissionDetailsPage = () => {
     const { id } = useParams();

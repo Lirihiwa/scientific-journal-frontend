@@ -7,20 +7,20 @@ import { toast } from 'sonner';
 
 import { editorApi } from '../../features/editor/api/editor.api';
 import { journalApi } from '../../entities/journal/api/journal.api';
-import { Button } from '../../shared/ui/Button';
-import { Input } from '../../shared/ui/Input';
-import { TextArea } from '../../shared/ui/TextArea';
-import { Modal } from '../../shared/ui/Modal';
-import { Badge } from '../../shared/ui/Bagde';
+import { Button } from '../../components/ui/Button.tsx';
+import { Input } from '../../components/ui/Input.tsx';
+import { TextArea } from '../../components/ui/TextArea.tsx';
+import { Modal } from '../../components/ui/Modal.tsx';
+import { Badge } from '../../components/ui/Badge.tsx';
 import { JournalStructure } from '../../widgets/editor/ui/JournalStructure';
-import { PageHeader } from '../../shared/ui/PageHeader';
-import { Card } from '../../shared/ui/Card';
-import { SkeletonList } from '../../shared/ui/Skeleton';
-import { cn } from '../../shared/lib/utils';
+import { PageHeader } from '../../components/ui/PageHeader.tsx';
+import { Card } from '../../components/ui/Card.tsx';
+import { SkeletonList } from '../../components/ui/Skeleton.tsx';
+import { cn } from '../../utils/cn.ts';
 import type { SubmissionStatus } from '../../entities/submission/model/types';
 import type { Issue } from '../../entities/journal/model/types.ts';
 import { SubmissionCard } from "../../widgets/submission/ui/SubmissionCard.tsx";
-import { PageContainer } from "../../shared/ui/PageContainer.tsx";
+import { PageContainer } from "../../components/ui/PageContainer.tsx";
 
 export const EditorDashboard = () => {
     const { t, i18n } = useTranslation();

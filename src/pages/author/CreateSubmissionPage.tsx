@@ -8,16 +8,16 @@ import { useTranslation } from 'react-i18next';
 import { Save, Plus, Trash2, FileUp, CheckCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { Input } from '../../shared/ui/Input';
-import { TextArea } from '../../shared/ui/TextArea';
-import { Button } from '../../shared/ui/Button';
+import { Input } from '../../components/ui/Input.tsx';
+import { TextArea } from '../../components/ui/TextArea.tsx';
+import { Button } from '../../components/ui/Button.tsx';
 import { submissionFormSchema, type SubmissionFormData } from '../../features/submission/model/schemas';
 import { submissionApi } from '../../entities/submission/api/submission.api';
-import { cn } from "../../shared/lib/utils.ts";
-import { PageHeader } from '../../shared/ui/PageHeader';
-import { Card } from '../../shared/ui/Card';
-import { SectionHeader } from '../../shared/ui/SectionHeader';
-import { PageContainer } from "../../shared/ui/PageContainer.tsx";
+import { cn } from "../../utils/cn.ts";
+import { PageHeader } from '../../components/ui/PageHeader.tsx';
+import { Card } from '../../components/ui/Card.tsx';
+import { SectionHeader } from '../../components/ui/SectionHeader.tsx';
+import { PageContainer } from "../../components/ui/PageContainer.tsx";
 
 export const CreateSubmissionPage = () => {
     const { t, i18n } = useTranslation();

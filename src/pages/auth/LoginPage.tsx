@@ -7,14 +7,14 @@ import { ShieldCheck, Mail, Lock } from 'lucide-react';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 
-import { Input } from '../../shared/ui/Input';
-import { Button } from '../../shared/ui/Button';
+import { Input } from '../../components/ui/Input.tsx';
+import { Button } from '../../components/ui/Button.tsx';
 import { loginSchema, type LoginFormData } from '../../features/auth/model/schemas';
 import { authApi } from '../../features/auth/api/auth.api';
 import { useSessionStore } from '../../entities/session/model/store';
-import { Card } from '../../shared/ui/Card';
-import { PageHeader } from '../../shared/ui/PageHeader';
-import { PageContainer } from "../../shared/ui/PageContainer.tsx";
+import { Card } from '../../components/ui/Card.tsx';
+import { PageHeader } from '../../components/ui/PageHeader.tsx';
+import { PageContainer } from "../../components/ui/PageContainer.tsx";
 
 export const LoginPage = () => {
     const { t, i18n } = useTranslation();

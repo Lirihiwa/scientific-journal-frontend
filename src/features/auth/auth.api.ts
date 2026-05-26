@@ -1,7 +1,5 @@
-// src/features/auth/api/auth.api.ts
-import { apiClient } from '../../../api/client.ts';
-import type { AuthResult, User } from '../../../entities/user/model/types';
-import type { LoginFormData, RegisterFormData } from '../model/schemas'; // Это мы создадим на этапе форм
+import { apiClient } from '../../api/client';
+import type { AuthResult, User, LoginFormData, RegisterFormData } from './auth.types';
 
 export const authApi = {
     login: async (data: LoginFormData) => {

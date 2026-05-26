@@ -2,9 +2,9 @@
 import { User as UserIcon, Mail, Building, Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useSessionStore } from '../../entities/session/model/store';
-import { Card } from '../../shared/ui/Card';
-import { PageHeader } from '../../shared/ui/PageHeader';
-import { PageContainer } from "../../shared/ui/PageContainer.tsx";
+import { Card } from '../../components/ui/Card.tsx';
+import { PageHeader } from '../../components/ui/PageHeader.tsx';
+import { PageContainer } from "../../components/ui/PageContainer.tsx";
 
 export const ProfilePage = () => {
     const { t, i18n } = useTranslation();

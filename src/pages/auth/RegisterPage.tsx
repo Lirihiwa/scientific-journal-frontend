@@ -7,15 +7,15 @@ import { useTranslation } from 'react-i18next';
 import { UserPlus, Mail, Lock, User, Building, Globe } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { Input } from '../../shared/ui/Input';
-import { Button } from '../../shared/ui/Button';
+import { Input } from '../../components/ui/Input.tsx';
+import { Button } from '../../components/ui/Button.tsx';
 import { registerSchema, type RegisterFormData } from '../../features/auth/model/schemas';
 import { authApi } from '../../features/auth/api/auth.api';
-import { Card } from '../../shared/ui/Card';
-import { PageHeader } from '../../shared/ui/PageHeader';
+import { Card } from '../../components/ui/Card.tsx';
+import { PageHeader } from '../../components/ui/PageHeader.tsx';
 import type { AxiosError } from "axios";
-import type { ApiError } from "../../shared/api/types.ts";
-import { PageContainer } from "../../shared/ui/PageContainer.tsx";
+import type { ApiError } from "../../api/types.ts";
+import { PageContainer } from "../../components/ui/PageContainer.tsx";
 
 export const RegisterPage = () => {
     const { t, i18n } = useTranslation();

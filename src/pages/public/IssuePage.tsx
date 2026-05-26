@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { ChevronLeft, Calendar } from 'lucide-react';
 import { journalApi } from '../../entities/journal/api/journal.api';
 import { PublicationCard } from '../../widgets/publication/ui/PublicationCard';
-import { Skeleton } from '../../shared/ui/Skeleton';
-import { PageContainer } from "../../shared/ui/PageContainer.tsx";
+import { Skeleton } from '../../components/ui/Skeleton.tsx';
+import { PageContainer } from "../../components/ui/PageContainer.tsx";
 
 export const IssuePage = () => {
     const { id } = useParams();

@@ -4,12 +4,12 @@ import { FileX, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { submissionApi } from '../../entities/submission/api/submission.api';
-import { Button } from '../../shared/ui/Button';
-import { PageHeader } from '../../shared/ui/PageHeader';
-import { SkeletonList } from '../../shared/ui/Skeleton';
-import { EmptyState } from '../../shared/ui/EmptyState';
+import { Button } from '../../components/ui/Button.tsx';
+import { PageHeader } from '../../components/ui/PageHeader.tsx';
+import { SkeletonList } from '../../components/ui/Skeleton.tsx';
+import { EmptyState } from '../../components/ui/EmptyState.tsx';
 import { SubmissionCard } from "../../widgets/submission/ui/SubmissionCard.tsx";
-import { PageContainer } from "../../shared/ui/PageContainer.tsx";
+import { PageContainer } from "../../components/ui/PageContainer.tsx";
 
 export const DashboardPage = () => {
     const { t, i18n } = useTranslation();

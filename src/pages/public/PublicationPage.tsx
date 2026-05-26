@@ -6,11 +6,11 @@ import { Calendar, ChevronLeft, Download, FileText, Fingerprint, Quote } from 'l
 import { toast } from 'sonner';
 
 import { journalApi } from '../../entities/journal/api/journal.api';
-import { Button } from '../../shared/ui/Button';
-import { Skeleton } from '../../shared/ui/Skeleton';
-import { Card } from '../../shared/ui/Card';
-import { Badge } from '../../shared/ui/Bagde';
-import { PageContainer } from "../../shared/ui/PageContainer.tsx";
+import { Button } from '../../components/ui/Button.tsx';
+import { Skeleton } from '../../components/ui/Skeleton.tsx';
+import { Card } from '../../components/ui/Card.tsx';
+import { Badge } from '../../components/ui/Badge.tsx';
+import { PageContainer } from "../../components/ui/PageContainer.tsx";
 
 // Вспомогательный блок для сайдбара
 const MetaBlock = ({

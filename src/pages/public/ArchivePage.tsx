@@ -4,11 +4,11 @@ import { Calendar, ArrowRight, BookOpen, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { journalApi } from '../../entities/journal/api/journal.api';
-import { PageHeader } from '../../shared/ui/PageHeader';
-import { Card } from '../../shared/ui/Card';
-import { Skeleton } from '../../shared/ui/Skeleton';
-import { PageContainer } from "../../shared/ui/PageContainer";
-import { Badge } from '../../shared/ui/Bagde';
+import { PageHeader } from '../../components/ui/PageHeader.tsx';
+import { Card } from '../../components/ui/Card.tsx';
+import { Skeleton } from '../../components/ui/Skeleton.tsx';
+import { PageContainer } from "../../components/ui/PageContainer.tsx";
+import { Badge } from '../../components/ui/Badge.tsx';
 
 export const ArchivePage = () => {
     const { t, i18n } = useTranslation();

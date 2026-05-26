@@ -1,9 +1,9 @@
 // src/pages/public/StaticPagePlaceholder.tsx
 import { useTranslation } from 'react-i18next';
-import { PageHeader } from '../../shared/ui/PageHeader';
-import { Card } from '../../shared/ui/Card';
+import { PageHeader } from '../../components/ui/PageHeader.tsx';
+import { Card } from '../../components/ui/Card.tsx';
 import { FileText } from 'lucide-react';
-import { PageContainer } from "../../shared/ui/PageContainer.tsx";
+import { PageContainer } from "../../components/ui/PageContainer.tsx";
 
 export const StaticPagePlaceholder = ({ title }: { title: string }) => {
     const { i18n } = useTranslation();

@@ -8,8 +8,8 @@ import {Toaster} from 'sonner';
 import {useSessionStore} from '../entities/session/model/store';
 
 // Providers & Layouts
-import {RoleGuard} from './providers/RoleGuard';
-import {MainLayout} from '../widgets/layout/ui/MainLayout';
+import {RoleGuard} from '../components/layout/RoleGuard.tsx';
+import {MainLayout} from '../components/layout/MainLayout.tsx';
 
 // PAGES (Импортируем из слоя pages)
 // Auth
