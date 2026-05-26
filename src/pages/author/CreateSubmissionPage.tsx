@@ -1,49 +1,28 @@
-import { useState } from 'react';
-import { useForm, useFieldArray } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
-import { useTranslation } from 'react-i18next';
-import { Save, Plus, Trash2 } from 'lucide-react';
-import { toast } from 'sonner';
-
+import { Plus, Trash2, Save } from 'lucide-react';
+import { useCreateSubmission } from '../../features/submission/hooks/useCreateSubmission';
 import { Input } from '../../components/ui/Input';
 import { TextArea } from '../../components/ui/TextArea';
 import { Button } from '../../components/ui/Button';
 import { FileUploader } from '../../components/ui/FileUploader';
-import { submissionFormSchema, type SubmissionFormData } from '../../features/submission/submission.types';
-import { submissionApi } from '../../features/submission/submission.api';
 import { PageHeader } from '../../components/ui/PageHeader';
 import { Card } from '../../components/ui/Card';
 import { SectionHeader } from '../../components/ui/SectionHeader';
 import { PageContainer } from "../../components/ui/PageContainer";
 
 export const CreateSubmissionPage = () => {
-    const { t, i18n } = useTranslation();
-    const isRu = i18n.language.startsWith('ru');
-    const navigate = useNavigate();
-    const [file, setFile] = useState<File | null>(null);
-
-    const { register, control, handleSubmit, formState: { errors } } = useForm<SubmissionFormData>({
-        resolver: zodResolver(submissionFormSchema),
-        defaultValues: { manuscript_language: isRu ? 'ru' : 'en', coauthors: [], policy_accepted: false }
-    });
-
-    const { fields, append, remove } = useFieldArray({ control, name: "coauthors" });
-
-    const createMutation = useMutation({
-        mutationFn: async (data: SubmissionFormData) => {
-            if (!file) throw new Error(isRu ? "Пожалуйста, загрузите файл рукописи" : "Please upload a manuscript file");
-            const submission = await submissionApi.create(data);
-            await submissionApi.uploadFile(submission.id, file);
-            return submission;
-        },
-        onSuccess: () => {
-            toast.success(isRu ? "Рукопись успешно отправлена" : "Manuscript submitted successfully");
-            navigate('/submissions');
-        },
-        onError: (error: any) => toast.error(error.message || (isRu ? "Ошибка при отправке" : "Submission error"))
-    });
+    const {
+        register,
+        errors,
+        handleSubmit,
+        fields,
+        append,
+        remove,
+        file,
+        setFile,
+        createMutation,
+        t,
+        isRu
+    } = useCreateSubmission();
 
     return (
         <PageContainer>

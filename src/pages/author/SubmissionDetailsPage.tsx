@@ -1,44 +1,26 @@
-import { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useTranslation } from 'react-i18next';
 import { ChevronLeft, Info } from 'lucide-react';
-import { toast } from 'sonner';
-
+import { Link } from 'react-router-dom';
+import { useSubmissionDetails } from '../../features/submission/hooks/useSubmissionDetails';
 import { Badge } from '../../components/ui/Badge';
 import { Card } from '../../components/ui/Card';
 import { PageHeader } from '../../components/ui/PageHeader';
 import { SectionHeader } from '../../components/ui/SectionHeader';
 import { Skeleton } from '../../components/ui/Skeleton';
 import { FileUploader } from '../../components/ui/FileUploader';
-import { submissionApi } from '../../features/submission/submission.api';
 import { SubmissionTimeline } from '../../features/submission/components/SubmissionTimeline';
 import { PageContainer } from "../../components/ui/PageContainer";
 
 export const SubmissionDetailsPage = () => {
-    const { id } = useParams();
-    const { t, i18n } = useTranslation();
-    const isRu = i18n.language.startsWith('ru');
-    const queryClient = useQueryClient();
-    const [file, setFile] = useState<File | null>(null);
-
-    const { data: submission, isLoading } = useQuery({
-        queryKey: ['submission', id],
-        queryFn: () => submissionApi.getById(id!),
-        enabled: !!id,
-    });
-
-    const uploadFileMutation = useMutation({
-        mutationFn: async (file: File) => {
-            return submissionApi.uploadFile(id!, file);
-        },
-        onSuccess: () => {
-            toast.success(isRu ? 'Файл успешно обновлён' : 'File updated successfully');
-            setFile(null);
-            queryClient.invalidateQueries({ queryKey: ['submission', id] });
-        },
-        onError: () => toast.error(isRu ? 'Ошибка загрузки файла' : 'Upload error'),
-    });
+    const {
+        // id,
+        submission,
+        isLoading,
+        file,
+        setFile,
+        uploadFileMutation,
+        t,
+        isRu
+    } = useSubmissionDetails();
 
     if (isLoading) {
         return (
