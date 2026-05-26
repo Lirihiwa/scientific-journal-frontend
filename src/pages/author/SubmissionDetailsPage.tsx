@@ -2,16 +2,15 @@ import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { ChevronLeft, FileUp, CheckCircle, Info, Save } from 'lucide-react';
+import { ChevronLeft, Info } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
 import { Card } from '../../components/ui/Card';
 import { PageHeader } from '../../components/ui/PageHeader';
 import { SectionHeader } from '../../components/ui/SectionHeader';
 import { Skeleton } from '../../components/ui/Skeleton';
-import { cn } from '../../utils/cn';
+import { FileUploader } from '../../components/ui/FileUploader';
 import { submissionApi } from '../../features/submission/submission.api';
 import { SubmissionTimeline } from '../../features/submission/components/SubmissionTimeline';
 import { PageContainer } from "../../components/ui/PageContainer";
@@ -137,30 +136,12 @@ export const SubmissionDetailsPage = () => {
                         </div>
 
                         {isEditable && (
-                            <div className={cn("border-2 border-dashed rounded-sm p-8 text-center transition-colors", file ? "border-primary bg-primary/5" : "border-border hover:border-primary/50")}>
-                                {!file ? (
-                                    <label className="cursor-pointer block">
-                                        <FileUp size={32} className="mx-auto text-muted-foreground mb-3" />
-                                        <span className="text-[10px] font-accent font-bold uppercase tracking-widest">
-                                            {isRu ? 'Выбрать файл для замены' : 'Choose file to replace'}
-                                        </span>
-                                        <input type="file" className="hidden" accept=".pdf,.doc,.docx" onChange={e => setFile(e.target.files?.[0] || null)} />
-                                    </label>
-                                ) : (
-                                    <div className="flex flex-col items-center">
-                                        <CheckCircle size={32} className="text-primary mb-2" />
-                                        <p className="font-serif text-sm text-foreground mb-4">{file.name}</p>
-                                        <div className="flex gap-4">
-                                            <Button size="sm" onClick={() => uploadFileMutation.mutate(file)} isLoading={uploadFileMutation.isPending}>
-                                                <Save size={14} className="mr-2" /> {t('common.save')}
-                                            </Button>
-                                            <Button size="sm" variant="ghost" onClick={() => setFile(null)}>
-                                                {t('common.cancel')}
-                                            </Button>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
+                            <FileUploader
+                                file={file}
+                                onFileChange={setFile}
+                                isLoading={uploadFileMutation.isPending}
+                                onSave={() => uploadFileMutation.mutate(file!)}
+                            />
                         )}
                     </Card>
                 </div>

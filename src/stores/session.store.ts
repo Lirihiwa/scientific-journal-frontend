@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { tokenStorage } from '../api/tokens';
-import { authApi } from '../features/auth/api/auth.api';
-import type { User } from '../entities/user/model/types';
+import { authApi } from '../features/auth/auth.api.ts';
+import type { User } from '../features/auth/auth.types.ts';
 
 interface SessionState {
     user: User | null;

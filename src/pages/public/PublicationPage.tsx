@@ -9,31 +9,8 @@ import { Button } from '../../components/ui/Button';
 import { Skeleton } from '../../components/ui/Skeleton';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
+import { MetaBlock } from '../../components/ui/MetaBlock';
 import { PageContainer } from "../../components/ui/PageContainer";
-
-const MetaBlock = ({
-                       title,
-                       icon,
-                       children,
-                       className
-                   }: {
-    title: string;
-    icon?: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-}) => (
-    <div className={`space-y-3 pb-4 border-b border-border last:border-0 last:pb-0 ${className}`}>
-        {title && (
-            <h4 className="flex items-center gap-2 text-[9px] font-accent font-bold uppercase tracking-widest text-muted-foreground">
-                {icon}
-                {title}
-            </h4>
-        )}
-        <div className="text-[11px] text-foreground">
-            {children}
-        </div>
-    </div>
-);
 
 export const PublicationPage = () => {
     const { id } = useParams();

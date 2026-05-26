@@ -4,15 +4,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { Save, Plus, Trash2, FileUp, CheckCircle } from 'lucide-react';
+import { Save, Plus, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { Input } from '../../components/ui/Input';
 import { TextArea } from '../../components/ui/TextArea';
 import { Button } from '../../components/ui/Button';
+import { FileUploader } from '../../components/ui/FileUploader';
 import { submissionFormSchema, type SubmissionFormData } from '../../features/submission/submission.types';
 import { submissionApi } from '../../features/submission/submission.api';
-import { cn } from "../../utils/cn";
 import { PageHeader } from '../../components/ui/PageHeader';
 import { Card } from '../../components/ui/Card';
 import { SectionHeader } from '../../components/ui/SectionHeader';
@@ -139,35 +139,12 @@ export const CreateSubmissionPage = () => {
                 <Card padding="lg" variant="accent">
                     <SectionHeader title={t('submission.form.file')} prefix="04." />
 
-                    <div className={cn(
-                        "border-2 border-dashed rounded-sm p-10 text-center transition-colors",
-                        file ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"
-                    )}>
-                        {!file ? (
-                            <label className="cursor-pointer block">
-                                <FileUp size={40} className="mx-auto text-muted-foreground mb-3" />
-                                <span className="text-[10px] font-accent font-bold uppercase tracking-widest">
-                                    {isRu ? 'Выберите файл статьи' : 'Choose article file'}
-                                </span>
-                                <p className="mt-2 text-xs font-serif text-muted-foreground">
-                                    {isRu ? 'Поддерживаемые форматы: PDF, DOC, DOCX' : 'Supported formats: PDF, DOC, DOCX'}
-                                </p>
-                                <input
-                                    type="file"
-                                    className="hidden"
-                                    accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                                    onChange={e => setFile(e.target.files?.[0] || null)}
-                                />
-                            </label>
-                        ) : (
-                            <div className="flex flex-col items-center">
-                                <CheckCircle size={32} className="text-primary mb-2" />
-                                <p className="font-serif text-sm text-foreground">{file.name}</p>
-                                <button onClick={() => setFile(null)} className="text-[9px] font-bold uppercase text-primary hover:underline mt-2">
-                                    {isRu ? 'Заменить' : 'Replace'}
-                                </button>
-                            </div>
-                        )}
+                    <div className="mt-4">
+                        <FileUploader
+                            file={file}
+                            onFileChange={setFile}
+                            isLoading={createMutation.isPending}
+                        />
                     </div>
 
                     <div className="flex items-start gap-3 p-4 bg-muted/50 mt-6 rounded-sm">
