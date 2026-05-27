@@ -54,20 +54,20 @@ export const RegisterPage = () => {
     };
 
     return (
-        <PageContainer className="flex flex-col justify-center items-center w-full">
-            <Card variant="accent" padding="lg" className="w-full max-w-2xl">
-                <div className="text-center mb-10">
+        <PageContainer className="min-h-[75vh] flex flex-col justify-center items-center w-full">
+            <Card variant="accent" padding="none" className="w-full max-w-xl p-6 sm:p-8 md:p-10">
+                <div className="text-center mb-8">
                     <PageHeader
                         title={t('auth.register_title')}
                         subtitle="Scientific Journal Identity"
                         withBorder={false}
-                        className="items-center text-center"
+                        className="items-center text-center pb-0"
                     />
                 </div>
 
                 <FormProvider {...methods}>
-                    <form onSubmit={methods.handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
-                        <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8 mb-4 border-b border-border pb-8">
+                    <form onSubmit={methods.handleSubmit(onSubmit)} className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+                        <div className="sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4 mb-2 border-b border-border pb-4">
                             <FormInput
                                 name="email"
                                 label={`${t('auth.email')} *`}
@@ -106,7 +106,7 @@ export const RegisterPage = () => {
                             placeholder={isRu ? "Например, Россия" : "e.g. Kazakhstan"}
                         />
 
-                        <div className="md:col-span-2">
+                        <div className="sm:col-span-2">
                             <FormInput
                                 name="organization"
                                 label={t('auth.organization')}
@@ -115,7 +115,7 @@ export const RegisterPage = () => {
                             />
                         </div>
 
-                        <div className="md:col-span-2 mt-6">
+                        <div className="sm:col-span-2 mt-4">
                             <Button
                                 type="submit"
                                 className="w-full"
@@ -129,7 +129,7 @@ export const RegisterPage = () => {
                     </form>
                 </FormProvider>
 
-                <div className="mt-8 text-center border-t border-border pt-6">
+                <div className="mt-6 text-center border-t border-border pt-4">
                     <p className="text-xs text-muted-foreground">
                         {t('auth.have_account')}
                         <Link to="/login" className="text-primary font-bold ml-2 hover:underline transition-colors">

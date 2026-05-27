@@ -34,15 +34,6 @@ export const Header = () => {
 
                 <div className="flex items-center gap-6">
 
-                    <button
-                        onClick={toggleLanguage}
-                        className="flex items-center gap-2 text-[10px] font-accent font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-all px-2 py-1 rounded-sm border border-transparent hover:border-border"
-                        title={i18n.language.startsWith('ru') ? 'Switch to English' : 'Переключить на русский'}
-                    >
-                        <Globe size={14} />
-                        <span>{i18n.language.toUpperCase().slice(0, 2)}</span>
-                    </button>
-
                     <div className="flex items-center gap-4">
                         {user ? (
                             <>
@@ -76,8 +67,16 @@ export const Header = () => {
                             </Link>
                         )}
                     </div>
-                </div>
 
+                    <button
+                        onClick={toggleLanguage}
+                        className="flex items-center gap-2 text-[10px] font-accent font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-all px-2 py-1 rounded-sm border border-transparent hover:border-border"
+                        title={i18n.language.startsWith('ru') ? 'Switch to English' : 'Переключить на русский'}
+                    >
+                        <Globe size={14} />
+                        <span>{i18n.language.toUpperCase().slice(0, 2)}</span>
+                    </button>
+                </div>
             </div>
         </header>
     );

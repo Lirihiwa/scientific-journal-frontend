@@ -37,7 +37,7 @@ export const CreateSubmissionPage = () => {
                 <form onSubmit={handleSubmit(data => createMutation.mutate(data))} className="space-y-12">
                     <Card padding="lg" variant="accent">
                         <SectionHeader title={t('submission.form.metadata')} prefix="01." />
-                        <div className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mt-6">
                             <FormInput
                                 name="title_ru"
                                 label={`${t('submission.form.title_ru')} *`}
@@ -61,7 +61,7 @@ export const CreateSubmissionPage = () => {
 
                     <Card padding="lg" variant="accent">
                         <SectionHeader title={t('submission.form.abstract_ru')} prefix="02." />
-                        <div className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mt-6">
                             <FormTextArea
                                 name="abstract_ru"
                                 label={`${t('submission.form.abstract_ru')} *`}
@@ -85,7 +85,7 @@ export const CreateSubmissionPage = () => {
                                 <Plus size={14} className="mr-1" /> {isRu ? 'Добавить' : 'Add'}
                             </Button>
                         </div>
-                        <div className="space-y-4">
+                        <div className="space-y-4 max-w-4xl">
                             {fields.map((field, index) => (
                                 <Card key={field.id} variant="muted" padding="sm" className="relative">
                                     <button
@@ -113,7 +113,7 @@ export const CreateSubmissionPage = () => {
                     <Card padding="lg" variant="accent">
                         <SectionHeader title={t('submission.form.file')} prefix="04." />
 
-                        <div className="mt-4">
+                        <div className="mt-6 max-w-2xl">
                             <FileUploader
                                 file={file}
                                 onFileChange={setFile}
@@ -121,7 +121,7 @@ export const CreateSubmissionPage = () => {
                             />
                         </div>
 
-                        <div className="flex items-start gap-3 p-4 bg-muted/50 mt-6 rounded-sm">
+                        <div className="flex items-start gap-3 p-4 bg-muted/50 mt-6 rounded-sm max-w-2xl">
                             <input
                                 type="checkbox"
                                 {...methods.register('policy_accepted')}
@@ -138,11 +138,11 @@ export const CreateSubmissionPage = () => {
                         )}
                     </Card>
 
-                    <div className="flex justify-center pt-6">
+                    <div className="flex justify-end pt-6 border-t border-border/30">
                         <Button
                             type="submit"
                             size="lg"
-                            className="px-12"
+                            className="w-full sm:w-auto px-12"
                             isLoading={createMutation.isPending}
                         >
                             <Save size={18} className="mr-2" /> {t('common.send')}

@@ -38,22 +38,22 @@ export const LoginPage = () => {
     });
 
     return (
-        <PageContainer className="flex flex-col justify-center items-center w-full">
-            <Card variant="accent" padding="lg" className="w-full max-w-md">
-                <div className="text-center mb-8">
-                    <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 text-primary mb-6">
-                        <ShieldCheck size={28} />
+        <PageContainer className="min-h-[75vh] flex flex-col justify-center items-center w-full">
+            <Card variant="accent" padding="none" className="w-full max-w-md p-6 sm:p-8 md:p-10">
+                <div className="text-center mb-6">
+                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 text-primary mb-4">
+                        <ShieldCheck size={24} />
                     </div>
                     <PageHeader
                         title={t('auth.login_title')}
                         subtitle="Scientific Journal Identity"
                         withBorder={false}
-                        className="items-center text-center"
+                        className="items-center text-center pb-0"
                     />
                 </div>
 
                 <FormProvider {...methods}>
-                    <form onSubmit={methods.handleSubmit(data => loginMutation.mutate(data))} className="space-y-6">
+                    <form onSubmit={methods.handleSubmit(data => loginMutation.mutate(data))} className="space-y-5">
                         <FormInput
                             name="email"
                             label={t('auth.email')}
@@ -72,7 +72,7 @@ export const LoginPage = () => {
 
                         <Button
                             type="submit"
-                            className="w-full mt-4"
+                            className="w-full mt-2"
                             size="lg"
                             isLoading={loginMutation.isPending}
                         >
@@ -81,7 +81,7 @@ export const LoginPage = () => {
                     </form>
                 </FormProvider>
 
-                <div className="mt-8 text-center border-t border-border pt-6">
+                <div className="mt-6 text-center border-t border-border pt-4">
                     <p className="text-xs text-muted-foreground font-medium">
                         {t('auth.no_account')}
                         <Link
