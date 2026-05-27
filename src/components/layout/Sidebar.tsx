@@ -11,7 +11,8 @@ import {
     Scale,
     Send,
     ShieldCheck,
-    Users
+    Users,
+    X
 } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { useSidebarStore } from '../../stores/sidebar.store';
@@ -29,7 +30,7 @@ const NavItem = ({ to, icon, label, isCollapsed, end = false }: {
         to={to}
         end={end}
         className={({ isActive }) => cn(
-            "flex items-center gap-3 px-3 py-2.5 text-[11px] font-medium transition-colors rounded-sm",
+            "flex items-center gap-3 px-3 py-2 text-[11px] font-medium transition-colors duration-200 rounded-sm",
             isActive
                 ? "bg-primary/10 text-primary font-bold"
                 : "text-foreground hover:bg-muted hover:text-primary",
@@ -58,7 +59,11 @@ const Section = ({ title, children, isCollapsed }: {
     );
 };
 
-export const Sidebar = () => {
+interface SidebarProps {
+    onMobileClose?: () => void;
+}
+
+export const Sidebar = ({ onMobileClose }: SidebarProps) => {
     const { t, i18n } = useTranslation();
     const { isCollapsed, toggle } = useSidebarStore();
     const { user } = useSessionStore();
@@ -67,18 +72,31 @@ export const Sidebar = () => {
     const lang = i18n.language.startsWith('ru') ? 'ru' : 'en';
 
     return (
-        <div className="flex flex-col h-full overflow-y-auto scrollbar-academic">
-            <div className="flex justify-end p-3 border-b border-border">
+        <div className="flex flex-col h-full overflow-y-auto scrollbar-academic relative">
+            {/* Кнопка сворачивания отображается только на десктопе */}
+            <div className="hidden lg:flex justify-end p-3 border-b border-border">
                 <button
                     onClick={toggle}
-                    className="p-1.5 rounded-sm text-muted-foreground hover:bg-muted hover:text-primary transition-colors"
+                    className="p-1.5 rounded-sm text-muted-foreground hover:bg-muted hover:text-primary transition-colors duration-200"
                     aria-label={isCollapsed ? "Expand" : "Collapse"}
                 >
                     {isCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
                 </button>
             </div>
 
-            <div className="flex-grow p-3 space-y-4">
+            {/* Абсолютно позиционированная кнопка закрытия для мобильной версии */}
+            {onMobileClose && (
+                <button
+                    onClick={onMobileClose}
+                    className="lg:hidden absolute top-4 right-4 z-50 p-2 rounded-full hover:bg-muted text-muted-foreground transition-colors"
+                    aria-label="Close menu"
+                >
+                    <X size={16} />
+                </button>
+            )}
+
+            {/* Контент бокового меню с адаптивным верхним отступом на мобильных */}
+            <div className="flex-grow p-3 pt-14 lg:pt-3 space-y-4">
 
                 <Section title={lang === 'ru' ? 'Журнал' : 'Journal'} isCollapsed={isCollapsed}>
                     <NavItem to="/" icon={<BookOpen size={16} />} label={t('nav.home')} isCollapsed={isCollapsed} end />
