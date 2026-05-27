@@ -21,6 +21,11 @@ import { HomePage } from './pages/public/HomePage';
 import { PublicationPage } from './pages/public/PublicationPage';
 import { ArchivePage } from './pages/public/ArchivePage';
 import { IssuePage } from './pages/public/IssuePage';
+import { AboutPage } from './pages/public/AboutPage';
+import { EditorialPage } from './pages/public/EditorialPage';
+import { EthicsPage } from './pages/public/EthicsPage';
+import { GuidelinesPage } from './pages/public/GuidelinesPage';
+import { StaticPagePlaceholder } from "./pages/public/StaticPagePlaceholder";
 
 // Author
 import { DashboardPage } from './pages/author/DashboardPage';
@@ -29,7 +34,6 @@ import { SubmissionDetailsPage } from './pages/author/SubmissionDetailsPage';
 
 // Editor
 import { EditorDashboard } from './pages/editor/EditorDashboard';
-import { StaticPagePlaceholder } from "./pages/public/StaticPagePlaceholder";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -67,11 +71,12 @@ export const App = () => {
                         <Route index element={<HomePage />} />
                         <Route path="login" element={<LoginPage />} />
                         <Route path="register" element={<RegisterPage />} />
-                        <Route path="about" element={<StaticPagePlaceholder title="О журнале" />} />
-                        <Route path="editorial" element={<StaticPagePlaceholder title="Редакционная коллегия" />} />
-                        <Route path="ethics" element={<StaticPagePlaceholder title="Этика публикаций" />} />
+
+                        <Route path="about" element={<AboutPage />} />
+                        <Route path="editorial" element={<EditorialPage />} />
+                        <Route path="ethics" element={<EthicsPage />} />
                         <Route path="review-process" element={<StaticPagePlaceholder title="Процесс рецензирования" />} />
-                        <Route path="info/guidelines" element={<StaticPagePlaceholder title="Информация для авторов" />} />
+                        <Route path="info/guidelines" element={<GuidelinesPage />} />
 
                         <Route path="archive" element={<ArchivePage />} />
                         <Route path="issues/:id" element={<IssuePage />} />
