@@ -13,21 +13,38 @@ interface EmptyStateProps {
 export const EmptyState = ({
                                title,
                                description,
-                               icon = <AlertCircle size={48} />,
+                               icon = <AlertCircle size={40} />,
                                action,
                                className
                            }: EmptyStateProps) => {
     return (
         <div
-            className={cn('py-20 text-center border-2 border-dashed border-border rounded-sm bg-card/50 animate-fade-in', className)}>
+            className={cn(
+                'py-12 sm:py-16 px-4 text-center border border-dashed border-border/60 rounded-sm bg-card/50 animate-fade-in',
+                className
+            )}
+        >
             <div
-                className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-muted text-muted-foreground mb-6">
+                className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-muted text-muted-foreground mb-5"
+            >
                 {icon}
             </div>
-            <h3 className="text-xl font-heading font-bold text-foreground mb-2">{title}</h3>
-            {description &&
-                <p className="text-sm font-serif text-muted-foreground mb-8 max-w-md mx-auto">{description}</p>}
-            {action}
+
+            <h3 className="text-lg sm:text-xl font-heading font-bold text-foreground mb-1.5">
+                {title}
+            </h3>
+
+            {description && (
+                <p className="text-xs sm:text-sm font-serif text-muted-foreground max-w-sm mx-auto leading-relaxed">
+                    {description}
+                </p>
+            )}
+
+            {action && (
+                <div className="mt-5">
+                    {action}
+                </div>
+            )}
         </div>
     );
 };
