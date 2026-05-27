@@ -15,10 +15,12 @@ export const useCreateSubmission = () => {
     const navigate = useNavigate();
     const [file, setFile] = useState<File | null>(null);
 
-    const { register, control, handleSubmit, formState: { errors } } = useForm<SubmissionFormData>({
+    const methods = useForm<SubmissionFormData>({
         resolver: zodResolver(submissionFormSchema),
         defaultValues: { manuscript_language: isRu ? 'ru' : 'en', coauthors: [], policy_accepted: false }
     });
+
+    const { control } = methods;
 
     const { fields, append, remove } = useFieldArray({ control, name: "coauthors" });
 
@@ -37,10 +39,7 @@ export const useCreateSubmission = () => {
     });
 
     return {
-        register,
-        control,
-        errors,
-        handleSubmit,
+        methods,
         fields,
         append,
         remove,

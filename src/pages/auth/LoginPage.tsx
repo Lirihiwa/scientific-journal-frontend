@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate, Link } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
@@ -6,7 +6,7 @@ import { ShieldCheck, Mail, Lock } from 'lucide-react';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 
-import { Input } from '../../components/ui/Input';
+import { FormInput } from '../../components/ui/FormInput';
 import { Button } from '../../components/ui/Button';
 import { loginSchema, type LoginFormData } from '../../features/auth/auth.types';
 import { authApi } from '../../features/auth/auth.api';
@@ -21,11 +21,7 @@ export const LoginPage = () => {
     const navigate = useNavigate();
     const { login: setSession } = useSessionStore();
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm<LoginFormData>({
+    const methods = useForm<LoginFormData>({
         resolver: zodResolver(loginSchema)
     });
 
@@ -56,34 +52,34 @@ export const LoginPage = () => {
                     />
                 </div>
 
-                <form onSubmit={handleSubmit(data => loginMutation.mutate(data))} className="space-y-6">
-                    <Input
-                        label={t('auth.email')}
-                        type="email"
-                        icon={<Mail size={16} />}
-                        placeholder="author@csu.ru"
-                        error={errors.email?.message}
-                        {...register('email')}
-                    />
+                <FormProvider {...methods}>
+                    <form onSubmit={methods.handleSubmit(data => loginMutation.mutate(data))} className="space-y-6">
+                        <FormInput
+                            name="email"
+                            label={t('auth.email')}
+                            type="email"
+                            icon={<Mail size={16} />}
+                            placeholder="author@csu.ru"
+                        />
 
-                    <Input
-                        label={t('auth.password')}
-                        type="password"
-                        icon={<Lock size={16} />}
-                        placeholder="••••••••"
-                        error={errors.password?.message}
-                        {...register('password')}
-                    />
+                        <FormInput
+                            name="password"
+                            label={t('auth.password')}
+                            type="password"
+                            icon={<Lock size={16} />}
+                            placeholder="••••••••"
+                        />
 
-                    <Button
-                        type="submit"
-                        className="w-full mt-4"
-                        size="lg"
-                        isLoading={loginMutation.isPending}
-                    >
-                        {t('auth.login_action')}
-                    </Button>
-                </form>
+                        <Button
+                            type="submit"
+                            className="w-full mt-4"
+                            size="lg"
+                            isLoading={loginMutation.isPending}
+                        >
+                            {t('auth.login_action')}
+                        </Button>
+                    </form>
+                </FormProvider>
 
                 <div className="mt-8 text-center border-t border-border pt-6">
                     <p className="text-xs text-muted-foreground font-medium">

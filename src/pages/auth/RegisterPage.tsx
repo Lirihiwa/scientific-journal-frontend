@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate, Link } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { UserPlus, Mail, Lock, User, Building, Globe } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { Input } from '../../components/ui/Input';
+import { FormInput } from '../../components/ui/FormInput';
 import { Button } from '../../components/ui/Button';
 import { registerSchema, type RegisterFormData } from '../../features/auth/auth.types';
 import { authApi } from '../../features/auth/auth.api';
@@ -21,11 +21,7 @@ export const RegisterPage = () => {
     const isRu = i18n.language.startsWith('ru');
     const navigate = useNavigate();
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm<RegisterFormData>({
+    const methods = useForm<RegisterFormData>({
         resolver: zodResolver(registerSchema)
     });
 
@@ -69,74 +65,69 @@ export const RegisterPage = () => {
                     />
                 </div>
 
-                <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
-                    <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8 mb-4 border-b border-border pb-8">
-                        <Input
-                            label={`${t('auth.email')} *`}
-                            type="email"
-                            icon={<Mail size={16} />}
-                            placeholder="author@csu.ru"
-                            error={errors.email?.message}
-                            {...register('email')}
-                        />
-                        <Input
-                            label={`${t('auth.password')} *`}
-                            type="password"
-                            icon={<Lock size={16} />}
-                            placeholder={isRu ? "Минимум 8 символов" : "Min. 8 characters"}
-                            error={errors.password?.message}
-                            {...register('password')}
-                        />
-                    </div>
+                <FormProvider {...methods}>
+                    <form onSubmit={methods.handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                        <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8 mb-4 border-b border-border pb-8">
+                            <FormInput
+                                name="email"
+                                label={`${t('auth.email')} *`}
+                                type="email"
+                                icon={<Mail size={16} />}
+                                placeholder="author@csu.ru"
+                            />
+                            <FormInput
+                                name="password"
+                                label={`${t('auth.password')} *`}
+                                type="password"
+                                icon={<Lock size={16} />}
+                                placeholder={isRu ? "Минимум 8 символов" : "Min. 8 characters"}
+                            />
+                        </div>
 
-                    <Input
-                        label={`${t('auth.first_name')} *`}
-                        icon={<User size={16} />}
-                        error={errors.first_name?.message}
-                        {...register('first_name')}
-                    />
-                    <Input
-                        label={`${t('auth.last_name')} *`}
-                        icon={<User size={16} />}
-                        error={errors.last_name?.message}
-                        {...register('last_name')}
-                    />
-                    <Input
-                        label={t('auth.middle_name')}
-                        placeholder={isRu ? "Если есть" : "Optional"}
-                        error={errors.middle_name?.message}
-                        {...register('middle_name')}
-                    />
-                    <Input
-                        label={t('auth.country')}
-                        icon={<Globe size={16} />}
-                        placeholder={isRu ? "Например, Россия" : "e.g. Kazakhstan"}
-                        error={errors.country?.message}
-                        {...register('country')}
-                    />
-
-                    <div className="md:col-span-2">
-                        <Input
-                            label={t('auth.organization')}
-                            icon={<Building size={16} />}
-                            placeholder={isRu ? "Например, ЧелГУ" : "University or Company name"}
-                            error={errors.organization?.message}
-                            {...register('organization')}
+                        <FormInput
+                            name="first_name"
+                            label={`${t('auth.first_name')} *`}
+                            icon={<User size={16} />}
                         />
-                    </div>
+                        <FormInput
+                            name="last_name"
+                            label={`${t('auth.last_name')} *`}
+                            icon={<User size={16} />}
+                        />
+                        <FormInput
+                            name="middle_name"
+                            label={t('auth.middle_name')}
+                            placeholder={isRu ? "Если есть" : "Optional"}
+                        />
+                        <FormInput
+                            name="country"
+                            label={t('auth.country')}
+                            icon={<Globe size={16} />}
+                            placeholder={isRu ? "Например, Россия" : "e.g. Kazakhstan"}
+                        />
 
-                    <div className="md:col-span-2 mt-6">
-                        <Button
-                            type="submit"
-                            className="w-full"
-                            size="lg"
-                            isLoading={registerMutation.isPending}
-                        >
-                            <UserPlus size={18} className="mr-2" />
-                            {t('auth.register_action')}
-                        </Button>
-                    </div>
-                </form>
+                        <div className="md:col-span-2">
+                            <FormInput
+                                name="organization"
+                                label={t('auth.organization')}
+                                icon={<Building size={16} />}
+                                placeholder={isRu ? "Например, ЧелГУ" : "University or Company name"}
+                            />
+                        </div>
+
+                        <div className="md:col-span-2 mt-6">
+                            <Button
+                                type="submit"
+                                className="w-full"
+                                size="lg"
+                                isLoading={registerMutation.isPending}
+                            >
+                                <UserPlus size={18} className="mr-2" />
+                                {t('auth.register_action')}
+                            </Button>
+                        </div>
+                    </form>
+                </FormProvider>
 
                 <div className="mt-8 text-center border-t border-border pt-6">
                     <p className="text-xs text-muted-foreground">
