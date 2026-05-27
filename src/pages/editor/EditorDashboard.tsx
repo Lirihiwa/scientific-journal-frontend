@@ -42,17 +42,17 @@ export const EditorDashboard = () => {
     } = useEditorDashboard();
 
     const dashboardTiles = [
-        { id: 'all', label: t('common.all'), count: stats.all, icon: Layers, color: 'text-foreground', bg: 'bg-muted/10', border: 'border-border', activeRing: 'ring-primary' },
-        { id: 'new', label: t('submission.status.new'), count: stats.new, icon: Inbox, color: 'text-status-new', bg: 'bg-status-new/5', border: 'border-status-new/20', activeRing: 'ring-status-new' },
-        { id: 'under_review', label: t('submission.status.under_review'), count: stats.review, icon: Eye, color: 'text-status-review', bg: 'bg-status-review/5', border: 'border-status-review/20', activeRing: 'ring-status-review' },
-        { id: 'revision_required', label: t('submission.status.revision_required'), count: stats.revision, icon: AlertCircle, color: 'text-status-revision', bg: 'bg-status-revision/5', border: 'border-status-revision/20', activeRing: 'ring-status-revision' },
-        { id: 'accepted', label: t('submission.status.accepted'), count: stats.accepted, icon: CheckCircle2, color: 'text-status-accepted', bg: 'bg-status-accepted/5', border: 'border-status-accepted/20', activeRing: 'ring-status-accepted' },
-        { id: 'published', label: t('submission.status.published'), count: stats.published, icon: FileText, color: 'text-status-published', bg: 'bg-status-published/5', border: 'border-status-published/20', activeRing: 'ring-status-published' },
-        { id: 'rejected', label: t('submission.status.rejected'), count: stats.rejected, icon: XCircle, color: 'text-status-rejected', bg: 'bg-status-rejected/5', border: 'border-status-rejected/20', activeRing: 'ring-status-rejected' },
+        { id: 'all', label: t('common.all'), count: stats.all, icon: Layers, activeColor: 'text-foreground', activeBg: 'bg-muted/30', activeBorder: 'border-foreground/30' },
+        { id: 'new', label: t('submission.status.new'), count: stats.new, icon: Inbox, activeColor: 'text-status-new', activeBg: 'bg-status-new/5', activeBorder: 'border-status-new/30' },
+        { id: 'under_review', label: t('submission.status.under_review'), count: stats.review, icon: Eye, activeColor: 'text-status-review', activeBg: 'bg-status-review/5', activeBorder: 'border-status-review/30' },
+        { id: 'revision_required', label: t('submission.status.revision_required'), count: stats.revision, icon: AlertCircle, activeColor: 'text-status-revision', activeBg: 'bg-status-revision/5', activeBorder: 'border-status-revision/30' },
+        { id: 'accepted', label: t('submission.status.accepted'), count: stats.accepted, icon: CheckCircle2, activeColor: 'text-status-accepted', activeBg: 'bg-status-accepted/5', activeBorder: 'border-status-accepted/30' },
+        { id: 'published', label: t('submission.status.published'), count: stats.published, icon: FileText, activeColor: 'text-status-published', activeBg: 'bg-status-published/5', activeBorder: 'border-status-published/30' },
+        { id: 'rejected', label: t('submission.status.rejected'), count: stats.rejected, icon: XCircle, activeColor: 'text-status-rejected', activeBg: 'bg-status-rejected/5', activeBorder: 'border-status-rejected/30' },
     ] as const;
 
     return (
-        <PageContainer className="space-y-12">
+        <PageContainer className="space-y-10">
             <PageHeader
                 title={t('nav.editor_panel')}
                 subtitle="Editorial Control Panel"
@@ -71,29 +71,39 @@ export const EditorDashboard = () => {
             />
 
             {activeTab === 'papers' ? (
-                <div className="space-y-8 animate-fade-in">
-                    <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-4">
-                        {dashboardTiles.map((t) => (
-                            <Card
-                                key={t.id}
-                                padding="sm"
-                                className={cn("cursor-pointer transition-all", t.bg, filter === t.id ? `ring-2 ${t.activeRing} border-transparent shadow-md` : `${t.border} hover:border-foreground/20`)}
-                                onClick={() => setFilter(t.id as SubmissionStatus | 'all')}
-                            >
-                                <div className="flex items-center justify-between">
-                                    <t.icon size={16} className={t.color}/>
-                                    <span className="text-2xl font-heading font-bold">{t.count}</span>
-                                </div>
-                                <p className="text-[9px] font-accent font-bold uppercase tracking-widest text-muted-foreground mt-2">{t.label}</p>
-                            </Card>
-                        ))}
+                <div className="space-y-6 animate-fade-in">
+                    <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-3">
+                        {dashboardTiles.map((tile) => {
+                            const isActive = filter === tile.id;
+                            return (
+                                <Card
+                                    key={tile.id}
+                                    padding="sm"
+                                    className={cn(
+                                        "cursor-pointer transition-all duration-200 h-full flex flex-col justify-between border",
+                                        isActive
+                                            ? `${tile.activeBg} ${tile.activeBorder} shadow-sm ring-1 ring-offset-0`
+                                            : "bg-card border-border/60 hover:border-border hover:bg-muted/10"
+                                    )}
+                                    onClick={() => setFilter(tile.id as SubmissionStatus | 'all')}
+                                >
+                                    <div className="flex items-center justify-between gap-2">
+                                        <tile.icon size={15} className={isActive ? tile.activeColor : "text-muted-foreground/80"} />
+                                        <span className="text-xl md:text-2xl font-heading font-bold leading-none">{tile.count}</span>
+                                    </div>
+                                    <p className="text-[9px] font-accent font-bold uppercase tracking-widest text-muted-foreground mt-3 truncate">
+                                        {tile.label}
+                                    </p>
+                                </Card>
+                            );
+                        })}
                     </div>
 
-                    <div className="flex bg-card border border-border p-4 shadow-sm rounded-sm">
+                    <div className="max-w-md w-full">
                         <Input
                             placeholder={t('common.search')}
-                            icon={<Search size={18}/>}
-                            className="bg-muted/30 border-none focus:ring-0 max-w-lg"
+                            icon={<Search size={16} />}
+                            className="bg-card border-border/60 focus:ring-primary/20"
                             value={search}
                             onChange={e => setSearch(e.target.value)}
                         />
@@ -109,25 +119,25 @@ export const EditorDashboard = () => {
                                 showLink={false}
                                 actions={
                                     <div className="flex gap-2">
-                                        {sub.status === 'new' && <Button onClick={() => statusMutation.mutate({ id: sub.id, status: 'under_review' })}>{isRu ? 'В работу' : 'Start Review'}</Button>}
+                                        {sub.status === 'new' && <Button size="sm" className="h-8 text-[9px]" onClick={() => statusMutation.mutate({ id: sub.id, status: 'under_review' })}>{isRu ? 'В работу' : 'Start Review'}</Button>}
                                         {sub.status === 'under_review' && (
                                             <>
-                                                <Button variant="outline" className="text-status-accepted border-status-accepted/30 hover:bg-status-accepted/10" onClick={() => statusMutation.mutate({ id: sub.id, status: 'accepted' })}>{isRu ? 'Принять' : 'Accept'}</Button>
-                                                <Button variant="outline" className="text-status-revision border-status-revision/30 hover:bg-status-revision/10" onClick={() => setDecisionModal({ isOpen: true, subId: sub.id, target: 'revision_required' })}>{isRu ? 'Правки' : 'Revision'}</Button>
-                                                <Button variant="outline" className="text-status-rejected border-status-rejected/30 hover:bg-status-rejected/10" onClick={() => setDecisionModal({ isOpen: true, subId: sub.id, target: 'rejected' })}>{isRu ? 'Отклонить' : 'Reject'}</Button>
+                                                <Button size="sm" variant="outline" className="h-8 text-[9px] text-status-accepted border-status-accepted/30 hover:bg-status-accepted/10" onClick={() => statusMutation.mutate({ id: sub.id, status: 'accepted' })}>{isRu ? 'Принять' : 'Accept'}</Button>
+                                                <Button size="sm" variant="outline" className="h-8 text-[9px] text-status-revision border-status-revision/30 hover:bg-status-revision/10" onClick={() => setDecisionModal({ isOpen: true, subId: sub.id, target: 'revision_required' })}>{isRu ? 'Правки' : 'Revision'}</Button>
+                                                <Button size="sm" variant="outline" className="h-8 text-[9px] text-status-rejected border-status-rejected/30 hover:bg-status-rejected/10" onClick={() => setDecisionModal({ isOpen: true, subId: sub.id, target: 'rejected' })}>{isRu ? 'Отклонить' : 'Reject'}</Button>
                                             </>
                                         )}
                                         {sub.status === 'accepted' && (
                                             publishingId === sub.id ? (
                                                 <div className="flex items-center gap-2 animate-fade-in">
-                                                    <select className="h-10 px-3 bg-muted border border-border text-[10px] font-bold uppercase font-accent outline-none rounded-sm" value={selectedIssue} onChange={e => setSelectedIssue(e.target.value)}>
+                                                    <select className="h-8 px-2 bg-muted border border-border/80 text-[9px] font-bold uppercase font-accent outline-none rounded-sm" value={selectedIssue} onChange={e => setSelectedIssue(e.target.value)}>
                                                         <option value="">{isRu ? 'Выпуск...' : 'Issue...'}</option>
                                                         {issues?.map((i: Issue) => <option key={i.id} value={i.id}>№{i.number} ({i.publication_date ? new Date(i.publication_date).getFullYear() : '—'})</option>)}
                                                     </select>
-                                                    <Button size="icon" disabled={!selectedIssue} onClick={() => publishMutation.mutate({ subId: sub.id, issueId: selectedIssue })}><Send size={16}/></Button>
-                                                    <button onClick={() => setPublishingId(null)} className="text-[10px] p-2 text-muted-foreground hover:text-foreground">✕</button>
+                                                    <Button size="icon" className="h-8 w-8" disabled={!selectedIssue} onClick={() => publishMutation.mutate({ subId: sub.id, issueId: selectedIssue })}><Send size={14}/></Button>
+                                                    <button onClick={() => setPublishingId(null)} className="text-[10px] p-1 text-muted-foreground hover:text-foreground">✕</button>
                                                 </div>
-                                            ) : <Button onClick={() => setPublishingId(sub.id)}>{isRu ? 'Опубликовать' : 'Publish'}</Button>
+                                            ) : <Button size="sm" className="h-8 text-[9px]" onClick={() => setPublishingId(sub.id)}>{isRu ? 'Опубликовать' : 'Publish'}</Button>
                                         )}
                                         {sub.status === 'published' && <Badge variant="published">{t('submission.status.published')}</Badge>}
                                     </div>

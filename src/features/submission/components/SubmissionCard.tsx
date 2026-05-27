@@ -26,69 +26,69 @@ export const SubmissionCard = ({ submission, actions, showLink = true, className
 
     return (
         <article className={cn(
-            'group flex flex-col p-6 bg-card border border-border hover:border-primary/50 transition-all rounded-sm relative',
-            showLink && 'hover:shadow-md',
+            'group flex flex-col p-4 sm:p-5 bg-card border border-border/80 hover:border-primary/30 transition-all duration-200 rounded-sm relative',
+            showLink && 'hover:shadow-sm',
             className
         )}>
-            <header className="flex flex-wrap items-center justify-between gap-4 pb-3 mb-3 border-b border-border/50">
-                <div className="flex items-center gap-3">
+            <header className="flex flex-wrap items-center justify-between gap-3 pb-2.5 mb-4 border-b border-border/40">
+                <div className="flex flex-wrap items-center gap-2.5">
                     <Badge variant={submission.status}>
                         {t(`submission.status.${submission.status}`)}
                     </Badge>
 
-                    <span className="text-[10px] font-accent font-bold text-muted-foreground uppercase">
+                    <span className="text-[10px] font-accent font-bold text-muted-foreground uppercase tracking-tight">
                         ID: {submission.id.slice(0, 8)}
                     </span>
 
-                    <span className="flex items-center gap-1 text-[10px] font-accent font-bold uppercase text-primary bg-primary/5 px-1.5 py-0.5 rounded-sm">
+                    <span className="flex items-center gap-1 text-[9px] font-accent font-bold uppercase text-primary bg-primary/5 px-1.5 py-0.5 rounded-sm">
                         <GitCommit size={10} /> v.{submission.current_version}
                     </span>
                 </div>
 
-                <div className="flex items-center gap-4 text-[10px] font-accent font-bold text-muted-foreground uppercase">
-                    <span className="flex items-center gap-1.5">
-                        <Globe size={12} className="text-primary/70" />
+                <div className="flex items-center gap-3.5 text-[10px] font-accent font-bold text-muted-foreground uppercase tracking-tight">
+                    <span className="flex items-center gap-1">
+                        <Globe size={11} className="text-primary/70" />
                         {submission.manuscript_language === 'ru' ? 'RU' : 'EN'}
                     </span>
-                    <span className="flex items-center gap-1.5">
-                        <Clock size={12} className="text-primary/70" />
+                    <span className="flex items-center gap-1">
+                        <Clock size={11} className="text-primary/70" />
                         {new Date(submission.created_at).toLocaleDateString(isRu ? 'ru-RU' : 'en-US')}
                     </span>
                 </div>
             </header>
 
-            <div className="space-y-3 flex-grow min-w-0">
+            <div className="space-y-2.5 flex-grow min-w-0">
                 {showLink ? (
-                    <Link to={detailsUrl} className="block">
-                        <h3 className="text-xl font-heading font-bold text-foreground group-hover:text-primary transition-colors leading-tight break-words line-clamp-3">
+                    <Link to={detailsUrl} className="block group/title">
+                        <h3 className="text-lg md:text-xl font-heading font-bold text-foreground group-hover/title:text-primary transition-colors leading-tight break-words line-clamp-2">
                             {displayTitle}
                         </h3>
                     </Link>
                 ) : (
-                    <h3 className="text-xl font-heading font-bold text-foreground leading-tight break-words line-clamp-3">
+                    <h3 className="text-lg md:text-xl font-heading font-bold text-foreground leading-tight break-words line-clamp-2">
                         {displayTitle}
                     </h3>
                 )}
 
-                <p className="text-[10px] font-accent font-bold uppercase tracking-wide text-foreground/80 flex items-center gap-1.5">
+                <p className="text-[10px] font-accent font-bold uppercase tracking-wider text-foreground/80 flex items-center gap-1.5 mt-1">
                     <User size={12} className="text-primary shrink-0" />
                     <span className="truncate">{authors || (isRu ? "Автор (вы)" : "Author (you)")}</span>
                 </p>
 
                 {displayAbstract && (
-                    <p className="text-sm font-serif text-muted-foreground line-clamp-2 leading-relaxed break-words">
+                    <p className="text-xs md:text-sm font-serif text-muted-foreground line-clamp-2 leading-relaxed break-words pt-1">
                         {displayAbstract}
                     </p>
                 )}
             </div>
 
-            <footer className="flex items-center justify-between gap-4 pt-4 mt-4 border-t border-border">
-                <div className="flex items-center gap-2 min-w-0 max-w-[50%]">
-                    <div className="w-8 h-8 bg-muted rounded-sm flex items-center justify-center shrink-0">
-                        <FileText size={14} className="text-muted-foreground" />
+            <footer className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-3.5 mt-4 border-t border-border/40">
+                <div className="flex items-center gap-2.5 min-w-0 sm:max-w-[50%]">
+                    <div className="w-7 h-7 bg-muted rounded-sm flex items-center justify-center shrink-0 border border-border/40">
+                        <FileText size={13} className="text-muted-foreground" />
                     </div>
                     <div className="truncate">
-                        <p className="text-[9px] font-accent font-bold uppercase tracking-widest text-muted-foreground mb-0.5">
+                        <p className="text-[8px] font-accent font-bold uppercase tracking-wider text-muted-foreground mb-0.5">
                             {t('submission.form.file')}
                         </p>
                         <p className="text-xs font-serif text-foreground truncate" title={submission.submitted_file_name || ""}>
@@ -97,13 +97,13 @@ export const SubmissionCard = ({ submission, actions, showLink = true, className
                     </div>
                 </div>
 
-                <div className="flex items-center gap-3 shrink-0">
+                <div className="flex flex-wrap items-center gap-2.5 shrink-0 self-end sm:self-auto">
                     {actions}
 
                     {showLink && (
                         <Link to={detailsUrl}>
-                            <Button variant="outline" size="sm" className="gap-2">
-                                {t('common.more')} <ArrowRight size={14} />
+                            <Button variant="outline" size="sm" className="gap-1.5 h-8 text-[9px] px-3">
+                                {t('common.more')} <ArrowRight size={12} />
                             </Button>
                         </Link>
                     )}
