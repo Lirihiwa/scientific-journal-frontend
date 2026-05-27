@@ -25,10 +25,10 @@ export const PublicationCard = ({ pub, className }: PublicationCardProps) => {
 
     return (
         <article className={cn(
-            'group flex flex-col p-6 bg-card border border-border hover:border-primary/50 transition-all rounded-sm',
+            'group flex flex-col p-4 sm:p-5 bg-card border border-border/80 hover:border-primary/50 transition-all rounded-sm',
             className
         )}>
-            <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center justify-between mb-2.5">
                 <Badge variant="published">
                     {t('submission.status.published')}
                 </Badge>
@@ -39,28 +39,28 @@ export const PublicationCard = ({ pub, className }: PublicationCardProps) => {
                 )}
             </div>
 
-            <div className="space-y-2 mb-4">
+            <div className="space-y-1.5 mb-3">
                 <Link to={`/publications/${pub.id}`} className="block">
-                    <h3 className="text-xl font-heading font-bold text-foreground group-hover:text-primary transition-colors leading-tight break-words">
+                    <h3 className="text-lg font-heading font-bold text-foreground group-hover:text-primary transition-colors leading-tight break-words">
                         {displayTitle}
                     </h3>
                 </Link>
 
                 <div className="flex items-center gap-2 text-xs text-foreground/80 font-medium">
-                    <User size={14} className="text-primary shrink-0" />
-                    <span className="truncate">
+                    <User size={13} className="text-primary shrink-0" />
+                    <span className="truncate text-[11px]">
                         {authors || (isRu ? "Автор не указан" : "Author not specified")}
                     </span>
                 </div>
             </div>
 
             {displayAbstract && (
-                <p className="text-sm font-serif text-muted-foreground line-clamp-2 leading-relaxed mb-4">
+                <p className="text-xs font-serif text-muted-foreground line-clamp-2 leading-relaxed mb-3">
                     {displayAbstract}
                 </p>
             )}
 
-            <div className="flex items-center justify-end pt-4 mt-auto border-t border-border">
+            <div className="flex items-center justify-end pt-3 mt-auto border-t border-border/40">
                 {pub.pdf_download_allowed ? (
                     <a
                         href={journalApi.getPdfUrl(pub.id)}
@@ -68,12 +68,12 @@ export const PublicationCard = ({ pub, className }: PublicationCardProps) => {
                         rel="noreferrer"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <Button variant="outline" size="sm" className="gap-2">
-                            <Download size={14} /> {t('journal.download_pdf')}
+                        <Button variant="outline" size="sm" className="gap-2 h-8 text-[9px] px-3">
+                            <Download size={12} /> {t('journal.download_pdf')}
                         </Button>
                     </a>
                 ) : (
-                    <span className="text-[10px] font-accent font-bold text-muted-foreground uppercase flex items-center gap-1.5">
+                    <span className="text-[9px] font-accent font-bold text-muted-foreground uppercase flex items-center gap-1.5">
                         <FileText size={12} /> {isRu ? 'PDF скоро' : 'PDF coming soon'}
                     </span>
                 )}

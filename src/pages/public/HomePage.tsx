@@ -31,15 +31,15 @@ export const HomePage = () => {
     }
 
     return (
-        <PageContainer className="grid grid-cols-1 lg:grid-cols-4 gap-12">
-            <div className="lg:col-span-3 space-y-12">
-                <section className="bg-card border border-border border-t-4 border-t-primary shadow-sm p-8 rounded-sm">
-                    <div className="flex flex-col md:flex-row gap-8 items-start">
-                        <div className="w-48 h-64 bg-muted border border-border flex items-center justify-center shrink-0 text-muted-foreground/40 font-serif text-center p-4">
+        <PageContainer className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <div className="lg:col-span-3 space-y-10">
+                <section className="bg-card border border-border border-t-4 border-t-primary shadow-sm p-6 rounded-sm">
+                    <div className="flex flex-col sm:flex-row gap-6 items-start">
+                        <div className="w-36 h-48 md:w-40 md:h-52 bg-muted border border-border/60 flex items-center justify-center shrink-0 text-muted-foreground/40 font-serif text-center p-3 text-xs">
                             {isRu ? 'Обложка журнала' : 'Journal Cover'}
                         </div>
-                        <div className="space-y-4">
-                            <h1 className="text-3xl font-heading font-bold text-foreground leading-tight">
+                        <div className="space-y-3 flex-grow">
+                            <h1 className="text-2xl md:text-3xl font-heading font-bold text-foreground leading-tight">
                                 {isRu
                                     ? 'Журнал Челябинского государственного университета'
                                     : 'Bulletin of Chelyabinsk State University'}
@@ -49,7 +49,7 @@ export const HomePage = () => {
                                     {t('journal.issn')}: 1994-2796
                                 </span>
                             </div>
-                            <p className="font-serif text-sm leading-relaxed text-muted-foreground text-justify">
+                            <p className="font-serif text-xs md:text-sm leading-relaxed text-muted-foreground text-justify">
                                 {isRu ? (
                                     "Научный журнал, в котором публикуются результаты диссертационных исследований. Издание включено в Перечень рецензируемых научных изданий (ВАК РФ). Журнал является открытым для международного научного сообщества."
                                 ) : (
@@ -79,7 +79,7 @@ export const HomePage = () => {
             </div>
 
             <aside className="lg:col-span-1 space-y-6">
-                <Link to="/submissions/new">
+                <Link to="/submissions/new" className="block">
                     <Button size="lg" className="w-full shadow-md">
                         <Send size={16} className="mr-2" />
                         {t('nav.submit')}
