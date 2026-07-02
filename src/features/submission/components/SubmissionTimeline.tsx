@@ -62,8 +62,8 @@ export const SubmissionTimeline = ({events}: SubmissionTimelineProps) => {
                 {isRu ? 'Файл' : 'File'}
             </span>
                                             <span className="text-primary lowercase">
-                {event.payload?.file_name || 'file'}
-            </span>
+                                                {String(event.payload?.file_name || 'file')}
+                                            </span>
                                             <span className="uppercase">
                 {isRu ? 'загружен' : 'uploaded'}
             </span>
