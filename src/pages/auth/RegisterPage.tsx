@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate, Link } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { UserPlus, Mail, Lock, User, Building, Globe } from 'lucide-react';
+// import { UserPlus, Mail, Lock, User, Building, Globe } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { FormInput } from '../../components/ui/FormInput';
@@ -11,10 +11,10 @@ import { Button } from '../../components/ui/Button';
 import { registerSchema, type RegisterFormData } from '../../features/auth/auth.types';
 import { authApi } from '../../features/auth/auth.api';
 import { Card } from '../../components/ui/Card';
-import { PageHeader } from '../../components/ui/PageHeader';
+// import { PageHeader } from '../../components/ui/PageHeader';
 import type { AxiosError } from "axios";
 import type { ApiError } from "../../api/types";
-import { PageContainer } from "../../components/ui/PageContainer";
+// import { PageContainer } from "../../components/ui/PageContainer";
 
 export const RegisterPage = () => {
     const { t, i18n } = useTranslation();
@@ -54,90 +54,36 @@ export const RegisterPage = () => {
     };
 
     return (
-        <PageContainer className="min-h-[75vh] flex flex-col justify-center items-center w-full">
-            <Card variant="accent" padding="none" className="w-full max-w-xl p-6 sm:p-8 md:p-10">
-                <div className="text-center mb-8">
-                    <PageHeader
-                        title={t('auth.register_title')}
-                        subtitle="Scientific Journal Identity"
-                        withBorder={false}
-                        className="items-center text-center pb-0"
-                    />
-                </div>
+        // Используем h-full flex items-center justify-center, чтобы форма встала строго по центру Main
+        <div className="h-full w-full flex items-center justify-center p-4">
+            <Card variant="default" className="w-full max-w-[600px] shadow-sm border border-border p-8">
+                <h2 className="text-2xl font-heading font-bold mb-8 text-center">{t('auth.register_title')}</h2>
 
                 <FormProvider {...methods}>
-                    <form onSubmit={methods.handleSubmit(onSubmit)} className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
-                        <div className="sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4 mb-2 border-b border-border pb-4">
-                            <FormInput
-                                name="email"
-                                label={`${t('auth.email')} *`}
-                                type="email"
-                                icon={<Mail size={16} />}
-                                placeholder="author@csu.ru"
-                            />
-                            <FormInput
-                                name="password"
-                                label={`${t('auth.password')} *`}
-                                type="password"
-                                icon={<Lock size={16} />}
-                                placeholder={isRu ? "Минимум 8 символов" : "Min. 8 characters"}
-                            />
+                    <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <FormInput name="first_name" label={t('auth.first_name')} placeholder={isRu ? "Иван" : "John"} />
+                            <FormInput name="last_name" label={t('auth.last_name')} placeholder={isRu ? "Иванов" : "Doe"} />
                         </div>
 
-                        <FormInput
-                            name="first_name"
-                            label={`${t('auth.first_name')} *`}
-                            icon={<User size={16} />}
-                        />
-                        <FormInput
-                            name="last_name"
-                            label={`${t('auth.last_name')} *`}
-                            icon={<User size={16} />}
-                        />
-                        <FormInput
-                            name="middle_name"
-                            label={t('auth.middle_name')}
-                            placeholder={isRu ? "Если есть" : "Optional"}
-                        />
-                        <FormInput
-                            name="country"
-                            label={t('auth.country')}
-                            icon={<Globe size={16} />}
-                            placeholder={isRu ? "Например, Россия" : "e.g. Kazakhstan"}
-                        />
+                        <FormInput name="email" label={t('auth.email')} placeholder="example@csu.ru" />
+                        <FormInput name="password" label={t('auth.password')} type="password" placeholder={isRu ? "Минимум 8 символов" : "Min. 8 characters"} />
 
-                        <div className="sm:col-span-2">
-                            <FormInput
-                                name="organization"
-                                label={t('auth.organization')}
-                                icon={<Building size={16} />}
-                                placeholder={isRu ? "Например, ЧелГУ" : "University or Company name"}
-                            />
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <FormInput name="country" label={t('auth.country')} placeholder={isRu ? "Россия" : "Russia"} />
+                            <FormInput name="organization" label={t('auth.organization')} placeholder={isRu ? "ЧелГУ" : "University Name"} />
                         </div>
 
-                        <div className="sm:col-span-2 mt-4">
-                            <Button
-                                type="submit"
-                                className="w-full"
-                                size="lg"
-                                isLoading={registerMutation.isPending}
-                            >
-                                <UserPlus size={18} className="mr-2" />
-                                {t('auth.register_action')}
-                            </Button>
-                        </div>
+                        <Button type="submit" className="w-full mt-6" size="lg" isLoading={registerMutation.isPending}>
+                            {t('auth.register_action')}
+                        </Button>
                     </form>
                 </FormProvider>
 
-                <div className="mt-6 text-center border-t border-border pt-4">
-                    <p className="text-xs text-muted-foreground">
-                        {t('auth.have_account')}
-                        <Link to="/login" className="text-primary font-bold ml-2 hover:underline transition-colors">
-                            {t('auth.login_action')}
-                        </Link>
-                    </p>
-                </div>
+                <p className="mt-6 text-center text-xs text-muted-foreground">
+                    {t('auth.have_account')} <Link to="/login" className="text-primary font-bold hover:underline">{t('auth.login_action')}</Link>
+                </p>
             </Card>
-        </PageContainer>
+        </div>
     );
 };

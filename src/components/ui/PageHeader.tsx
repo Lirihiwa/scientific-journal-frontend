@@ -11,7 +11,7 @@ interface PageHeaderProps {
 
 export const PageHeader = ({
                                title,
-                               subtitle,
+                               // subtitle,
                                action,
                                className,
                                withBorder = true
@@ -23,12 +23,14 @@ export const PageHeader = ({
             className
         )}>
             <div className="space-y-3">
-                <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground tracking-tight">{title}</h1>
-                {subtitle && (
-                    <p className="text-[10px] font-accent font-bold uppercase tracking-[0.3em] text-muted-foreground">
-                        {subtitle}
-                    </p>
-                )}
+                <h1 className="text-4xl md:text-5xl font-heading font-bold text-foreground tracking-tight">
+                    {title}
+                </h1>
+                {/*{subtitle && (*/}
+                {/*    <p className="text-[10px] font-accent font-bold uppercase tracking-[0.3em] text-muted-foreground">*/}
+                {/*        {subtitle}*/}
+                {/*    </p>*/}
+                {/*)}*/}
             </div>
             {action && <div className="shrink-0">{action}</div>}
         </header>

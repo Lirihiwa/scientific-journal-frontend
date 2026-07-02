@@ -1,3 +1,4 @@
+/* filepath: src/pages/editor/EditorDashboard.tsx */
 import { AlertCircle, CheckCircle2, Eye, FileText, Inbox, Layers, Search, Send, XCircle } from 'lucide-react';
 import { useEditorDashboard } from '../../features/editor/hooks/useEditorDashboard';
 import { Button } from '../../components/ui/Button';
@@ -40,6 +41,39 @@ export const EditorDashboard = () => {
         t,
         isRu
     } = useEditorDashboard();
+
+    const handleStartReview = (subId: string) => {
+        const confirmed = window.confirm(
+            isRu
+                ? "Вы уверены, что хотите взять эту рукопись в работу и начать рецензирование?"
+                : "Are you sure you want to start reviewing this manuscript?"
+        );
+        if (confirmed) {
+            statusMutation.mutate({ id: subId, status: 'under_review' });
+        }
+    };
+
+    const handleAccept = (subId: string) => {
+        const confirmed = window.confirm(
+            isRu
+                ? "Вы уверены, что хотите принять эту рукопись к публикации?"
+                : "Are you sure you want to accept this manuscript for publication?"
+        );
+        if (confirmed) {
+            statusMutation.mutate({ id: subId, status: 'accepted' });
+        }
+    };
+
+    const handlePublish = (subId: string, issueId: string) => {
+        const confirmed = window.confirm(
+            isRu
+                ? "Вы уверены, что хотите опубликовать эту статью в выбранном выпуске?"
+                : "Are you sure you want to publish this article in the selected issue?"
+        );
+        if (confirmed) {
+            publishMutation.mutate({ subId, issueId });
+        }
+    };
 
     const dashboardTiles = [
         { id: 'all', label: t('common.all'), count: stats.all, icon: Layers, activeColor: 'text-foreground', activeBg: 'bg-muted/30', activeBorder: 'border-foreground/30' },
@@ -119,12 +153,22 @@ export const EditorDashboard = () => {
                                 showLink={false}
                                 actions={
                                     <div className="flex gap-2">
-                                        {sub.status === 'new' && <Button size="sm" className="h-8 text-[9px]" onClick={() => statusMutation.mutate({ id: sub.id, status: 'under_review' })}>{isRu ? 'В работу' : 'Start Review'}</Button>}
+                                        {sub.status === 'new' && (
+                                            <Button size="sm" className="h-8 text-[9px]" onClick={() => handleStartReview(sub.id)}>
+                                                {isRu ? 'В работу' : 'Start Review'}
+                                            </Button>
+                                        )}
                                         {sub.status === 'under_review' && (
                                             <>
-                                                <Button size="sm" variant="outline" className="h-8 text-[9px] text-status-accepted border-status-accepted/30 hover:bg-status-accepted/10" onClick={() => statusMutation.mutate({ id: sub.id, status: 'accepted' })}>{isRu ? 'Принять' : 'Accept'}</Button>
-                                                <Button size="sm" variant="outline" className="h-8 text-[9px] text-status-revision border-status-revision/30 hover:bg-status-revision/10" onClick={() => setDecisionModal({ isOpen: true, subId: sub.id, target: 'revision_required' })}>{isRu ? 'Правки' : 'Revision'}</Button>
-                                                <Button size="sm" variant="outline" className="h-8 text-[9px] text-status-rejected border-status-rejected/30 hover:bg-status-rejected/10" onClick={() => setDecisionModal({ isOpen: true, subId: sub.id, target: 'rejected' })}>{isRu ? 'Отклонить' : 'Reject'}</Button>
+                                                <Button size="sm" variant="outline" className="h-8 text-[9px] text-status-accepted border-status-accepted/30 hover:bg-status-accepted/10" onClick={() => handleAccept(sub.id)}>
+                                                    {isRu ? 'Принять' : 'Accept'}
+                                                </Button>
+                                                <Button size="sm" variant="outline" className="h-8 text-[9px] text-status-revision border-status-revision/30 hover:bg-status-revision/10" onClick={() => setDecisionModal({ isOpen: true, subId: sub.id, target: 'revision_required' })}>
+                                                    {isRu ? 'Правки' : 'Revision'}
+                                                </Button>
+                                                <Button size="sm" variant="outline" className="h-8 text-[9px] text-status-rejected border-status-rejected/30 hover:bg-status-rejected/10" onClick={() => setDecisionModal({ isOpen: true, subId: sub.id, target: 'rejected' })}>
+                                                    {isRu ? 'Отклонить' : 'Reject'}
+                                                </Button>
                                             </>
                                         )}
                                         {sub.status === 'accepted' && (
@@ -134,10 +178,16 @@ export const EditorDashboard = () => {
                                                         <option value="">{isRu ? 'Выпуск...' : 'Issue...'}</option>
                                                         {issues?.map((i: Issue) => <option key={i.id} value={i.id}>№{i.number} ({i.publication_date ? new Date(i.publication_date).getFullYear() : '—'})</option>)}
                                                     </select>
-                                                    <Button size="icon" className="h-8 w-8" disabled={!selectedIssue} onClick={() => publishMutation.mutate({ subId: sub.id, issueId: selectedIssue })}><Send size={14}/></Button>
+                                                    <Button size="icon" className="h-8 w-8" disabled={!selectedIssue} onClick={() => handlePublish(sub.id, selectedIssue)}>
+                                                        <Send size={14}/>
+                                                    </Button>
                                                     <button onClick={() => setPublishingId(null)} className="text-[10px] p-1 text-muted-foreground hover:text-foreground">✕</button>
                                                 </div>
-                                            ) : <Button size="sm" className="h-8 text-[9px]" onClick={() => setPublishingId(sub.id)}>{isRu ? 'Опубликовать' : 'Publish'}</Button>
+                                            ) : (
+                                                <Button size="sm" className="h-8 text-[9px]" onClick={() => setPublishingId(sub.id)}>
+                                                    {isRu ? 'Опубликовать' : 'Publish'}
+                                                </Button>
+                                            )
                                         )}
                                         {sub.status === 'published' && <Badge variant="published">{t('submission.status.published')}</Badge>}
                                     </div>
@@ -162,7 +212,25 @@ export const EditorDashboard = () => {
                         placeholder={isRu ? "Причина решения..." : "Decision rationale..."}
                     />
                     <div className="flex gap-3">
-                        <Button className="flex-grow" isLoading={statusMutation.isPending} disabled={!comment.trim()} onClick={() => statusMutation.mutate({ id: decisionModal.subId, status: decisionModal.target!, comment })}>
+                        <Button
+                            className="flex-grow"
+                            isLoading={statusMutation.isPending}
+                            disabled={!comment.trim()}
+                            onClick={() => {
+                                const actionText = decisionModal.target === 'rejected'
+                                    ? (isRu ? "отклонить данную работу" : "reject this manuscript")
+                                    : (isRu ? "запросить исправления" : "request changes for this manuscript");
+
+                                const confirmed = window.confirm(
+                                    isRu
+                                        ? `Вы действительно хотите ${actionText}?`
+                                        : `Are you sure you want to ${actionText}?`
+                                );
+                                if (confirmed) {
+                                    statusMutation.mutate({ id: decisionModal.subId, status: decisionModal.target!, comment });
+                                }
+                            }}
+                        >
                             {isRu ? 'Подтвердить' : 'Confirm'}
                         </Button>
                         <Button variant="ghost" onClick={() => setDecisionModal({...decisionModal, isOpen: false})}>

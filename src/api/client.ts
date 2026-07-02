@@ -1,5 +1,6 @@
 import axios, { AxiosError, type InternalAxiosRequestConfig } from 'axios';
 import { tokenStorage } from './tokens';
+import { toast } from 'sonner';
 
 interface FailedRequest {
     resolve: (token: string | null) => void;
@@ -93,3 +94,30 @@ apiClient.interceptors.response.use(
         return Promise.reject(error);
     }
 );
+
+export const downloadAuthenticatedFile = async (urlPath: string, fileName: string) => {
+    const toastId = toast.loading('Подготовка к скачиванию / Preparing download...');
+    try {
+        const response = await apiClient.get(urlPath, {
+            responseType: 'blob',
+        });
+
+        const blob = new Blob([response.data], {
+            type: response.headers['content-type'] || 'application/octet-stream'
+        });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', fileName);
+        document.body.appendChild(link);
+        link.click();
+
+        link.parentNode?.removeChild(link);
+        window.URL.revokeObjectURL(url);
+        toast.dismiss(toastId);
+    } catch (error) {
+        console.error('File download error:', error);
+        toast.dismiss(toastId);
+        toast.error('Ошибка при скачивании файла / Download failed');
+    }
+};

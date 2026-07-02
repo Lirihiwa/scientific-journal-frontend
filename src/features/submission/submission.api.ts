@@ -23,6 +23,7 @@ export const submissionApi = {
     },
     getById: async (id: string) => {
         const { data } = await apiClient.get<SubmissionDetails>(`/submissions/${id}`);
+        console.dir(data);
         return data;
     }
 };

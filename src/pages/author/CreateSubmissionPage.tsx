@@ -60,7 +60,7 @@ export const CreateSubmissionPage = () => {
                     </Card>
 
                     <Card padding="lg" variant="accent">
-                        <SectionHeader title={t('submission.form.abstract_ru')} prefix="02." />
+                        <SectionHeader title={t('submission.form.abstract')} prefix="02." />
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mt-6">
                             <FormTextArea
                                 name="abstract_ru"

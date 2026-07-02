@@ -11,6 +11,7 @@ import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import { MetaBlock } from '../../components/ui/MetaBlock';
 import { PageContainer } from "../../components/ui/PageContainer";
+import { downloadAuthenticatedFile } from '../../api/client';
 
 export const PublicationPage = () => {
     const { id } = useParams();
@@ -148,12 +149,16 @@ export const PublicationPage = () => {
                 <aside className="lg:col-span-1 space-y-6">
                     <Card variant="accent" padding="md" className="space-y-4">
                         {pub.pdf_download_allowed ? (
-                            <a href={journalApi.getPdfUrl(pub.id)} target="_blank" rel="noreferrer" className="block">
-                                <Button className="w-full h-10 text-[10px]">
-                                    <Download size={14} className="mr-2" />
-                                    {t('journal.download_pdf')}
-                                </Button>
-                            </a>
+                            <Button
+                                className="w-full h-10 text-[10px]"
+                                onClick={() => {
+                                    const fileName = pub.pdf_file_name || `${pub.id}.pdf`;
+                                    downloadAuthenticatedFile(`/journal/publications/${pub.id}/pdf`, fileName);
+                                }}
+                            >
+                                <Download size={14} className="mr-2" />
+                                {t('journal.download_pdf')}
+                            </Button>
                         ) : (
                             <div className="p-3 bg-muted/50 border border-border text-center">
                                 <span className="text-[9px] font-accent font-bold uppercase tracking-widest text-muted-foreground">
