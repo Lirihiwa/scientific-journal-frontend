@@ -41,19 +41,21 @@ export const HomePage = () => {
                         <div className="space-y-3 flex-grow">
                             <h1 className="text-2xl md:text-3xl font-heading font-bold text-foreground leading-tight">
                                 {isRu
-                                    ? 'Журнал Челябинского государственного университета'
-                                    : 'Bulletin of Chelyabinsk State University'}
+                                    ? 'Российский журнал когнитивных исследований'
+                                    : 'Russian Journal of Cognitive Science'}
                             </h1>
+                            {/* ISSN временно скрыт до присвоения
                             <div className="flex gap-3">
                                 <span className="px-2 py-0.5 bg-accent/10 text-accent border border-accent/20 text-[10px] font-accent font-bold uppercase tracking-widest rounded-sm">
                                     {t('journal.issn')}: 1994-2796
                                 </span>
                             </div>
+                            */}
                             <p className="font-serif text-xs md:text-sm leading-relaxed text-muted-foreground text-justify">
                                 {isRu ? (
-                                    "Научный журнал, в котором публикуются результаты диссертационных исследований. Издание включено в Перечень рецензируемых научных изданий (ВАК РФ). Журнал является открытым для международного научного сообщества."
+                                    "Журнал является платформой для научных исследований и академических дискуссий по междисциплинарным проблемам когнитивной науки."
                                 ) : (
-                                    "A peer-reviewed scientific journal publishing the results of dissertation research. The publication is included in the List of peer-reviewed scientific editions (VAK RF). The journal is open to the international scientific community."
+                                    "The journal serves as a platform for scientific research and academic discussions on interdisciplinary problems of cognitive science."
                                 )}
                             </p>
                         </div>
@@ -93,10 +95,10 @@ export const HomePage = () => {
                     <div className="flex flex-col">
                         {[
                             { to: '/about', icon: Info, label: t('nav.about') },
-                            { to: '/info/guidelines', icon: FileText, label: t('nav.guidelines') },
                             { to: '/editorial', icon: Users, label: t('nav.editorial') },
-                            { to: '/review-process', icon: BookOpen, label: isRu ? 'Рецензирование' : 'Peer Review' },
-                            { to: '/ethics', icon: Scale, label: t('nav.ethics') },
+                            { to: '/ethics', icon: Scale, label: t('nav.ethics_policy') },
+                            { to: '/info/guidelines', icon: FileText, label: t('nav.for_authors') },
+                            { to: '/archive', icon: BookOpen, label: t('nav.archive') },
                         ].map(link => (
                             <Link key={link.to} to={link.to} className="flex items-center gap-3 p-4 text-sm font-serif hover:bg-primary/5 hover:text-primary transition-colors border-b border-border last:border-0">
                                 <link.icon size={16} className="text-muted-foreground" /> {link.label}
