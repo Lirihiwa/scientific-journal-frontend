@@ -1,4 +1,5 @@
-import { User as UserIcon, Mail, Building, Globe } from 'lucide-react';
+import { User as UserIcon, Mail, Building, Globe, FileText, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useSessionStore } from '../../stores/session.store';
 import { Card } from '../../components/ui/Card';
@@ -60,6 +61,28 @@ export const ProfilePage = () => {
                                 {user.country || (isRu ? 'Не указана' : 'Not specified')}
                             </p>
                         </div>
+                    </div>
+
+                    <div className="pt-8 border-t border-border">
+                        <Link
+                            to="/submissions"
+                            className="flex items-center justify-between gap-4 p-5 bg-muted/30 border border-border rounded-sm hover:border-primary/50 hover:bg-primary/5 transition-colors group"
+                        >
+                            <span className="flex items-center gap-3">
+                                <span className="w-10 h-10 bg-primary/10 text-primary flex items-center justify-center rounded-full shrink-0">
+                                    <FileText size={18} />
+                                </span>
+                                <span>
+                                    <span className="block text-sm font-bold text-foreground group-hover:text-primary transition-colors">
+                                        {t('nav.my_submissions')}
+                                    </span>
+                                    <span className="block text-xs text-muted-foreground font-serif">
+                                        {isRu ? 'Просмотр и управление вашими рукописями' : 'View and manage your manuscripts'}
+                                    </span>
+                                </span>
+                            </span>
+                            <ArrowRight size={18} className="text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0" />
+                        </Link>
                     </div>
                 </div>
             </Card>
