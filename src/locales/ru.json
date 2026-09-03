@@ -64,8 +64,8 @@
     "submission": {
         "status": {
             "new": "Новая",
-            "under_review": "На рецензии",
-            "revision_required": "Нужны правки",
+            "under_review": "На рецензировании",
+            "revision_required": "На доработке",
             "accepted": "Принята",
             "rejected": "Отклонена",
             "published": "Опубликована"
@@ -122,13 +122,13 @@
         "actions": {
             "start_review": "В работу",
             "accept": "Принять",
-            "revision": "Правки",
+            "revision": "На доработку",
             "reject": "Отклонить",
             "publish": "Опубликовать"
         },
         "decision": {
             "title_reject": "Отказ в публикации",
-            "title_revision": "Запрос правок",
+            "title_revision": "Запрос доработки",
             "comment": "Комментарий",
             "placeholder": "Причина решения..."
         }

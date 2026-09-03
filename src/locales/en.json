@@ -65,7 +65,7 @@
         "status": {
             "new": "New",
             "under_review": "Under Review",
-            "revision_required": "Revisions Required",
+            "revision_required": "Revision Requested",
             "accepted": "Accepted",
             "rejected": "Rejected",
             "published": "Published"
@@ -121,13 +121,13 @@
         "actions": {
             "start_review": "Start Review",
             "accept": "Accept",
-            "revision": "Request Revisions",
+            "revision": "Request Revision",
             "reject": "Reject",
             "publish": "Publish"
         },
         "decision": {
             "title_reject": "Rejection",
-            "title_revision": "Request for Revisions",
+            "title_revision": "Revision Request",
             "comment": "Comment",
             "placeholder": "Reason for decision..."
         }
