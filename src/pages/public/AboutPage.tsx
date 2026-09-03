@@ -71,8 +71,8 @@ export const AboutPage = () => {
                                 "Social cognitive psychology",
                                 "Cognitive developmental psychology"
                             ]).map((topic, i) => (
-                                <li key={i} className="flex items-start gap-2 text-sm font-serif text-foreground/80">
-                                    <span className="text-primary shrink-0 mt-1.5">•</span>
+                                <li key={i} className="flex items-baseline gap-2 text-sm font-serif text-foreground/80">
+                                    <span className="text-primary shrink-0 leading-none relative top-[-0.05em]">•</span>
                                     <span>{topic}</span>
                                 </li>
                             ))}
