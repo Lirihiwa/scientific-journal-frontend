@@ -5,7 +5,6 @@ import {
     ChevronLeft,
     ChevronRight,
     Database,
-    Download,
     FileText,
     Info,
     Scale,
@@ -106,9 +105,8 @@ export const Sidebar = ({ onMobileClose }: SidebarProps) => {
                 </Section>
 
                 <Section title={lang === 'ru' ? 'Авторам' : 'For Authors'} isCollapsed={isCollapsed}>
-                    <NavItem to="/submissions/new" icon={<Send size={16} />} label={t('nav.submit')} isCollapsed={isCollapsed} />
-                    <NavItem to="/submissions" icon={<Download size={16} />} label={t('nav.my_submissions')} isCollapsed={isCollapsed} end />
                     <NavItem to="/info/guidelines" icon={<Scale size={16} />} label={t('nav.guidelines')} isCollapsed={isCollapsed} />
+                    <NavItem to="/submissions/new" icon={<Send size={16} />} label={t('nav.submit')} isCollapsed={isCollapsed} />
                 </Section>
 
                 {isEditorOrAdmin && (
@@ -126,15 +124,16 @@ export const Sidebar = ({ onMobileClose }: SidebarProps) => {
                 {!isCollapsed ? (
                     <Section title={lang === 'ru' ? 'Индексация' : 'Indexing'} isCollapsed={false}>
                         <div
-                            className="px-3 py-2 bg-muted/30 border border-border rounded-sm text-[10px] font-accent font-bold uppercase tracking-tight text-muted-foreground">
-                            РИНЦ / Scopus / DOI
+                            className="px-3 py-2 text-[10px] font-accent font-bold uppercase tracking-tight text-muted-foreground select-none cursor-default"
+                        >
+                            РИНЦ
                         </div>
                     </Section>
                 ) : (
                     <div className="flex justify-center py-2">
                         <div
-                            className="w-8 h-8 flex items-center justify-center bg-muted/30 border border-border rounded-sm text-muted-foreground"
-                            title="Indexing: RSCI / Scopus / DOI"
+                            className="w-8 h-8 flex items-center justify-center text-muted-foreground select-none cursor-default"
+                            title="Indexing: РИНЦ"
                         >
                             <Database size={14} />
                         </div>
