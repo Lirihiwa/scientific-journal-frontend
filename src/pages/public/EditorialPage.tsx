@@ -20,7 +20,8 @@ export const EditorialPage = () => {
         cityEn: "Saint Petersburg",
         countryRu: "Российская Федерация",
         countryEn: "Russian Federation",
-        orcid: "0000-0002-0469-4818"
+        orcid: "0000-0002-0469-4818",
+        photoUrl: "" // вставьте ссылку на фото сюда, например: "https://example.com/photo.jpg"
     };
 
     const editorialCommittee = [
@@ -35,7 +36,8 @@ export const EditorialPage = () => {
             cityEn: "Moscow",
             countryRu: "Российская Федерация",
             countryEn: "Russian Federation",
-            orcid: "0000-0003-3809-3639"
+            orcid: "0000-0003-3809-3639",
+            photoUrl: "" // вставьте ссылку на фото
         },
         {
             nameRu: "Карпов Анатолий Викторович",
@@ -48,7 +50,8 @@ export const EditorialPage = () => {
             cityEn: "Yaroslavl",
             countryRu: "Российская Федерация",
             countryEn: "Russian Federation",
-            orcid: "0000-0003-4547-2848"
+            orcid: "0000-0003-4547-2848",
+            photoUrl: "" // вставьте ссылку на фото
         },
         {
             nameRu: "Коровкин Сергей Юрьевич",
@@ -61,7 +64,8 @@ export const EditorialPage = () => {
             cityEn: "Yaroslavl",
             countryRu: "Российская Федерация",
             countryEn: "Russian Federation",
-            orcid: "0000-0001-7890-4366"
+            orcid: "0000-0001-7890-4366",
+            photoUrl: "" // вставьте ссылку на фото
         },
         {
             nameRu: "Ермаков Павел Николаевич",
@@ -74,7 +78,8 @@ export const EditorialPage = () => {
             cityEn: "Rostov-on-Don",
             countryRu: "Российская Федерация",
             countryEn: "Russian Federation",
-            orcid: "0000-0001-8395-2426"
+            orcid: "0000-0001-8395-2426",
+            photoUrl: "" // вставьте ссылку на фото
         }
     ];
 
@@ -90,7 +95,8 @@ export const EditorialPage = () => {
             cityEn: "Rostov-on-Don",
             countryRu: "Российская Федерация",
             countryEn: "Russian Federation",
-            orcid: "0000-0003-2202-2588"
+            orcid: "0000-0003-2202-2588",
+            photoUrl: "" // вставьте ссылку на фото
         },
         {
             nameRu: "Воробьева Елена Викторовна",
@@ -103,7 +109,8 @@ export const EditorialPage = () => {
             cityEn: "Rostov-on-Don",
             countryRu: "Российская Федерация",
             countryEn: "Russian Federation",
-            orcid: "0000-0001-8974-5655"
+            orcid: "0000-0001-8974-5655",
+            photoUrl: "" // вставьте ссылку на фото
         },
         {
             nameRu: "Девятерикова Алена Андреевна",
@@ -116,7 +123,8 @@ export const EditorialPage = () => {
             cityEn: "Moscow",
             countryRu: "Российская Федерация",
             countryEn: "Russian Federation",
-            orcid: "0000-0002-7666-1089"
+            orcid: "0000-0002-7666-1089",
+            photoUrl: "" // вставьте ссылку на фото
         },
         {
             nameRu: "Дейнека Ольга Сергеевна",
@@ -129,7 +137,8 @@ export const EditorialPage = () => {
             cityEn: "Saint Petersburg",
             countryRu: "Российская Федерация",
             countryEn: "Russian Federation",
-            orcid: "0000-0001-8224-2190"
+            orcid: "0000-0001-8224-2190",
+            photoUrl: "" // вставьте ссылку на фото
         },
         {
             nameRu: "Денисова Екатерина Геннадьевна",
@@ -142,7 +151,8 @@ export const EditorialPage = () => {
             cityEn: "Rostov-on-Don",
             countryRu: "Российская Федерация",
             countryEn: "Russian Federation",
-            orcid: "0000-0003-0240-8176"
+            orcid: "0000-0003-0240-8176",
+            photoUrl: "" // вставьте ссылку на фото
         },
         {
             nameRu: "Копцева Наталья Петровна",
@@ -155,7 +165,8 @@ export const EditorialPage = () => {
             cityEn: "Krasnoyarsk",
             countryRu: "Российская Федерация",
             countryEn: "Russian Federation",
-            orcid: "0000-0003-3910-7991"
+            orcid: "0000-0003-3910-7991",
+            photoUrl: "" // вставьте ссылку на фото
         },
         {
             nameRu: "Маракшина Юлия Александровна",
@@ -168,7 +179,8 @@ export const EditorialPage = () => {
             cityEn: "Moscow",
             countryRu: "Российская Федерация",
             countryEn: "Russian Federation",
-            orcid: "0000-0002-7559-9148"
+            orcid: "0000-0002-7559-9148",
+            photoUrl: "" // вставьте ссылку на фото
         },
         {
             nameRu: "Нестик Тимофей Александрович",
@@ -181,7 +193,8 @@ export const EditorialPage = () => {
             cityEn: "Moscow",
             countryRu: "Российская Федерация",
             countryEn: "Russian Federation",
-            orcid: "0000-0002-1410-4762"
+            orcid: "0000-0002-1410-4762",
+            photoUrl: "" // вставьте ссылку на фото
         },
         {
             nameRu: "Парфенов Владимир Анатольевич",
@@ -194,7 +207,8 @@ export const EditorialPage = () => {
             cityEn: "Moscow",
             countryRu: "Российская Федерация",
             countryEn: "Russian Federation",
-            orcid: "0000-0002-1992-7960"
+            orcid: "0000-0002-1992-7960",
+            photoUrl: "" // вставьте ссылку на фото
         },
         {
             nameRu: "Тихомирова Татьяна Николаевна",
@@ -207,7 +221,8 @@ export const EditorialPage = () => {
             cityEn: "Moscow",
             countryRu: "Российская Федерация",
             countryEn: "Russian Federation",
-            orcid: "0000-0002-6748-763X"
+            orcid: "0000-0002-6748-763X",
+            photoUrl: "" // вставьте ссылку на фото
         },
         {
             nameRu: "Фомина Татьяна Геннадьевна",
@@ -220,7 +235,8 @@ export const EditorialPage = () => {
             cityEn: "Moscow",
             countryRu: "Российская Федерация",
             countryEn: "Russian Federation",
-            orcid: "0000-0001-5097-4733"
+            orcid: "0000-0001-5097-4733",
+            photoUrl: "" // вставьте ссылку на фото
         },
         {
             nameRu: "Холодная Марина Александровна",
@@ -233,7 +249,8 @@ export const EditorialPage = () => {
             cityEn: "Moscow",
             countryRu: "Российская Федерация",
             countryEn: "Russian Federation",
-            orcid: "0000-0002-4267-317X"
+            orcid: "0000-0002-4267-317X",
+            photoUrl: "" // вставьте ссылку на фото
         },
         {
             nameRu: "Храмов Александр Евгеньевич",
@@ -246,7 +263,8 @@ export const EditorialPage = () => {
             cityEn: "Moscow",
             countryRu: "Российская Федерация",
             countryEn: "Russian Federation",
-            orcid: "0000-0003-2787-2530"
+            orcid: "0000-0003-2787-2530",
+            photoUrl: "" // вставьте ссылку на фото
         },
         {
             nameRu: "Юров Иван Юрьевич",
@@ -259,7 +277,8 @@ export const EditorialPage = () => {
             cityEn: "Moscow",
             countryRu: "Российская Федерация",
             countryEn: "Russian Federation",
-            orcid: "0000-0002-4134-8367"
+            orcid: "0000-0002-4134-8367",
+            photoUrl: "" // вставьте ссылку на фото
         },
         {
             nameRu: "Зай-Фу Яо",
@@ -272,7 +291,8 @@ export const EditorialPage = () => {
             cityEn: "Hsinchu",
             countryRu: "Тайвань",
             countryEn: "Taiwan",
-            orcid: "0000-0002-9823-9110"
+            orcid: "0000-0002-9823-9110",
+            photoUrl: "" // вставьте ссылку на фото
         },
         {
             nameRu: "Манодж Кумар Маллик",
@@ -285,7 +305,8 @@ export const EditorialPage = () => {
             cityEn: "Bhubaneswar",
             countryRu: "Индия",
             countryEn: "India",
-            orcid: "0000-0002-3193-1727"
+            orcid: "0000-0002-3193-1727",
+            photoUrl: "" // вставьте ссылку на фото
         }
     ];
 
@@ -298,11 +319,19 @@ export const EditorialPage = () => {
 
             <section className="space-y-6">
                 <SectionHeader title={isRu ? "Главный редактор" : "Editor-in-Chief"} />
-                <Card variant="accent" className="flex flex-col md:flex-row items-start gap-6">
-                    <div className="w-14 h-14 bg-primary/10 text-primary flex items-center justify-center rounded-full shrink-0">
-                        <UserCheck size={28} />
-                    </div>
-                    <div className="space-y-2 font-serif">
+                <Card variant="accent" padding="none" className="flex flex-col md:flex-row items-stretch gap-0 overflow-hidden">
+                    {editorInChief.photoUrl ? (
+                        <img
+                            src={editorInChief.photoUrl}
+                            alt={isRu ? editorInChief.nameRu : editorInChief.nameEn}
+                            className="w-full md:w-40 h-48 md:h-auto object-cover shrink-0"
+                        />
+                    ) : (
+                        <div className="w-full md:w-40 h-48 md:h-auto bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                            <UserCheck size={40} />
+                        </div>
+                    )}
+                    <div className="space-y-2 font-serif p-6 md:p-8">
                         <h3 className="text-2xl font-sans font-bold text-foreground">
                             {isRu ? editorInChief.nameRu : editorInChief.nameEn}
                         </h3>
@@ -339,11 +368,19 @@ export const EditorialPage = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {editorialCommittee.map((member, i) => (
-                        <Card key={i} variant="flat" className="p-6 bg-card border border-border flex gap-4">
-                            <div className="w-10 h-10 bg-muted text-muted-foreground flex items-center justify-center rounded-full shrink-0">
-                                <GraduationCap size={20} />
-                            </div>
-                            <div className="space-y-2 text-xs font-serif">
+                        <Card key={i} variant="flat" padding="none" className="bg-card border border-border flex gap-0 overflow-hidden">
+                            {member.photoUrl ? (
+                                <img
+                                    src={member.photoUrl}
+                                    alt={isRu ? member.nameRu : member.nameEn}
+                                    className="w-28 shrink-0 object-cover"
+                                />
+                            ) : (
+                                <div className="w-28 shrink-0 bg-muted text-muted-foreground flex items-center justify-center">
+                                    <GraduationCap size={28} />
+                                </div>
+                            )}
+                            <div className="space-y-2 text-xs font-serif p-5">
                                 <h4 className="text-base font-sans font-bold text-foreground leading-snug">
                                     {isRu ? member.nameRu : member.nameEn}
                                 </h4>
@@ -382,11 +419,19 @@ export const EditorialPage = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {boardMembers.map((member, i) => (
-                        <Card key={i} variant="flat" className="p-6 bg-card border border-border flex gap-4">
-                            <div className="w-10 h-10 bg-muted text-muted-foreground flex items-center justify-center rounded-full shrink-0">
-                                <GraduationCap size={20} />
-                            </div>
-                            <div className="space-y-2 text-xs font-serif">
+                        <Card key={i} variant="flat" padding="none" className="bg-card border border-border flex gap-0 overflow-hidden">
+                            {member.photoUrl ? (
+                                <img
+                                    src={member.photoUrl}
+                                    alt={isRu ? member.nameRu : member.nameEn}
+                                    className="w-28 shrink-0 object-cover"
+                                />
+                            ) : (
+                                <div className="w-28 shrink-0 bg-muted text-muted-foreground flex items-center justify-center">
+                                    <GraduationCap size={28} />
+                                </div>
+                            )}
+                            <div className="space-y-2 text-xs font-serif p-5">
                                 <h4 className="text-base font-sans font-bold text-foreground leading-snug">
                                     {isRu ? member.nameRu : member.nameEn}
                                 </h4>
