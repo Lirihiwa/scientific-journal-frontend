@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Mail, Phone, User, Languages, RefreshCw, CheckCircle2 } from 'lucide-react';
+import { Mail, Phone, MapPin, Languages, RefreshCw, CheckCircle2 } from 'lucide-react';
 import { PageContainer } from '../../components/ui/PageContainer';
 import { PageHeader } from '../../components/ui/PageHeader';
 import { Card } from '../../components/ui/Card';
@@ -145,18 +145,17 @@ export const AboutPage = () => {
                                 </div>
                             </div>
 
-                            <div className="flex items-start gap-3 pt-3 border-t border-border/60">
-                                <User size={16} className="text-primary shrink-0 mt-0.5" />
+                            <div className="flex items-start gap-3">
+                                <MapPin size={16} className="text-primary shrink-0 mt-0.5" />
                                 <div>
                                     <span className="block font-sans uppercase text-[9px] tracking-wider text-muted-foreground">
-                                        {isRu ? "Выпускающий редактор" : "Managing Editor"}
+                                        {isRu ? "Адрес" : "Address"}
                                     </span>
-                                    <p className="text-foreground/90 font-bold leading-tight">
-                                        {isRu ? "Данилова Анастасия Анатольевна" : "Danilova Anastasia Anatolyevna"}
-                                    </p>
-                                    <p className="text-[10px] text-muted-foreground mt-1">
-                                        {isRu ? "кандидат педагогических наук" : "PhD in Pedagogical Sciences"}
-                                    </p>
+                                    <span className="text-foreground/90">
+                                        {isRu
+                                            ? "454001, г. Челябинск, ул. Братьев Кашириных, 129"
+                                            : "129 Bratyev Kashirinykh St., Chelyabinsk, 454001, Russia"}
+                                    </span>
                                 </div>
                             </div>
                         </div>
