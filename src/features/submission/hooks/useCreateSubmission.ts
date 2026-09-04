@@ -17,7 +17,7 @@ export const useCreateSubmission = () => {
 
     const methods = useForm<SubmissionFormData>({
         resolver: zodResolver(submissionFormSchema),
-        defaultValues: { manuscript_language: isRu ? 'ru' : 'en', coauthors: [], policy_accepted: false }
+        defaultValues: { manuscript_language: isRu ? 'ru' : 'en', coauthors: [], policy_accepted: false, data_processing_accepted: false }
     });
 
     const { control } = methods;

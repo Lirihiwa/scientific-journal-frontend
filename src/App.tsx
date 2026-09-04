@@ -25,6 +25,7 @@ import { AboutPage } from './pages/public/AboutPage';
 import { EditorialPage } from './pages/public/EditorialPage';
 import { EthicsPage } from './pages/public/EthicsPage';
 import { GuidelinesPage } from './pages/public/GuidelinesPage';
+import { PrivacyPolicyPage } from './pages/public/PrivacyPolicyPage';
 import { StaticPagePlaceholder } from "./pages/public/StaticPagePlaceholder";
 
 // Author
@@ -77,6 +78,7 @@ export const App = () => {
                         <Route path="ethics" element={<EthicsPage />} />
                         <Route path="review-process" element={<StaticPagePlaceholder title="Процесс рецензирования" />} />
                         <Route path="info/guidelines" element={<GuidelinesPage />} />
+                        <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
 
                         <Route path="archive" element={<ArchivePage />} />
                         <Route path="issues/:id" element={<IssuePage />} />

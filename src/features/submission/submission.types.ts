@@ -75,6 +75,7 @@ export const submissionFormSchema = z.object({
     funding_info_ru: z.string().optional().nullable(),
     funding_info_en: z.string().optional().nullable(),
     policy_accepted: z.boolean().refine(val => val === true, 'Необходимо принять условия'),
+    data_processing_accepted: z.boolean().refine(val => val === true, 'Необходимо дать согласие на обработку персональных данных'),
 });
 
 export type SubmissionFormData = z.infer<typeof submissionFormSchema>;

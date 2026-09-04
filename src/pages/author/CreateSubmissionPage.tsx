@@ -1,5 +1,6 @@
 import { Plus, Trash2, Save } from 'lucide-react';
 import { FormProvider } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 
 import { useCreateSubmission } from '../../features/submission/hooks/useCreateSubmission';
 import { FormInput } from '../../components/ui/FormInput';
@@ -157,6 +158,36 @@ export const CreateSubmissionPage = () => {
                         {errors.policy_accepted && (
                             <p className="text-[10px] text-destructive font-bold uppercase mt-2">
                                 {errors.policy_accepted.message as string}
+                            </p>
+                        )}
+
+                        <div className="flex items-start gap-3 p-4 bg-muted/50 mt-3 rounded-sm max-w-2xl">
+                            <input
+                                type="checkbox"
+                                {...methods.register('data_processing_accepted')}
+                                className="mt-1 accent-primary"
+                            />
+                            <label className="text-[11px] leading-relaxed text-muted-foreground font-serif">
+                                {isRu ? (
+                                    <>
+                                        Я даю согласие на обработку персональных данных в соответствии с{' '}
+                                        <Link to="/privacy-policy" target="_blank" className="text-primary hover:underline font-bold">
+                                            политикой обработки персональных данных
+                                        </Link>.
+                                    </>
+                                ) : (
+                                    <>
+                                        I consent to the processing of my personal data in accordance with the{' '}
+                                        <Link to="/privacy-policy" target="_blank" className="text-primary hover:underline font-bold">
+                                            personal data processing policy
+                                        </Link>.
+                                    </>
+                                )}
+                            </label>
+                        </div>
+                        {errors.data_processing_accepted && (
+                            <p className="text-[10px] text-destructive font-bold uppercase mt-2">
+                                {errors.data_processing_accepted.message as string}
                             </p>
                         )}
                     </Card>
