@@ -29,7 +29,7 @@ const NavItem = ({ to, icon, label, isCollapsed, end = false }: {
         to={to}
         end={end}
         className={({ isActive }) => cn(
-            "flex items-center gap-3 px-3 py-2 text-[11px] font-medium transition-colors duration-200 rounded-sm",
+            "flex items-center gap-3 px-3 py-2 text-sm font-medium transition-colors duration-200 rounded-sm",
             isActive
                 ? "bg-primary/10 text-primary font-bold"
                 : "text-foreground hover:bg-muted hover:text-primary",
@@ -50,7 +50,7 @@ const Section = ({ title, children, isCollapsed }: {
     if (isCollapsed) return <div className="space-y-1">{children}</div>;
     return (
         <div className="space-y-1">
-            <h3 className="px-3 pt-4 pb-2 text-[9px] font-accent font-bold uppercase tracking-widest text-muted-foreground border-b border-border">
+            <h3 className="px-3 pt-4 pb-2 text-[10px] font-accent font-bold uppercase tracking-widest text-muted-foreground border-b border-border">
                 {title}
             </h3>
             <div className="space-y-0.5">{children}</div>
@@ -98,22 +98,22 @@ export const Sidebar = ({ onMobileClose }: SidebarProps) => {
             <div className="flex-grow p-3 pt-14 lg:pt-3 space-y-4">
 
                 <Section title={lang === 'ru' ? 'Журнал' : 'Journal'} isCollapsed={isCollapsed}>
-                    <NavItem to="/" icon={<BookOpen size={16} />} label={t('nav.home')} isCollapsed={isCollapsed} end />
-                    <NavItem to="/archive" icon={<FileText size={16} />} label={t('nav.archive')} isCollapsed={isCollapsed} />
-                    <NavItem to="/about" icon={<Info size={16} />} label={t('nav.about')} isCollapsed={isCollapsed} />
-                    <NavItem to="/editorial" icon={<Users size={16} />} label={t('nav.editorial')} isCollapsed={isCollapsed} />
+                    <NavItem to="/" icon={<BookOpen size={18} />} label={t('nav.home')} isCollapsed={isCollapsed} end />
+                    <NavItem to="/archive" icon={<FileText size={18} />} label={t('nav.archive')} isCollapsed={isCollapsed} />
+                    <NavItem to="/about" icon={<Info size={18} />} label={t('nav.about')} isCollapsed={isCollapsed} />
+                    <NavItem to="/editorial" icon={<Users size={18} />} label={t('nav.editorial')} isCollapsed={isCollapsed} />
                 </Section>
 
                 <Section title={lang === 'ru' ? 'Авторам' : 'For Authors'} isCollapsed={isCollapsed}>
-                    <NavItem to="/info/guidelines" icon={<Scale size={16} />} label={t('nav.guidelines')} isCollapsed={isCollapsed} />
-                    <NavItem to="/submissions/new" icon={<Send size={16} />} label={t('nav.submit')} isCollapsed={isCollapsed} />
+                    <NavItem to="/info/guidelines" icon={<Scale size={18} />} label={t('nav.guidelines')} isCollapsed={isCollapsed} />
+                    <NavItem to="/submissions/new" icon={<Send size={18} />} label={t('nav.submit')} isCollapsed={isCollapsed} />
                 </Section>
 
                 {isEditorOrAdmin && (
                     <Section title={lang === 'ru' ? 'Редакция' : 'Editorial'} isCollapsed={isCollapsed}>
                         <NavItem
                             to="/editor"
-                            icon={<ShieldCheck size={16} />}
+                            icon={<ShieldCheck size={18} />}
                             label={t('nav.editor_panel')}
                             isCollapsed={isCollapsed}
                             end
