@@ -5,9 +5,9 @@ import {
     ChevronLeft,
     ChevronRight,
     Database,
+    FileCheck,
     FileText,
     Info,
-    Scale,
     Send,
     ShieldCheck,
     Users,
@@ -105,7 +105,7 @@ export const Sidebar = ({ onMobileClose }: SidebarProps) => {
                 </Section>
 
                 <Section title={lang === 'ru' ? 'Авторам' : 'For Authors'} isCollapsed={isCollapsed}>
-                    <NavItem to="/info/guidelines" icon={<Scale size={18} />} label={t('nav.guidelines')} isCollapsed={isCollapsed} />
+                    <NavItem to="/info/guidelines" icon={<FileCheck size={18} />} label={t('nav.guidelines')} isCollapsed={isCollapsed} />
                     <NavItem to="/submissions/new" icon={<Send size={18} />} label={t('nav.submit')} isCollapsed={isCollapsed} />
                 </Section>
 
