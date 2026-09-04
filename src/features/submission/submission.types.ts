@@ -59,14 +59,17 @@ export interface SubmissionDetails extends Submission {
     author_email: string;
 }
 
+// Аннотация ограничена 300 символами (с пробелами), считается по обоим языкам
+export const ABSTRACT_MAX_LENGTH = 300;
+
 export const submissionFormSchema = z.object({
     manuscript_language: z.enum(['ru', 'en']),
     title_ru: z.string().min(5, 'Заголовок слишком короткий').max(500, 'Заголовок слишком длинный'),
-    title_en: z.string().max(500).optional().nullable(),
-    abstract_ru: z.string().min(50, 'Аннотация должна быть не менее 50 символов'),
-    abstract_en: z.string().optional().nullable(),
+    title_en: z.string().min(5, 'Заголовок слишком короткий (мин. 5 символов)').max(500, 'Заголовок слишком длинный'),
+    abstract_ru: z.string().min(10, 'Аннотация должна быть не менее 10 символов').max(ABSTRACT_MAX_LENGTH, `Аннотация не должна превышать ${ABSTRACT_MAX_LENGTH} символов`),
+    abstract_en: z.string().min(10, 'Аннотация должна быть не менее 10 символов').max(ABSTRACT_MAX_LENGTH, `Аннотация не должна превышать ${ABSTRACT_MAX_LENGTH} символов`),
     keywords_ru: z.string().min(3, 'Укажите ключевые слова'),
-    keywords_en: z.string().optional().nullable(),
+    keywords_en: z.string().min(3, 'Укажите ключевые слова (EN)'),
     coauthors: z.array(CoAuthorSchema),
     cover_letter: z.string().optional().nullable(),
     funding_info_ru: z.string().optional().nullable(),

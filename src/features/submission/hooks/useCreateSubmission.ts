@@ -35,6 +35,7 @@ export const useCreateSubmission = () => {
             toast.success(isRu ? "Рукопись успешно отправлена" : "Manuscript submitted successfully");
             navigate('/submissions');
         },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onError: (error: any) => toast.error(error.message || (isRu ? "Ошибка при отправке" : "Submission error"))
     });
 

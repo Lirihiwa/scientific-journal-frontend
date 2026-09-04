@@ -10,6 +10,7 @@ import { PageHeader } from '../../components/ui/PageHeader';
 import { Card } from '../../components/ui/Card';
 import { SectionHeader } from '../../components/ui/SectionHeader';
 import { PageContainer } from "../../components/ui/PageContainer";
+import { ABSTRACT_MAX_LENGTH } from '../../features/submission/submission.types';
 
 export const CreateSubmissionPage = () => {
     const {
@@ -24,7 +25,10 @@ export const CreateSubmissionPage = () => {
         isRu
     } = useCreateSubmission();
 
-    const { handleSubmit, formState: { errors } } = methods;
+    const { handleSubmit, formState: { errors }, watch } = methods;
+
+    const abstractRu = watch('abstract_ru') || '';
+    const abstractEn = watch('abstract_en') || '';
 
     return (
         <PageContainer>
@@ -32,6 +36,13 @@ export const CreateSubmissionPage = () => {
                 title={t('nav.submit')}
                 subtitle="New Manuscript Submission"
             />
+
+            <p className="text-xs text-muted-foreground font-serif -mt-6 mb-6">
+                {isRu
+                    ? <>Поля, отмеченные <span className="text-primary font-bold">*</span>, обязательны для заполнения, включая англоязычные версии.</>
+                    : <>Fields marked with <span className="text-primary font-bold">*</span> are required, including English-language versions.</>
+                }
+            </p>
 
             <FormProvider {...methods}>
                 <form onSubmit={handleSubmit(data => createMutation.mutate(data))} className="space-y-12">
@@ -44,7 +55,7 @@ export const CreateSubmissionPage = () => {
                             />
                             <FormInput
                                 name="title_en"
-                                label={t('submission.form.title_en')}
+                                label={`${t('submission.form.title_en')} *`}
                             />
                             <FormTextArea
                                 name="keywords_ru"
@@ -53,7 +64,7 @@ export const CreateSubmissionPage = () => {
                             />
                             <FormTextArea
                                 name="keywords_en"
-                                label={t('submission.form.keywords_en')}
+                                label={`${t('submission.form.keywords_en')} *`}
                                 placeholder={isRu ? "через запятую" : "comma separated"}
                             />
                         </div>
@@ -62,14 +73,26 @@ export const CreateSubmissionPage = () => {
                     <Card padding="lg" variant="accent">
                         <SectionHeader title={t('submission.form.abstract')} prefix="02." />
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mt-6">
-                            <FormTextArea
-                                name="abstract_ru"
-                                label={`${t('submission.form.abstract_ru')} *`}
-                            />
-                            <FormTextArea
-                                name="abstract_en"
-                                label={t('submission.form.abstract_en')}
-                            />
+                            <div className="space-y-1.5">
+                                <FormTextArea
+                                    name="abstract_ru"
+                                    label={`${t('submission.form.abstract_ru')} *`}
+                                    maxLength={ABSTRACT_MAX_LENGTH}
+                                />
+                                <p className={`text-[10px] font-accent text-right ${abstractRu.length > ABSTRACT_MAX_LENGTH ? 'text-destructive font-bold' : 'text-muted-foreground'}`}>
+                                    {abstractRu.length} / {ABSTRACT_MAX_LENGTH}
+                                </p>
+                            </div>
+                            <div className="space-y-1.5">
+                                <FormTextArea
+                                    name="abstract_en"
+                                    label={`${t('submission.form.abstract_en')} *`}
+                                    maxLength={ABSTRACT_MAX_LENGTH}
+                                />
+                                <p className={`text-[10px] font-accent text-right ${abstractEn.length > ABSTRACT_MAX_LENGTH ? 'text-destructive font-bold' : 'text-muted-foreground'}`}>
+                                    {abstractEn.length} / {ABSTRACT_MAX_LENGTH}
+                                </p>
+                            </div>
                         </div>
                     </Card>
 
